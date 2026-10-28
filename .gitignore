@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Production build
+dist/
+build/
+
+# Uploads & Temporary files
+server/uploads/*
+!server/uploads/.gitkeep
+temp/
+coverage/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+cloudflared.exe
+mobile_qr.png
+*.apk
+.gradle/
+client/android/.gradle/
+client/android/app/build/

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: skillproof-ai
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: RESTRICT_DASHBOARDS
+        value: false
