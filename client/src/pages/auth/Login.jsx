@@ -12,6 +12,7 @@ import {
   Building2,
   Users,
   ShieldAlert,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAuth, RESTRICTION_MESSAGE } from '../../context/AuthContext';
 
