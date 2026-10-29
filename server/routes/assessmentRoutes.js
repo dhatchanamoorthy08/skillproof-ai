@@ -6,6 +6,8 @@ const {
   startAssessment,
   logViolation,
   submitAssessment,
+  terminateAssessment,
+  allowAttemptRestart,
   getAttemptResult,
   getAssessmentAttempts,
   updateAttemptStatus,
@@ -31,10 +33,16 @@ router.post(
   authorize('placement_officer', 'recruiter', 'admin'),
   updateAttemptStatus
 );
+router.post(
+  '/monitoring/attempts/:id/allow-restart',
+  authorize('placement_officer', 'recruiter', 'admin'),
+  allowAttemptRestart
+);
 
 router.post('/:id/start', authorize('student'), startAssessment);
 router.post('/:id/violations', authorize('student'), logViolation);
 router.post('/:id/submit', authorize('student'), submitAssessment);
+router.post('/:id/terminate', authorize('student'), terminateAssessment);
 router.get('/results/:id', getAttemptResult);
 
 module.exports = router;

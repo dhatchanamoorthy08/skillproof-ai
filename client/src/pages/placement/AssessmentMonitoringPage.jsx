@@ -29,6 +29,7 @@ export const AssessmentMonitoringPage = () => {
     flaggedCount: 0,
     completedCount: 0,
     pausedCount: 0,
+    terminatedCount: 0,
   });
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState('all');
@@ -83,6 +84,25 @@ export const AssessmentMonitoringPage = () => {
       }
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to update attempt status.');
+    } finally {
+      setStatusUpdating(false);
+    }
+  };
+
+  const handleAllowRestart = async (attemptId) => {
+    if (!window.confirm('Are you sure you want to authorize this candidate to retake this assessment?')) {
+      return;
+    }
+    setStatusUpdating(true);
+    try {
+      const res = await api.post(`/assessments/monitoring/attempts/${attemptId}/allow-restart`);
+      if (res.data.success) {
+        alert(res.data.message);
+        setSelectedAttempt(null);
+        fetchAttempts();
+      }
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to authorize candidate retake.');
     } finally {
       setStatusUpdating(false);
     }
@@ -155,6 +175,10 @@ export const AssessmentMonitoringPage = () => {
             <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#166534', textTransform: 'uppercase' }}>Completed & Passed</div>
             <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#16A34A', marginTop: '0.2rem' }}>{stats.completedCount}</div>
           </div>
+          <div style={{ padding: '0.875rem 1rem', background: '#FEF2F2', borderRadius: '8px', border: '1.5px solid #FCA5A5' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#991B1B', textTransform: 'uppercase' }}>Terminated (Violations)</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#B91C1C', marginTop: '0.2rem' }}>{stats.terminatedCount || 0}</div>
+          </div>
         </div>
       </div>
 
@@ -203,6 +227,7 @@ export const AssessmentMonitoringPage = () => {
               <option value="all">All Attempts ({stats.totalAttempts})</option>
               <option value="in_progress">In Progress ({stats.inProgressCount})</option>
               <option value="flagged">Flagged for Review ({stats.flaggedCount})</option>
+              <option value="terminated">Terminated Violations ({stats.terminatedCount || 0})</option>
               <option value="completed">Completed ({stats.completedCount})</option>
               <option value="paused">Paused ({stats.pausedCount || 0})</option>
             </select>
@@ -249,6 +274,7 @@ export const AssessmentMonitoringPage = () => {
                 const isInProgress = att.status === 'in_progress';
                 const isCompleted = att.status === 'completed';
                 const isPaused = att.status === 'paused';
+                const isTerminated = att.status === 'terminated';
 
                 return (
                   <tr key={att._id}>
@@ -329,6 +355,24 @@ export const AssessmentMonitoringPage = () => {
                       </span>
                     </td>
                     <td>
+                      {isTerminated && (
+                        <span
+                          style={{
+                            background: '#FEF2F2',
+                            color: '#B91C1C',
+                            border: '1px solid #FECACA',
+                            padding: '3px 8px',
+                            borderRadius: '999px',
+                            fontSize: '0.75rem',
+                            fontWeight: 800,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                          }}
+                        >
+                          <AlertOctagon size={12} /> Terminated
+                        </span>
+                      )}
                       {isInProgress && (
                         <span
                           style={{
@@ -440,18 +484,43 @@ export const AssessmentMonitoringPage = () => {
                     borderRadius: '4px',
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    background: selectedAttempt.status === 'flagged' ? '#FEE2E2' : '#DCFCE7',
-                    color: selectedAttempt.status === 'flagged' ? '#DC2626' : '#16A34A',
+                    background: selectedAttempt.status === 'terminated' ? '#FEE2E2' : selectedAttempt.status === 'flagged' ? '#FEF3C7' : '#DCFCE7',
+                    color: selectedAttempt.status === 'terminated' ? '#B91C1C' : selectedAttempt.status === 'flagged' ? '#B45309' : '#16A34A',
                   }}
                 >
                   {selectedAttempt.status?.toUpperCase()}
                 </span>
               </div>
 
+              {/* Termination Info Banner if Terminated */}
+              {selectedAttempt.status === 'terminated' && (
+                <div
+                  style={{
+                    marginTop: '0.75rem',
+                    padding: '0.75rem',
+                    background: '#FEF2F2',
+                    border: '1px solid #FECACA',
+                    borderRadius: '6px',
+                    color: '#991B1B',
+                    fontSize: '0.825rem',
+                  }}
+                >
+                  <div style={{ fontWeight: 800, marginBottom: '2px' }}>
+                    Zero-Tolerance Termination Reason:
+                  </div>
+                  <div>{selectedAttempt.terminationReason || 'Anti-cheating security violation.'}</div>
+                  <div style={{ display: 'flex', gap: '1rem', marginTop: '6px', fontSize: '0.78rem', color: '#7F1D1D' }}>
+                    <span>Fullscreen Exits: <strong>{selectedAttempt.fullscreenExits || 0}</strong></span>
+                    <span>Retake Status: <strong>{selectedAttempt.isRestartAllowed ? 'Authorized' : 'Locked by Policy'}</strong></span>
+                  </div>
+                </div>
+              )}
+
               {/* Counters summary */}
-              <div style={{ display: 'flex', gap: '1.25rem', marginTop: '0.75rem', fontSize: '0.8rem', color: '#475569' }}>
+              <div style={{ display: 'flex', gap: '1.25rem', marginTop: '0.75rem', fontSize: '0.8rem', color: '#475569', flexWrap: 'wrap' }}>
                 <div>Tab Switches: <strong>{selectedAttempt.tabSwitches || 0}</strong></div>
                 <div>Focus Losses: <strong>{selectedAttempt.focusLossCount || 0}</strong></div>
+                <div>Fullscreen Exits: <strong>{selectedAttempt.fullscreenExits || 0}</strong></div>
                 <div>Camera Drops: <strong>{selectedAttempt.cameraInterruptions || 0}</strong></div>
                 <div>Total Flags: <strong>{selectedAttempt.violationCount || 0}</strong></div>
               </div>
@@ -507,8 +576,16 @@ export const AssessmentMonitoringPage = () => {
             </div>
 
             {/* Admin Resolution Actions */}
-            <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => handleAllowRestart(selectedAttempt._id)}
+                  disabled={statusUpdating}
+                  className="btn btn-primary btn-sm"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700 }}
+                >
+                  <RefreshCw size={13} /> Authorize Retake
+                </button>
                 <button
                   onClick={() => handleUpdateStatus('completed')}
                   disabled={statusUpdating}

@@ -146,6 +146,20 @@ const startAssessment = async (req, res, next) => {
 
     const candidateName = req.user?.fullName || 'Student Candidate';
     const candidateEmail = req.user?.email || '';
+    const studentId = req.user?._id?.toString();
+
+    // Check if candidate already has a terminated attempt that requires admin retake authorization
+    const existingAttempt = (fallbackAssessmentAttempts || []).find(
+      (a) => a.student?.toString() === studentId && a.assessment?.toString() === ass._id?.toString()
+    );
+    if (existingAttempt && existingAttempt.status === 'terminated' && !existingAttempt.isRestartAllowed) {
+      return res.status(403).json({
+        success: false,
+        terminated: true,
+        message: `Your assessment attempt was terminated due to a proctoring violation (${existingAttempt.terminationReason || 'Security violation'}). Contact an administrator or placement officer to authorize a retake.`,
+      });
+    }
+
     const maxAllowedViolations = 5;
 
     memoryAttempts[attemptId] = {
@@ -153,16 +167,20 @@ const startAssessment = async (req, res, next) => {
       assessmentId: ass._id,
       assessmentTitle: ass.title,
       assessmentDomain: ass.domain,
-      studentId: req.user?._id?.toString(),
+      studentId,
       candidateName,
       candidateEmail,
       cameraStatus: 'connected',
       cameraInterruptions: 0,
       tabSwitches: 0,
       focusLossCount: 0,
+      fullscreenExits: 0,
       startedAt: new Date(),
       expiresAt,
       status: 'in_progress',
+      terminationReason: null,
+      terminatedAt: null,
+      isRestartAllowed: false,
       violations: [],
       violationCount: 0,
       maxAllowedViolations,
@@ -282,6 +300,26 @@ const submitAssessment = async (req, res, next) => {
   try {
     const { attemptId, userAnswers } = req.body;
     const studentId = req.user?._id?.toString();
+
+    // Reject answers submitted after an attempt has been terminated
+    if (memoryAttempts[attemptId] && memoryAttempts[attemptId].status === 'terminated') {
+      return res.status(403).json({
+        success: false,
+        message: 'Cannot submit answers: this assessment attempt was already terminated due to a proctoring violation.',
+      });
+    }
+
+    const existingTerminated = (fallbackAssessmentAttempts || []).find(
+      (a) =>
+        (a._id === attemptId || (studentId && a.student?.toString() === studentId && a.assessment?.toString() === req.params.id)) &&
+        a.status === 'terminated'
+    );
+    if (existingTerminated) {
+      return res.status(403).json({
+        success: false,
+        message: 'Cannot submit answers: this assessment attempt was already terminated due to a proctoring violation.',
+      });
+    }
 
     const ass =
       mongoose.connection.readyState === 1
@@ -460,6 +498,176 @@ const getAttemptResult = async (req, res, next) => {
   }
 };
 
+// @desc    Immediately terminate assessment attempt due to strict security violations
+// @route   POST /api/v1/assessments/:id/terminate
+// @access  Private (Student)
+const terminateAssessment = async (req, res, next) => {
+  try {
+    const { attemptId, reason, violationType, userAnswers } = req.body;
+    const studentId = req.user?._id?.toString();
+
+    const ass =
+      mongoose.connection.readyState === 1
+        ? await Assessment.findById(req.params.id)
+        : fallbackAssessments.find((a) => a._id === req.params.id) || fallbackAssessments[0];
+
+    if (!ass) {
+      return res.status(404).json({ success: false, message: 'Assessment not found.' });
+    }
+
+    const activeAttempt = memoryAttempts[attemptId];
+    const questionsToGrade = activeAttempt?.questions || ass.questions;
+
+    // Calculate score for answers answered up to termination
+    let totalPoints = 0;
+    let earnedPoints = 0;
+
+    questionsToGrade.forEach((q) => {
+      totalPoints += q.points || 10;
+      const submitted = (userAnswers || []).find((ua) => ua.questionId === q._id?.toString());
+      const selectedIndex = submitted?.selectedOptionIndex;
+      let isCorrect = false;
+      if (selectedIndex !== undefined && selectedIndex !== null && q.options && q.options[selectedIndex]) {
+        isCorrect = q.options[selectedIndex].isCorrect === true;
+      }
+      if (isCorrect) earnedPoints += q.points || 10;
+    });
+
+    const scorePercentage = totalPoints > 0 ? Math.round((earnedPoints / totalPoints) * 100) : 0;
+    const terminationReason = reason || 'Security violation detected during assessment.';
+    const terminatedAt = new Date();
+
+    const violationEvent = {
+      type: violationType || 'security_termination',
+      details: terminationReason,
+      timestamp: terminatedAt,
+    };
+
+    if (activeAttempt) {
+      activeAttempt.status = 'terminated';
+      activeAttempt.terminationReason = terminationReason;
+      activeAttempt.terminatedAt = terminatedAt;
+      activeAttempt.isRestartAllowed = false;
+      activeAttempt.violations.push(violationEvent);
+      activeAttempt.violationCount = activeAttempt.violations.length;
+      if (violationType === 'fullscreen_exit') {
+        activeAttempt.fullscreenExits = (activeAttempt.fullscreenExits || 0) + 1;
+      }
+    }
+
+    const candidateName = activeAttempt?.candidateName || req.user?.fullName || 'Candidate';
+    const candidateEmail = activeAttempt?.candidateEmail || req.user?.email || '';
+
+    const attemptRecord = {
+      _id: attemptId || `66800000000000000000${Date.now().toString().slice(-4)}`,
+      student: studentId,
+      candidateName,
+      candidateEmail,
+      assessment: ass._id,
+      assessmentTitle: ass.title,
+      assessmentDomain: ass.domain,
+      scorePercentage,
+      earnedPoints,
+      totalPoints,
+      passed: false,
+      status: 'terminated',
+      terminationReason,
+      terminatedAt,
+      isRestartAllowed: false,
+      fullscreenExits: (activeAttempt?.fullscreenExits || 0) + (violationType === 'fullscreen_exit' ? 1 : 0),
+      cameraStatus: activeAttempt?.cameraStatus || 'disconnected',
+      cameraInterruptions: activeAttempt?.cameraInterruptions || 0,
+      tabSwitches: (activeAttempt?.tabSwitches || 0) + (violationType === 'tab_hidden' ? 1 : 0),
+      focusLossCount: (activeAttempt?.focusLossCount || 0) + (violationType === 'focus_loss' ? 1 : 0),
+      violationCount: activeAttempt?.violationCount || 1,
+      violations: activeAttempt?.violations || [violationEvent],
+      startedAt: activeAttempt?.startedAt || new Date(Date.now() - 10 * 60000),
+      submittedAt: terminatedAt,
+    };
+
+    const existingIdx = fallbackAssessmentAttempts.findIndex(
+      (a) => a.student?.toString() === studentId && a.assessment?.toString() === ass._id?.toString()
+    );
+    if (existingIdx >= 0) {
+      fallbackAssessmentAttempts[existingIdx] = attemptRecord;
+    } else {
+      fallbackAssessmentAttempts.push(attemptRecord);
+    }
+
+    saveStore();
+
+    if (mongoose.connection.readyState === 1 && attemptId) {
+      try {
+        await AssessmentAttempt.findByIdAndUpdate(attemptId, {
+          status: 'terminated',
+          terminationReason,
+          terminatedAt,
+          isRestartAllowed: false,
+          $push: { violations: violationEvent },
+          $inc: {
+            violationCount: 1,
+            fullscreenExits: violationType === 'fullscreen_exit' ? 1 : 0,
+          },
+          submittedAt: terminatedAt,
+        });
+      } catch (dbErr) {
+        console.error('Failed to update mongo attempt to terminated:', dbErr.message);
+      }
+    }
+
+    res.json({
+      success: true,
+      message: 'Assessment attempt has been terminated immediately.',
+      status: 'terminated',
+      terminationReason,
+      terminatedAt,
+      scorePercentage,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Authorize a retake for a terminated or flagged attempt
+// @route   POST /api/v1/assessments/monitoring/attempts/:id/allow-restart
+// @access  Private (Placement Officer, Recruiter, Admin)
+const allowAttemptRestart = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const adminUser = req.user?.fullName || req.user?.email || 'Administrator';
+
+    if (memoryAttempts[id]) {
+      memoryAttempts[id].isRestartAllowed = true;
+      memoryAttempts[id].adminResetBy = adminUser;
+    }
+
+    const att = (fallbackAssessmentAttempts || []).find((a) => a._id === id);
+    if (att) {
+      att.isRestartAllowed = true;
+      att.adminResetBy = adminUser;
+      saveStore();
+    }
+
+    if (mongoose.connection.readyState === 1) {
+      try {
+        await AssessmentAttempt.findByIdAndUpdate(id, {
+          isRestartAllowed: true,
+          adminResetBy: adminUser,
+        });
+      } catch (e) {
+        console.error('Mongo allow-restart error:', e.message);
+      }
+    }
+
+    res.json({
+      success: true,
+      message: `Retake authorized by ${adminUser}. Candidate can now take this assessment again.`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Get assessment attempts for Admin & Placement Officer proctoring monitoring
 // @route   GET /api/v1/assessments/monitoring/attempts
 // @access  Private (Placement Officer, Recruiter, Admin)
@@ -480,12 +688,16 @@ const getAssessmentAttempts = async (req, res, next) => {
         assessmentTitle: m.assessmentTitle || 'Technical Assessment',
         assessmentDomain: m.assessmentDomain || 'Computer Science',
         startedAt: m.startedAt,
-        submittedAt: null,
+        submittedAt: m.terminatedAt || null,
         status: m.status || 'in_progress',
         cameraStatus: m.cameraStatus || 'connected',
         cameraInterruptions: m.cameraInterruptions || 0,
         tabSwitches: m.tabSwitches || 0,
         focusLossCount: m.focusLossCount || 0,
+        fullscreenExits: m.fullscreenExits || 0,
+        terminationReason: m.terminationReason || null,
+        terminatedAt: m.terminatedAt || null,
+        isRestartAllowed: m.isRestartAllowed || false,
         violationCount: m.violationCount || 0,
         violations: m.violations || [],
         scorePercentage: null,
@@ -513,6 +725,10 @@ const getAssessmentAttempts = async (req, res, next) => {
           cameraInterruptions: att.cameraInterruptions || 0,
           tabSwitches: att.tabSwitches || 0,
           focusLossCount: att.focusLossCount || 0,
+          fullscreenExits: att.fullscreenExits || 0,
+          terminationReason: att.terminationReason || null,
+          terminatedAt: att.terminatedAt || null,
+          isRestartAllowed: att.isRestartAllowed || false,
           violationCount: att.violationCount || 0,
           violations: att.violations || [],
           scorePercentage: att.scorePercentage,
@@ -546,6 +762,7 @@ const getAssessmentAttempts = async (req, res, next) => {
       flaggedCount: allAttempts.filter((a) => a.status === 'flagged').length,
       completedCount: allAttempts.filter((a) => a.status === 'completed').length,
       pausedCount: allAttempts.filter((a) => a.status === 'paused').length,
+      terminatedCount: allAttempts.filter((a) => a.status === 'terminated').length,
     };
 
     res.json({
@@ -593,6 +810,8 @@ module.exports = {
   startAssessment,
   logViolation,
   submitAssessment,
+  terminateAssessment,
+  allowAttemptRestart,
   getAttemptResult,
   getAssessmentAttempts,
   updateAttemptStatus,

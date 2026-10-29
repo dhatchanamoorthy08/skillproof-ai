@@ -77,8 +77,27 @@ const assessmentAttemptSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['not_started', 'in_progress', 'paused', 'completed', 'timed_out', 'flagged'],
+      enum: ['not_started', 'in_progress', 'paused', 'completed', 'timed_out', 'flagged', 'terminated'],
       default: 'in_progress',
+    },
+    terminationReason: {
+      type: String,
+      default: '',
+    },
+    terminatedAt: {
+      type: Date,
+    },
+    fullscreenExits: {
+      type: Number,
+      default: 0,
+    },
+    isRestartAllowed: {
+      type: Boolean,
+      default: false,
+    },
+    adminResetBy: {
+      type: String,
+      default: '',
     },
     cameraStatus: {
       type: String,

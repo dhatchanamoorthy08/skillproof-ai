@@ -25,8 +25,9 @@ export const AssessmentRunnerPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Phase: 'pre_check' | 'in_exam' | 'paused_camera' | 'submitted'
+  // Phase: 'pre_check' | 'in_exam' | 'paused_camera' | 'submitted' | 'terminated'
   const [phase, setPhase] = useState('pre_check');
+  const [terminationData, setTerminationData] = useState(null);
 
   // Webcam & Permissions
   const [cameraGranted, setCameraGranted] = useState(false);
@@ -202,62 +203,79 @@ export const AssessmentRunnerPage = () => {
     }
   };
 
-  // Violation Reporter Helper
-  const reportViolation = async (type, details) => {
-    if (!attemptId || phase !== 'in_exam') return;
+  // Offline resilience: listen for online event to flush any queued termination
+  useEffect(() => {
+    const handleOnline = async () => {
+      try {
+        const cached = localStorage.getItem('pending_assessment_termination');
+        if (cached) {
+          const payload = JSON.parse(cached);
+          await api.post(`/assessments/${payload.assessmentId || id}/terminate`, payload);
+          localStorage.removeItem('pending_assessment_termination');
+          console.log('[Anti-Cheat] Queued assessment termination successfully synchronized with backend.');
+        }
+      } catch (err) {
+        console.error('[Anti-Cheat] Failed to flush queued termination payload:', err);
+      }
+    };
+
+    window.addEventListener('online', handleOnline);
+    return () => window.removeEventListener('online', handleOnline);
+  }, [id]);
+
+  // Immediate Termination Handler: zero grace period for proctoring violations
+  const handleImmediateTermination = async (reason, violationType = 'security_termination') => {
+    if (phase === 'terminated' || phase === 'submitted') return;
+
+    setPhase('terminated');
+    setTerminationData({
+      reason,
+      violationType,
+      timestamp: new Date().toISOString(),
+    });
+
+    // Terminate camera stream immediately
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+    }
+
+    // Exit full-screen mode if currently active
+    if (document.fullscreenElement && document.exitFullscreen) {
+      document.exitFullscreen().catch(() => {});
+    }
+
+    const userAnswers = Object.entries(selectedAnswers).map(([questionId, selectedOptionIndex]) => ({
+      questionId,
+      selectedOptionIndex,
+    }));
+
+    const payload = {
+      attemptId,
+      reason,
+      violationType,
+      userAnswers,
+      assessmentId: id,
+    };
 
     try {
-      const res = await api.post(`/assessments/${id}/violations`, {
-        attemptId,
-        type,
-        details,
-        cameraStatus: streamRef.current?.active ? 'connected' : 'disconnected',
-      });
-
-      if (res.data.success) {
-        setViolationsCount(res.data.violationCount);
-        if (res.data.tabSwitches !== undefined) setTabSwitches(res.data.tabSwitches);
-        if (res.data.focusLossCount !== undefined) setFocusLosses(res.data.focusLossCount);
-        if (res.data.cameraInterruptions !== undefined) setCameraInterruptions(res.data.cameraInterruptions);
-
-        setWarningMessage(
-          `Security Alert (${res.data.violationCount}/${res.data.maxAllowedViolations || warningLimit}): ${details}`
-        );
-        setTimeout(() => setWarningMessage(null), 6000);
-
-        // Auto-submit if limit exceeded
-        if (res.data.shouldAutoSubmit) {
-          alert(
-            `Proctoring Warning Limit Exceeded (${res.data.violationCount}/${res.data.maxAllowedViolations || warningLimit}). Your assessment is being submitted automatically for audit review.`
-          );
-          handleSubmitExam();
-        }
+      await api.post(`/assessments/${id}/terminate`, payload);
+    } catch (err) {
+      console.warn('[Anti-Cheat] Network error during termination submission. Storing locally for retry.', err);
+      try {
+        localStorage.setItem('pending_assessment_termination', JSON.stringify(payload));
+      } catch (e) {
+        console.error('LocalStorage write failed:', e);
       }
-    } catch (e) {
-      console.error('Failed to log violation:', e);
     }
   };
 
   // Camera Interruption Handler
   const handleCameraInterrupted = (reason) => {
     if (phase !== 'in_exam') return;
-    setPhase('paused_camera');
-    setCameraInterruptions((prev) => prev + 1);
-    reportViolation('camera_disconnected', reason || 'Webcam connection lost or permission revoked.');
-  };
-
-  // Resume after Camera Reconnection
-  const handleResumeAfterCamera = async () => {
-    await requestCameraAccess();
-    if (streamRef.current && streamRef.current.active) {
-      setPhase('in_exam');
-      if (liveVideoRef.current) {
-        liveVideoRef.current.srcObject = streamRef.current;
-      }
-      reportViolation('camera_resumed', 'Candidate successfully re-established webcam connection.');
-    } else {
-      alert('Webcam is still unavailable. Please check your camera connection.');
-    }
+    handleImmediateTermination(
+      reason || 'Assessment Terminated: Mandatory webcam connection was disconnected or camera permission was revoked.',
+      'camera_disconnected'
+    );
   };
 
   // 3. Periodic Camera & Face-Presence Analysis Heuristic
@@ -270,7 +288,7 @@ export const AssessmentRunnerPage = () => {
 
       // Verify stream is actively sending frames
       if (!streamRef.current || !streamRef.current.active) {
-        handleCameraInterrupted('Active video stream terminated.');
+        handleCameraInterrupted('Assessment Terminated: Mandatory webcam video track stopped.');
         return;
       }
 
@@ -303,14 +321,12 @@ export const AssessmentRunnerPage = () => {
             setFaceInFrame(true);
           }
 
-          // If frame missing for 3 consecutive checks (9 seconds)
+          // If face missing or covered for 3 consecutive checks (9 seconds)
           if (faceMissingCounterRef.current >= 3) {
             setFaceInFrame(false);
-            reportViolation(
-              'no_face_detected',
-              'Candidate face appears not clearly visible in webcam frame. Ensure proper lighting and center your face.'
-            );
-            faceMissingCounterRef.current = 0; // Reset after logging
+            setWarningMessage('Security Warning: Candidate face not clearly visible in webcam. Maintain lighting and face camera.');
+            setTimeout(() => setWarningMessage(null), 5000);
+            faceMissingCounterRef.current = 0;
           }
         } catch {
           // Canvas read error bypass
@@ -321,72 +337,95 @@ export const AssessmentRunnerPage = () => {
     return () => clearInterval(interval);
   }, [phase]);
 
-  // 4. Browser Security Event Listeners
+  // 4. Strict Browser Security Event Listeners (Zero Tolerance)
   useEffect(() => {
     if (phase !== 'in_exam') return;
 
-    // Fullscreen Exit
+    // Fullscreen Exit -> Immediate Termination without warning
     const handleFullscreenChange = () => {
       if (!document.fullscreenElement) {
-        reportViolation('fullscreen_exit', 'Candidate exited full-screen mode.');
+        handleImmediateTermination(
+          'Assessment Terminated: Candidate exited full-screen mode.',
+          'fullscreen_exit'
+        );
       }
     };
 
-    // Tab Switch / Page Visibility
+    // Tab Switch / Page Visibility -> Immediate Termination without warning
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        reportViolation('tab_hidden', 'Switched browser tabs or minimized window.');
+        handleImmediateTermination(
+          'Assessment Terminated: Browser tab switch or window minimization detected.',
+          'tab_hidden'
+        );
       }
     };
 
-    // Window Blur (Focus Loss)
+    // Window Blur (Focus Loss to external window/application) -> Immediate Termination
     const handleWindowBlur = () => {
-      reportViolation('focus_loss', 'Assessment browser window lost focus.');
+      handleImmediateTermination(
+        'Assessment Terminated: Page lost focus to an external window or background application.',
+        'focus_loss'
+      );
     };
 
-    // Clipboard Copy Suppression
+    // Text Selection & Clipboard Copy Suppression
     const handleCopy = (e) => {
       e.preventDefault();
-      reportViolation('clipboard_blocked', 'Copy command suppressed in proctored session.');
+      setWarningMessage('Copy command is disabled in proctored assessments.');
+      setTimeout(() => setWarningMessage(null), 3000);
     };
 
-    // Clipboard Paste Suppression
+    const handleCut = (e) => {
+      e.preventDefault();
+      setWarningMessage('Cut command is disabled in proctored assessments.');
+      setTimeout(() => setWarningMessage(null), 3000);
+    };
+
     const handlePaste = (e) => {
       e.preventDefault();
-      reportViolation('clipboard_blocked', 'Paste command suppressed in proctored session.');
+      setWarningMessage('Paste command is disabled in proctored assessments.');
+      setTimeout(() => setWarningMessage(null), 3000);
     };
 
-    // Right-Click Context Menu
+    // Right-Click Context Menu Suppression
     const handleContextMenu = (e) => {
       e.preventDefault();
-      reportViolation('context_menu', 'Right-click context menu suppressed.');
+      setWarningMessage('Right-click context menu is disabled in proctored assessments.');
+      setTimeout(() => setWarningMessage(null), 3000);
     };
 
-    // Keyboard Shortcuts (Ctrl+C, Ctrl+V, F12, Ctrl+U)
+    // Block Keyboard Shortcuts (Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+A, Ctrl+U, F12, etc.)
     const handleKeyDown = (e) => {
       if (
         (e.ctrlKey || e.metaKey) &&
-        ['c', 'v', 'a', 'u', 'p', 's'].includes(e.key.toLowerCase())
+        ['c', 'v', 'x', 'a', 'u', 'p', 's'].includes(e.key.toLowerCase())
       ) {
         e.preventDefault();
-        reportViolation('clipboard_blocked', `Keyboard shortcut (Ctrl+${e.key.toUpperCase()}) blocked.`);
+        setWarningMessage(`Prohibited shortcut (Ctrl+${e.key.toUpperCase()}) blocked.`);
+        setTimeout(() => setWarningMessage(null), 3000);
       }
-      if (e.key === 'F12') {
+      if (
+        e.key === 'F12' ||
+        ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase()))
+      ) {
         e.preventDefault();
-        reportViolation('navigation_attempt', 'Developer tools inspect key suppressed.');
+        setWarningMessage('Developer Inspection Tools are disabled.');
+        setTimeout(() => setWarningMessage(null), 3000);
       }
     };
 
     // Unload confirmation
     const handleBeforeUnload = (e) => {
       e.preventDefault();
-      e.returnValue = 'Assessment is in progress. Leaving will submit your answers.';
+      e.returnValue = 'Assessment is currently active. Navigating away will immediately terminate and submit your attempt.';
     };
 
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('blur', handleWindowBlur);
     window.addEventListener('copy', handleCopy);
+    window.addEventListener('cut', handleCut);
     window.addEventListener('paste', handlePaste);
     window.addEventListener('contextmenu', handleContextMenu);
     window.addEventListener('keydown', handleKeyDown);
@@ -397,12 +436,13 @@ export const AssessmentRunnerPage = () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('blur', handleWindowBlur);
       window.removeEventListener('copy', handleCopy);
+      window.removeEventListener('cut', handleCut);
       window.removeEventListener('paste', handlePaste);
       window.removeEventListener('contextmenu', handleContextMenu);
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [phase, attemptId]);
+  }, [phase, attemptId, selectedAnswers]);
 
   // 5. Timer Countdown (only runs during 'in_exam')
   useEffect(() => {
@@ -682,6 +722,126 @@ export const AssessmentRunnerPage = () => {
             >
               <Maximize2 size={16} /> Enter Fullscreen & Begin Assessment
             </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // RENDER PHASE: TERMINATED DUE TO STRICT VIOLATION
+  // ==========================================
+  if (phase === 'terminated') {
+    return (
+      <div style={{ maxWidth: '680px', margin: '2.5rem auto', padding: '0 1rem' }}>
+        <div
+          className="card"
+          style={{
+            background: '#FFFFFF',
+            border: '2px solid #EF4444',
+            textAlign: 'center',
+            padding: '3rem 2rem',
+            boxShadow: '0 20px 25px -5px rgba(239, 68, 68, 0.1)',
+          }}
+        >
+          <div
+            style={{
+              width: '68px',
+              height: '68px',
+              borderRadius: '50%',
+              background: '#FEE2E2',
+              color: '#DC2626',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1.25rem',
+            }}
+          >
+            <AlertOctagon size={40} />
+          </div>
+
+          <span
+            style={{
+              display: 'inline-block',
+              background: '#FEE2E2',
+              color: '#991B1B',
+              fontSize: '0.75rem',
+              fontWeight: 800,
+              padding: '4px 12px',
+              borderRadius: '999px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              marginBottom: '0.75rem',
+            }}
+          >
+            Zero Tolerance Security Action
+          </span>
+
+          <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#0F172A', marginBottom: '0.5rem' }}>
+            Assessment Terminated Immediately
+          </h2>
+
+          <p style={{ color: '#64748B', fontSize: '0.925rem', margin: '0 auto 1.5rem', maxWidth: '520px', lineHeight: 1.55 }}>
+            This assessment attempt was immediately terminated and submitted because a strict proctoring anti-cheating policy violation was detected by the monitoring system.
+          </p>
+
+          {/* Details Box */}
+          <div
+            style={{
+              background: '#F8FAFC',
+              border: '1px solid #E2E8F0',
+              borderRadius: '10px',
+              padding: '1.25rem',
+              textAlign: 'left',
+              marginBottom: '1.75rem',
+            }}
+          >
+            <div style={{ marginBottom: '0.75rem' }}>
+              <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 700, textTransform: 'uppercase' }}>
+                Termination Cause
+              </div>
+              <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#DC2626', marginTop: '2px' }}>
+                {terminationData?.reason || 'Strict proctoring violation detected.'}
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid #E2E8F0' }}>
+              <div>
+                <div style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600 }}>TERMINATION TIMESTAMP</div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0F172A', marginTop: '2px' }}>
+                  {new Date(terminationData?.timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600 }}>ATTEMPT RECORD</div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0F172A', marginTop: '2px' }}>
+                  {attemptId || 'Recorded & Locked'}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Administrative Notice */}
+          <div
+            style={{
+              background: '#EFF6FF',
+              border: '1px solid #BFDBFE',
+              borderRadius: '8px',
+              padding: '0.9rem',
+              color: '#1E40AF',
+              fontSize: '0.825rem',
+              lineHeight: 1.5,
+              textAlign: 'left',
+              marginBottom: '2rem',
+            }}
+          >
+            <strong>Administrative Notice:</strong> All responses recorded prior to termination have been submitted for faculty &amp; placement audit. In accordance with examination regulations, candidates cannot restart this attempt unless authorized by an administrator.
+          </div>
+
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+            <Link to="/assessments" className="btn btn-primary" style={{ fontWeight: 700 }}>
+              Return to Assessments Catalog
+            </Link>
           </div>
         </div>
       </div>
@@ -1082,9 +1242,26 @@ export const AssessmentRunnerPage = () => {
         </div>
       </div>
 
-      {/* Question Card */}
+      {/* Question Card - Strict Anti-Copy Protected Area */}
       {currentQ && (
-        <div className="card" style={{ padding: '2rem', background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
+        <div
+          className="card"
+          onCopy={(e) => e.preventDefault()}
+          onCut={(e) => e.preventDefault()}
+          onPaste={(e) => e.preventDefault()}
+          onContextMenu={(e) => e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
+          onSelectStart={(e) => e.preventDefault()}
+          style={{
+            padding: '2rem',
+            background: '#FFFFFF',
+            border: '1px solid #E2E8F0',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            MozUserSelect: 'none',
+            msUserSelect: 'none',
+          }}
+        >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#64748B' }}>
               Question {currentQuestionIndex + 1} of {assessment.questions.length}
