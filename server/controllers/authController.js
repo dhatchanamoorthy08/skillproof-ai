@@ -25,6 +25,7 @@ const {
   consumeVerifiedEmail,
 } = require('../services/emailService');
 const { isDashboardRestricted, RESTRICTION_MESSAGE } = require('../config/restriction');
+const { logSecurityEvent } = require('../services/auditService');
 
 // Generate JWT token helper
 const generateToken = (id, email, role) => {
@@ -488,6 +489,13 @@ const login = async (req, res, next) => {
       // Offline fallback login
       const matched = fallbackUsers.find((u) => u.email.toLowerCase() === email.toLowerCase());
       if (!matched) {
+        logSecurityEvent({
+          userEmail: email,
+          action: 'LOGIN_FAILED',
+          resourceType: 'AUTH',
+          details: { reason: 'User not found' },
+          ipAddress: req.ip,
+        });
         return res.status(401).json({
           success: false,
           message: 'Invalid email or password credentials.',
@@ -507,11 +515,29 @@ const login = async (req, res, next) => {
       }
 
       if (!isMatch) {
+        logSecurityEvent({
+          user: matched._id,
+          userEmail: matched.email,
+          userRole: matched.role,
+          action: 'LOGIN_FAILED',
+          resourceType: 'AUTH',
+          details: { reason: 'Password mismatch' },
+          ipAddress: req.ip,
+        });
         return res.status(401).json({
           success: false,
           message: 'Invalid email or password credentials.',
         });
       }
+
+      logSecurityEvent({
+        user: matched._id,
+        userEmail: matched.email,
+        userRole: matched.role,
+        action: 'LOGIN_SUCCESS',
+        resourceType: 'AUTH',
+        ipAddress: req.ip,
+      });
 
       const token = generateToken(matched._id, matched.email, matched.role);
       return res.json({
@@ -529,6 +555,13 @@ const login = async (req, res, next) => {
     // Check for user with password field included
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
+      logSecurityEvent({
+        userEmail: email,
+        action: 'LOGIN_FAILED',
+        resourceType: 'AUTH',
+        details: { reason: 'User not found in DB' },
+        ipAddress: req.ip,
+      });
       return res.status(401).json({
         success: false,
         message: 'Invalid email or password credentials.',
@@ -537,6 +570,15 @@ const login = async (req, res, next) => {
 
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
+      logSecurityEvent({
+        user: user._id,
+        userEmail: user.email,
+        userRole: user.role,
+        action: 'LOGIN_FAILED',
+        resourceType: 'AUTH',
+        details: { reason: 'Password mismatch' },
+        ipAddress: req.ip,
+      });
       return res.status(401).json({
         success: false,
         message: 'Invalid email or password credentials.',
@@ -544,11 +586,28 @@ const login = async (req, res, next) => {
     }
 
     if (user.status === 'suspended') {
+      logSecurityEvent({
+        user: user._id,
+        userEmail: user.email,
+        userRole: user.role,
+        action: 'LOGIN_BLOCKED_SUSPENDED',
+        resourceType: 'AUTH',
+        ipAddress: req.ip,
+      });
       return res.status(403).json({
         success: false,
         message: 'Your account has been suspended. Please contact support.',
       });
     }
+
+    logSecurityEvent({
+      user: user._id,
+      userEmail: user.email,
+      userRole: user.role,
+      action: 'LOGIN_SUCCESS',
+      resourceType: 'AUTH',
+      ipAddress: req.ip,
+    });
 
     const token = generateToken(user._id, user.email, user.role);
 

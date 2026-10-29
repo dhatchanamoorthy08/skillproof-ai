@@ -93,6 +93,18 @@ const otpVerifyLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+// Rate Limiter for Login Attempts to block credential brute-forcing
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 15, // max 15 attempts per IP per window
+  message: {
+    success: false,
+    message: 'Too many login attempts from this network. Please wait 15 minutes before trying again.',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 const { isDashboardRestricted, RESTRICTION_MESSAGE } = require('../config/restriction');
 
 // Restriction status check (public endpoint for frontend dynamic synchronization)
@@ -111,7 +123,7 @@ router.get('/pincode/:pincode', getPincodeDetails);
 router.post('/send-otp', otpSendLimiter, sendOtp);
 router.post('/verify-otp', otpVerifyLimiter, confirmOtp);
 router.post('/register', register);
-router.post('/login', login);
+router.post('/login', loginLimiter, login);
 router.get('/me', protect, getMe);
 
 module.exports = router;

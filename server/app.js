@@ -12,6 +12,7 @@ const assessmentRoutes = require('./routes/assessmentRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const resumeRoutes = require('./routes/resumeRoutes');
 const errorHandler = require('./middleware/errorHandler');
+const sanitizeInput = require('./middleware/sanitize');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(
 
 app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
+app.use(sanitizeInput);
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));

@@ -15,6 +15,7 @@ const {
   saveStore,
 } = require('../services/fallbackStore');
 const { getRandomizedQuestions } = require('../services/assessments/assessmentBank');
+const { logSecurityEvent } = require('../services/auditService');
 
 // In-memory active attempts store for offline & active sessions
 const memoryAttempts = {};
@@ -186,6 +187,17 @@ const startAssessment = async (req, res, next) => {
       maxAllowedViolations,
       questions: selectedQuestions, // includes full option objects with isCorrect for grading
     };
+
+    logSecurityEvent({
+      user: req.user?._id,
+      userEmail: candidateEmail,
+      userRole: 'student',
+      action: 'ASSESSMENT_START',
+      resourceType: 'ASSESSMENT',
+      resourceId: ass._id,
+      details: { attemptId, assessmentTitle: ass.title },
+      ipAddress: req.ip,
+    });
 
     res.status(201).json({
       success: true,
@@ -472,10 +484,17 @@ const submitAssessment = async (req, res, next) => {
 const getAttemptResult = async (req, res, next) => {
   try {
     const studentId = req.user?._id?.toString();
+    const userRole = req.user?.role;
     const attempt = fallbackAssessmentAttempts.find(
       (a) => a._id === req.params.id || (studentId && a.student === studentId && a.assessment === req.params.id)
     );
     if (attempt) {
+      if (userRole === 'student' && attempt.student && attempt.student.toString() !== studentId) {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied: You are not authorized to view another candidate's assessment result.",
+        });
+      }
       return res.json({
         success: true,
         result: {
