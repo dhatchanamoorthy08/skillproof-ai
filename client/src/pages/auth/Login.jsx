@@ -90,7 +90,7 @@ export const Login = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+        background: '#FAFAF5',
         padding: '2rem 1rem',
       }}
     >
@@ -100,10 +100,10 @@ export const Login = () => {
           maxWidth: '460px',
           width: '100%',
           padding: '2.75rem 2.5rem',
-          boxShadow: '0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03)',
+          boxShadow: '0 4px 20px -2px rgba(20, 45, 43, 0.06)',
           borderRadius: 'var(--radius-xl)',
-          backgroundColor: '#ffffff',
-          border: '1px solid #e2e8f0',
+          backgroundColor: '#FFFFFF',
+          border: '1px solid var(--border-light)',
         }}
       >
         {/* Brand Header */}
@@ -112,19 +112,19 @@ export const Login = () => {
             style={{
               width: '48px',
               height: '48px',
-              background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+              background: 'var(--primary)',
               borderRadius: 'var(--radius-md)',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#ffffff',
               marginBottom: '1rem',
-              boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)',
+              boxShadow: '0 2px 8px rgba(7, 134, 106, 0.3)',
             }}
           >
-            <Sparkles size={24} />
+            <ShieldCheck size={26} />
           </div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.35rem', letterSpacing: '-0.02em' }}>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.35rem', letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
             Welcome Back
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>
@@ -138,9 +138,9 @@ export const Login = () => {
             style={{
               padding: '0.9rem 1rem',
               borderRadius: 'var(--radius-md)',
-              backgroundColor: '#fef2f2',
-              border: '1px solid #fecaca',
-              color: '#991b1b',
+              backgroundColor: 'var(--error-light)',
+              border: '1px solid var(--error-border)',
+              color: 'var(--error)',
               fontSize: '0.85rem',
               display: 'flex',
               alignItems: 'flex-start',
@@ -150,7 +150,7 @@ export const Login = () => {
               lineHeight: 1.45,
             }}
           >
-            <ShieldAlert size={18} color="#dc2626" style={{ flexShrink: 0, marginTop: '2px' }} />
+            <ShieldAlert size={18} color="var(--error)" style={{ flexShrink: 0, marginTop: '2px' }} />
             <span>{error}</span>
           </div>
         )}
@@ -159,7 +159,7 @@ export const Login = () => {
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-              <Mail size={14} color="#64748b" /> Email Address
+              <Mail size={14} color="var(--text-muted)" /> Email Address
             </label>
             <input
               type="email"
@@ -173,7 +173,7 @@ export const Login = () => {
 
           <div className="form-group">
             <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-              <Lock size={14} color="#64748b" /> Password
+              <Lock size={14} color="var(--text-muted)" /> Password
             </label>
             <div style={{ position: 'relative' }}>
               <input
@@ -238,7 +238,7 @@ export const Login = () => {
               onClick={() => autofillDemo('student@skillproof.ai', 'Password@123')}
               style={{ fontSize: '0.78rem', gap: '0.3rem', padding: '0.45rem 0.5rem' }}
             >
-              <GraduationCap size={14} color="#2563eb" />
+              <GraduationCap size={14} color="#07866A" />
               <span>Student</span>
             </button>
             <button
@@ -247,16 +247,16 @@ export const Login = () => {
               onClick={() => autofillDemo('recruiter@skillproof.ai', 'Password@123')}
               style={{ fontSize: '0.78rem', gap: '0.3rem', padding: '0.45rem 0.5rem' }}
             >
-              <Building2 size={14} color="#d97706" />
+              <Building2 size={14} color="#E8A23A" />
               <span>Recruiter</span>
             </button>
             <button
               type="button"
               className="btn btn-secondary btn-sm"
-              onClick={() => autofillDemo('officer@skillproof.ai', 'Password@123')}
+              onClick={() => autofillDemo('placement@skillproof.ai', 'Password@123')}
               style={{ fontSize: '0.78rem', gap: '0.3rem', padding: '0.45rem 0.5rem' }}
             >
-              <Users size={14} color="#4f46e5" />
+              <Users size={14} color="#142D2B" />
               <span>Placement</span>
             </button>
           </div>

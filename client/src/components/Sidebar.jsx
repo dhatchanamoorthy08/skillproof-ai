@@ -120,17 +120,17 @@ export const Sidebar = ({ isOpen, onClose }) => {
       {/* Brand Header */}
       <div className="sidebar-header" style={{ justifyContent: 'space-between' }}>
         <div className="brand-logo">
-          <div className="brand-icon">
-            <Sparkles size={19} />
+          <div className="brand-icon" style={{ background: '#07866A', color: '#FFFFFF', borderRadius: '8px', boxShadow: '0 2px 8px rgba(7, 134, 106, 0.35)' }}>
+            <ShieldCheck size={20} />
           </div>
           <div>
-            <div style={{ lineHeight: 1.15, fontSize: '1.15rem' }}>
-              SkillProof <span style={{ color: '#38bdf8' }}>AI</span>
+            <div style={{ lineHeight: 1.15, fontSize: '1.15rem', color: '#FAFAF5', fontWeight: 800 }}>
+              SkillProof <span style={{ color: '#E8A23A' }}>AI</span>
             </div>
             <div
               style={{
                 fontSize: '0.65rem',
-                color: '#94a3b8',
+                color: '#7C958C',
                 textTransform: 'uppercase',
                 letterSpacing: '0.08em',
                 fontWeight: 700,
@@ -150,7 +150,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
             style={{
               background: 'transparent',
               border: 'none',
-              color: '#94a3b8',
+              color: '#A3B8B2',
               cursor: 'pointer',
               padding: '4px',
               display: 'none',

@@ -506,7 +506,7 @@ export const Register = () => {
         alignItems: 'center',
         minHeight: '100vh',
         padding: '2.5rem 1rem',
-        background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+        background: '#FAFAF5',
       }}
     >
       <div
@@ -515,10 +515,10 @@ export const Register = () => {
           width: '100%',
           maxWidth: '780px',
           padding: '2.75rem 2.5rem',
-          boxShadow: '0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03)',
+          boxShadow: '0 4px 20px -2px rgba(20, 45, 43, 0.06)',
           borderRadius: 'var(--radius-xl)',
           backgroundColor: '#ffffff',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           transition: 'all 0.3s ease',
         }}
       >
@@ -534,9 +534,9 @@ export const Register = () => {
               marginBottom: '1rem',
             }}
           >
-            <Sparkles size={28} />
+            <ShieldCheck size={28} />
           </div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem' }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem', color: 'var(--text-main)' }}>
             Create Your Account
           </h1>
           <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.95rem' }}>
@@ -581,9 +581,9 @@ export const Register = () => {
             style={{
               padding: '0.75rem 0.5rem',
               borderRadius: 'var(--radius-md)',
-              border: role === 'recruiter' ? '2px solid #d97706' : '1px solid var(--border-light)',
-              background: role === 'recruiter' ? '#fef3c7' : '#ffffff',
-              color: role === 'recruiter' ? '#b45309' : 'var(--text-muted)',
+              border: role === 'recruiter' ? '2px solid var(--accent)' : '1px solid var(--border-light)',
+              background: role === 'recruiter' ? 'var(--accent-light)' : '#ffffff',
+              color: role === 'recruiter' ? '#B27315' : 'var(--text-muted)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -603,9 +603,9 @@ export const Register = () => {
             style={{
               padding: '0.75rem 0.5rem',
               borderRadius: 'var(--radius-md)',
-              border: role === 'placement_officer' ? '2px solid #4f46e5' : '1px solid var(--border-light)',
-              background: role === 'placement_officer' ? '#e0e7ff' : '#ffffff',
-              color: role === 'placement_officer' ? '#3730a3' : 'var(--text-muted)',
+              border: role === 'placement_officer' ? '2px solid var(--secondary)' : '1px solid var(--border-light)',
+              background: role === 'placement_officer' ? '#EDF3F1' : '#ffffff',
+              color: role === 'placement_officer' ? 'var(--secondary)' : 'var(--text-muted)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -626,9 +626,9 @@ export const Register = () => {
             style={{
               padding: '0.75rem 1rem',
               borderRadius: 'var(--radius-md)',
-              backgroundColor: '#fee2e2',
-              border: '1px solid #fca5a5',
-              color: '#b91c1c',
+              backgroundColor: 'var(--error-light)',
+              border: '1px solid var(--error-border)',
+              color: 'var(--error)',
               fontSize: '0.85rem',
               display: 'flex',
               alignItems: 'center',

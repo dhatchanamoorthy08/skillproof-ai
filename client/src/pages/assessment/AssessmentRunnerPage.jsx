@@ -525,7 +525,7 @@ export const AssessmentRunnerPage = () => {
     return (
       <div style={{ maxWidth: '850px', margin: '1.5rem auto', padding: '0 1rem' }}>
         {hiddenCanvas}
-        <div className="card" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', padding: '2rem' }}>
+        <div className="card" style={{ background: '#FFFFFF', border: '1px solid #DFE8E1', padding: '2rem' }}>
           {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
             <div
@@ -534,7 +534,7 @@ export const AssessmentRunnerPage = () => {
                 height: '44px',
                 borderRadius: '10px',
                 background: 'rgba(37, 99, 235, 0.1)',
-                color: '#2563EB',
+                color: '#07866A',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -543,10 +543,10 @@ export const AssessmentRunnerPage = () => {
               <ShieldCheck size={24} />
             </div>
             <div>
-              <h2 style={{ fontSize: '1.45rem', fontWeight: 800, margin: 0, color: '#0F172A' }}>
+              <h2 style={{ fontSize: '1.45rem', fontWeight: 800, margin: 0, color: '#142D2B' }}>
                 Secure Proctoring & Camera Verification
               </h2>
-              <p style={{ color: '#64748B', fontSize: '0.875rem', margin: '2px 0 0 0' }}>
+              <p style={{ color: '#68756F', fontSize: '0.875rem', margin: '2px 0 0 0' }}>
                 {assessment?.title || 'Technical Assessment'} &bull; Mandatory anti-cheating security protocol
               </p>
             </div>
@@ -566,14 +566,14 @@ export const AssessmentRunnerPage = () => {
             <div
               style={{
                 position: 'relative',
-                background: '#0F172A',
+                background: '#142D2B',
                 borderRadius: '12px',
                 overflow: 'hidden',
                 aspectRatio: '4 / 3',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                border: cameraGranted ? '2px solid #16A34A' : '2px dashed #94A3B8',
+                border: cameraGranted ? '2px solid #247A48' : '2px dashed #8B9892',
               }}
             >
               <video
@@ -591,18 +591,18 @@ export const AssessmentRunnerPage = () => {
               />
 
               {!cameraGranted && (
-                <div style={{ textAlign: 'center', padding: '1.5rem', color: '#94A3B8' }}>
+                <div style={{ textAlign: 'center', padding: '1.5rem', color: '#8B9892' }}>
                   {cameraLoading ? (
                     <>
-                      <RefreshCw size={36} className="animate-spin" style={{ margin: '0 auto 0.75rem', color: '#38BDF8' }} />
-                      <div style={{ fontWeight: 600, color: '#F8FAFC' }}>Requesting camera permission...</div>
+                      <RefreshCw size={36} className="animate-spin" style={{ margin: '0 auto 0.75rem', color: '#07866A' }} />
+                      <div style={{ fontWeight: 600, color: '#FAFAF5' }}>Requesting camera permission...</div>
                       <div style={{ fontSize: '0.8rem', marginTop: '4px' }}>Please click "Allow" in your browser popup.</div>
                     </>
                   ) : (
                     <>
-                      <VideoOff size={40} style={{ margin: '0 auto 0.75rem', color: '#F87171' }} />
-                      <div style={{ fontWeight: 700, color: '#F8FAFC', marginBottom: '4px' }}>Webcam Access Required</div>
-                      <p style={{ fontSize: '0.8rem', color: '#94A3B8', maxWidth: '280px', margin: '0 auto 1rem' }}>
+                      <VideoOff size={40} style={{ margin: '0 auto 0.75rem', color: '#C83E4D' }} />
+                      <div style={{ fontWeight: 700, color: '#FAFAF5', marginBottom: '4px' }}>Webcam Access Required</div>
+                      <p style={{ fontSize: '0.8rem', color: '#8B9892', maxWidth: '280px', margin: '0 auto 1rem' }}>
                         {cameraError || 'Camera permissions have not been granted.'}
                       </p>
                       <button
@@ -624,7 +624,7 @@ export const AssessmentRunnerPage = () => {
                     top: '12px',
                     left: '12px',
                     background: 'rgba(15, 23, 42, 0.75)',
-                    color: '#DCFCE7',
+                    color: '#EFF8F2',
                     padding: '4px 10px',
                     borderRadius: '999px',
                     fontSize: '0.75rem',
@@ -640,8 +640,8 @@ export const AssessmentRunnerPage = () => {
                       width: '8px',
                       height: '8px',
                       borderRadius: '50%',
-                      background: '#16A34A',
-                      boxShadow: '0 0 6px #16A34A',
+                      background: '#247A48',
+                      boxShadow: '0 0 6px #247A48',
                     }}
                   />
                   Camera Ready
@@ -651,24 +651,24 @@ export const AssessmentRunnerPage = () => {
 
             {/* Assessment Security Rules */}
             <div>
-              <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#0F172A', marginBottom: '0.75rem' }}>
+              <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#142D2B', marginBottom: '0.75rem' }}>
                 Proctoring Rules & Security Checklist:
               </h4>
-              <ul style={{ paddingLeft: '1.2rem', color: '#475569', fontSize: '0.875rem', lineHeight: 1.6, margin: 0 }}>
+              <ul style={{ paddingLeft: '1.2rem', color: '#4A5651', fontSize: '0.875rem', lineHeight: 1.6, margin: 0 }}>
                 <li>
-                  <strong style={{ color: '#0F172A' }}>Mandatory Webcam Feed:</strong> Your camera must remain active and unobstructed throughout the examination.
+                  <strong style={{ color: '#142D2B' }}>Mandatory Webcam Feed:</strong> Your camera must remain active and unobstructed throughout the examination.
                 </li>
                 <li>
-                  <strong style={{ color: '#0F172A' }}>Automatic Fullscreen Mode:</strong> Exiting fullscreen or navigating away will log a security violation.
+                  <strong style={{ color: '#142D2B' }}>Automatic Fullscreen Mode:</strong> Exiting fullscreen or navigating away will log a security violation.
                 </li>
                 <li>
-                  <strong style={{ color: '#0F172A' }}>Tab Switching & Focus Loss:</strong> Switching tabs or opening external software triggers an anti-cheat alert.
+                  <strong style={{ color: '#142D2B' }}>Tab Switching & Focus Loss:</strong> Switching tabs or opening external software triggers an anti-cheat alert.
                 </li>
                 <li>
-                  <strong style={{ color: '#0F172A' }}>Randomized Questions:</strong> Question order and answer choices are dynamically shuffled per account.
+                  <strong style={{ color: '#142D2B' }}>Randomized Questions:</strong> Question order and answer choices are dynamically shuffled per account.
                 </li>
                 <li>
-                  <strong style={{ color: '#0F172A' }}>Violation Limit:</strong> Exceeding 5 warnings will pause or auto-submit your exam for administrative review.
+                  <strong style={{ color: '#142D2B' }}>Violation Limit:</strong> Exceeding 5 warnings will pause or auto-submit your exam for administrative review.
                 </li>
               </ul>
 
@@ -680,12 +680,12 @@ export const AssessmentRunnerPage = () => {
                   gap: '0.65rem',
                   marginTop: '1.25rem',
                   padding: '0.85rem',
-                  background: '#F8FAFC',
+                  background: '#FAFAF5',
                   borderRadius: '8px',
-                  border: '1px solid #E2E8F0',
+                  border: '1px solid #DFE8E1',
                   cursor: 'pointer',
                   fontSize: '0.85rem',
-                  color: '#0F172A',
+                  color: '#142D2B',
                 }}
               >
                 <input
@@ -702,7 +702,7 @@ export const AssessmentRunnerPage = () => {
           </div>
 
           {/* Action Row */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #E2E8F0', paddingTop: '1.25rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #DFE8E1', paddingTop: '1.25rem' }}>
             <Link to="/assessments" className="btn btn-secondary">
               Back to Catalog
             </Link>
@@ -749,8 +749,8 @@ export const AssessmentRunnerPage = () => {
               width: '68px',
               height: '68px',
               borderRadius: '50%',
-              background: '#FEE2E2',
-              color: '#DC2626',
+              background: '#FCF0F2',
+              color: '#C83E4D',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -763,8 +763,8 @@ export const AssessmentRunnerPage = () => {
           <span
             style={{
               display: 'inline-block',
-              background: '#FEE2E2',
-              color: '#991B1B',
+              background: '#FCF0F2',
+              color: '#822430',
               fontSize: '0.75rem',
               fontWeight: 800,
               padding: '4px 12px',
@@ -777,19 +777,19 @@ export const AssessmentRunnerPage = () => {
             Zero Tolerance Security Action
           </span>
 
-          <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#0F172A', marginBottom: '0.5rem' }}>
+          <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.5rem' }}>
             Assessment Terminated Immediately
           </h2>
 
-          <p style={{ color: '#64748B', fontSize: '0.925rem', margin: '0 auto 1.5rem', maxWidth: '520px', lineHeight: 1.55 }}>
+          <p style={{ color: '#68756F', fontSize: '0.925rem', margin: '0 auto 1.5rem', maxWidth: '520px', lineHeight: 1.55 }}>
             This assessment attempt was immediately terminated and submitted because a strict proctoring anti-cheating policy violation was detected by the monitoring system.
           </p>
 
           {/* Details Box */}
           <div
             style={{
-              background: '#F8FAFC',
-              border: '1px solid #E2E8F0',
+              background: '#FAFAF5',
+              border: '1px solid #DFE8E1',
               borderRadius: '10px',
               padding: '1.25rem',
               textAlign: 'left',
@@ -797,24 +797,24 @@ export const AssessmentRunnerPage = () => {
             }}
           >
             <div style={{ marginBottom: '0.75rem' }}>
-              <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 700, textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '0.75rem', color: '#68756F', fontWeight: 700, textTransform: 'uppercase' }}>
                 Termination Cause
               </div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#DC2626', marginTop: '2px' }}>
+              <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#C83E4D', marginTop: '2px' }}>
                 {terminationData?.reason || 'Strict proctoring violation detected.'}
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid #E2E8F0' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid #DFE8E1' }}>
               <div>
-                <div style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600 }}>TERMINATION TIMESTAMP</div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0F172A', marginTop: '2px' }}>
+                <div style={{ fontSize: '0.72rem', color: '#68756F', fontWeight: 600 }}>TERMINATION TIMESTAMP</div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#142D2B', marginTop: '2px' }}>
                   {new Date(terminationData?.timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600 }}>ATTEMPT RECORD</div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0F172A', marginTop: '2px' }}>
+                <div style={{ fontSize: '0.72rem', color: '#68756F', fontWeight: 600 }}>ATTEMPT RECORD</div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#142D2B', marginTop: '2px' }}>
                   {attemptId || 'Recorded & Locked'}
                 </div>
               </div>
@@ -824,11 +824,11 @@ export const AssessmentRunnerPage = () => {
           {/* Administrative Notice */}
           <div
             style={{
-              background: '#EFF6FF',
-              border: '1px solid #BFDBFE',
+              background: '#F0F7F4',
+              border: '1px solid #DFE8E1',
               borderRadius: '8px',
               padding: '0.9rem',
-              color: '#1E40AF',
+              color: '#142D2B',
               fontSize: '0.825rem',
               lineHeight: 1.5,
               textAlign: 'left',
@@ -859,7 +859,7 @@ export const AssessmentRunnerPage = () => {
           className="card"
           style={{
             background: '#FFFFFF',
-            border: passed ? '2px solid #BBF7D0' : '2px solid #FECACA',
+            border: passed ? '2px solid #C8E6D2' : '2px solid #F7D4D7',
             textAlign: 'center',
             padding: '2.75rem 2rem',
           }}
@@ -869,8 +869,8 @@ export const AssessmentRunnerPage = () => {
               width: '64px',
               height: '64px',
               borderRadius: '50%',
-              background: passed ? '#DCFCE7' : '#FEE2E2',
-              color: passed ? '#16A34A' : '#DC2626',
+              background: passed ? '#EFF8F2' : '#FCF0F2',
+              color: passed ? '#247A48' : '#C83E4D',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -880,10 +880,10 @@ export const AssessmentRunnerPage = () => {
             {passed ? <Award size={36} /> : <AlertTriangle size={36} />}
           </div>
 
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0F172A', marginBottom: '0.35rem' }}>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.35rem' }}>
             {passed ? 'Assessment Completed & Passed!' : 'Assessment Completed'}
           </h2>
-          <p style={{ color: '#64748B', fontSize: '0.925rem', margin: '0 auto 1.5rem', maxWidth: '450px' }}>
+          <p style={{ color: '#68756F', fontSize: '0.925rem', margin: '0 auto 1.5rem', maxWidth: '450px' }}>
             {passed
               ? 'Your competencies have been verified and upgraded to Assessed status in your Digital Skill Passport.'
               : 'Thank you for completing the technical examination. Review your results below.'}
@@ -897,32 +897,32 @@ export const AssessmentRunnerPage = () => {
               gap: '1rem',
               marginBottom: '1.75rem',
               padding: '1.25rem',
-              background: '#F8FAFC',
+              background: '#FAFAF5',
               borderRadius: '8px',
-              border: '1px solid #E2E8F0',
+              border: '1px solid #DFE8E1',
             }}
           >
             <div>
-              <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600, textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '0.75rem', color: '#68756F', fontWeight: 600, textTransform: 'uppercase' }}>
                 Score
               </div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: passed ? '#16A34A' : '#D97706', marginTop: '2px' }}>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: passed ? '#247A48' : '#E8A23A', marginTop: '2px' }}>
                 {testResult?.scorePercentage || 0}%
               </div>
             </div>
             <div>
-              <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600, textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '0.75rem', color: '#68756F', fontWeight: 600, textTransform: 'uppercase' }}>
                 Threshold
               </div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0F172A', marginTop: '2px' }}>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#142D2B', marginTop: '2px' }}>
                 {testResult?.passingThreshold || 70}%
               </div>
             </div>
             <div>
-              <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600, textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '0.75rem', color: '#68756F', fontWeight: 600, textTransform: 'uppercase' }}>
                 Security Flags
               </div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: violationsCount > 0 ? '#DC2626' : '#16A34A', marginTop: '2px' }}>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: violationsCount > 0 ? '#C83E4D' : '#247A48', marginTop: '2px' }}>
                 {violationsCount}
               </div>
             </div>
@@ -936,8 +936,8 @@ export const AssessmentRunnerPage = () => {
               gap: '0.4rem',
               padding: '0.4rem 0.85rem',
               borderRadius: '999px',
-              background: violationsCount >= 3 ? '#FEE2E2' : '#DCFCE7',
-              color: violationsCount >= 3 ? '#991B1B' : '#166534',
+              background: violationsCount >= 3 ? '#FCF0F2' : '#EFF8F2',
+              color: violationsCount >= 3 ? '#822430' : '#247A48',
               fontSize: '0.8rem',
               fontWeight: 600,
               marginBottom: '2rem',
@@ -976,11 +976,11 @@ export const AssessmentRunnerPage = () => {
           top: '20px',
           right: '24px',
           width: '210px',
-          background: '#0F172A',
+          background: '#142D2B',
           borderRadius: '10px',
           overflow: 'hidden',
           boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
-          border: faceInFrame ? '2px solid #16A34A' : '2px solid #F59E0B',
+          border: faceInFrame ? '2px solid #247A48' : '2px solid #E8A23A',
           zIndex: 100,
           transition: 'all 0.2s ease',
         }}
@@ -1016,8 +1016,8 @@ export const AssessmentRunnerPage = () => {
                 width: '6px',
                 height: '6px',
                 borderRadius: '50%',
-                background: phase === 'in_exam' ? '#16A34A' : '#EF4444',
-                boxShadow: phase === 'in_exam' ? '0 0 6px #16A34A' : 'none',
+                background: phase === 'in_exam' ? '#247A48' : '#EF4444',
+                boxShadow: phase === 'in_exam' ? '0 0 6px #247A48' : 'none',
               }}
             />
             {phase === 'in_exam' ? 'Camera Live' : 'Camera Paused'}
@@ -1076,8 +1076,8 @@ export const AssessmentRunnerPage = () => {
                 width: '56px',
                 height: '56px',
                 borderRadius: '50%',
-                background: '#FEE2E2',
-                color: '#DC2626',
+                background: '#FCF0F2',
+                color: '#C83E4D',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -1087,10 +1087,10 @@ export const AssessmentRunnerPage = () => {
               <VideoOff size={32} />
             </div>
 
-            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0F172A', marginBottom: '0.5rem' }}>
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.5rem' }}>
               Webcam Feed Disconnected
             </h3>
-            <p style={{ color: '#64748B', fontSize: '0.875rem', lineHeight: 1.5, marginBottom: '1.5rem' }}>
+            <p style={{ color: '#68756F', fontSize: '0.875rem', lineHeight: 1.5, marginBottom: '1.5rem' }}>
               Per institutional proctoring regulations, camera monitoring must remain uninterrupted. Your examination timer has been temporarily paused.
             </p>
 
@@ -1112,11 +1112,11 @@ export const AssessmentRunnerPage = () => {
             position: 'sticky',
             top: '10px',
             zIndex: 90,
-            background: '#FEF2F2',
-            border: '1.5px solid #F87171',
+            background: '#FCF0F2',
+            border: '1.5px solid #C83E4D',
             borderRadius: '8px',
             padding: '0.75rem 1.25rem',
-            color: '#991B1B',
+            color: '#822430',
             fontSize: '0.875rem',
             fontWeight: 700,
             display: 'flex',
@@ -1143,7 +1143,7 @@ export const AssessmentRunnerPage = () => {
           flexWrap: 'wrap',
           gap: '1rem',
           background: '#FFFFFF',
-          border: '1px solid #E2E8F0',
+          border: '1px solid #DFE8E1',
         }}
       >
         <div>
@@ -1155,8 +1155,8 @@ export const AssessmentRunnerPage = () => {
                 textTransform: 'uppercase',
                 padding: '2px 8px',
                 borderRadius: '4px',
-                background: '#DCFCE7',
-                color: '#166534',
+                background: '#EFF8F2',
+                color: '#247A48',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '4px',
@@ -1164,11 +1164,11 @@ export const AssessmentRunnerPage = () => {
             >
               <ShieldCheck size={11} /> Proctored Session
             </span>
-            <span style={{ fontSize: '0.8rem', color: '#64748B' }}>
+            <span style={{ fontSize: '0.8rem', color: '#68756F' }}>
               Warnings: <strong>{violationsCount} / {warningLimit}</strong>
             </span>
           </div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: '4px 0 0 0', color: '#0F172A' }}>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: '4px 0 0 0', color: '#142D2B' }}>
             {assessment?.title}
           </h2>
         </div>
@@ -1179,9 +1179,9 @@ export const AssessmentRunnerPage = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            background: timeLeftSeconds < 180 ? '#FEE2E2' : '#EFF6FF',
-            color: timeLeftSeconds < 180 ? '#DC2626' : '#2563EB',
-            border: `1px solid ${timeLeftSeconds < 180 ? '#FECACA' : '#BFDBFE'}`,
+            background: timeLeftSeconds < 180 ? '#FCF0F2' : '#F0F7F4',
+            color: timeLeftSeconds < 180 ? '#C83E4D' : '#07866A',
+            border: `1px solid ${timeLeftSeconds < 180 ? '#F7D4D7' : '#DFE8E1'}`,
             padding: '0.5rem 1rem',
             borderRadius: '8px',
             fontWeight: 800,
@@ -1200,12 +1200,12 @@ export const AssessmentRunnerPage = () => {
           marginBottom: '1rem',
           padding: '1rem 1.25rem',
           background: '#FFFFFF',
-          border: '1px solid #E2E8F0',
+          border: '1px solid #DFE8E1',
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0F172A' }}>Question Progress</span>
-          <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748B' }}>
+          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#142D2B' }}>Question Progress</span>
+          <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#68756F' }}>
             {Object.keys(selectedAnswers).length} of {assessment?.questions?.length || 0} Answered
           </span>
         </div>
@@ -1224,9 +1224,9 @@ export const AssessmentRunnerPage = () => {
                   width: '32px',
                   height: '32px',
                   borderRadius: '6px',
-                  border: isCurrent ? '2px solid #2563EB' : isAnswered ? '1px solid #16A34A' : '1px solid #CBD5E1',
-                  backgroundColor: isCurrent ? '#EFF6FF' : isAnswered ? '#DCFCE7' : '#FFFFFF',
-                  color: isCurrent ? '#2563EB' : isAnswered ? '#166534' : '#64748B',
+                  border: isCurrent ? '2px solid #07866A' : isAnswered ? '1px solid #247A48' : '1px solid #DFE8E1',
+                  backgroundColor: isCurrent ? '#F0F7F4' : isAnswered ? '#EFF8F2' : '#FFFFFF',
+                  color: isCurrent ? '#07866A' : isAnswered ? '#247A48' : '#68756F',
                   fontWeight: isCurrent ? 800 : isAnswered ? 700 : 500,
                   fontSize: '0.75rem',
                   cursor: 'pointer',
@@ -1255,7 +1255,7 @@ export const AssessmentRunnerPage = () => {
           style={{
             padding: '2rem',
             background: '#FFFFFF',
-            border: '1px solid #E2E8F0',
+            border: '1px solid #DFE8E1',
             userSelect: 'none',
             WebkitUserSelect: 'none',
             MozUserSelect: 'none',
@@ -1263,7 +1263,7 @@ export const AssessmentRunnerPage = () => {
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#64748B' }}>
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#68756F' }}>
               Question {currentQuestionIndex + 1} of {assessment.questions.length}
             </span>
             <span
@@ -1272,16 +1272,16 @@ export const AssessmentRunnerPage = () => {
                 fontWeight: 700,
                 padding: '2px 8px',
                 borderRadius: '4px',
-                background: '#EFF6FF',
-                color: '#2563EB',
-                border: '1px solid #BFDBFE',
+                background: '#F0F7F4',
+                color: '#07866A',
+                border: '1px solid #DFE8E1',
               }}
             >
               {currentQ.skillTag}
             </span>
           </div>
 
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0F172A', marginBottom: '1.25rem', lineHeight: 1.45 }}>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#142D2B', marginBottom: '1.25rem', lineHeight: 1.45 }}>
             {currentQ.questionText}
           </h3>
 
@@ -1290,8 +1290,8 @@ export const AssessmentRunnerPage = () => {
             <pre
               style={{
                 padding: '1rem',
-                backgroundColor: '#0F172A',
-                color: '#38BDF8',
+                backgroundColor: '#142D2B',
+                color: '#07866A',
                 borderRadius: '8px',
                 fontSize: '0.85rem',
                 fontFamily: 'monospace',
@@ -1314,9 +1314,9 @@ export const AssessmentRunnerPage = () => {
                   style={{
                     padding: '1rem 1.25rem',
                     borderRadius: '8px',
-                    border: isSelected ? '2px solid #2563EB' : '1px solid #E2E8F0',
-                    backgroundColor: isSelected ? '#EFF6FF' : '#FFFFFF',
-                    color: isSelected ? '#1E40AF' : '#0F172A',
+                    border: isSelected ? '2px solid #07866A' : '1px solid #DFE8E1',
+                    backgroundColor: isSelected ? '#F0F7F4' : '#FFFFFF',
+                    color: isSelected ? '#142D2B' : '#142D2B',
                     fontWeight: isSelected ? 700 : 500,
                     fontSize: '0.925rem',
                     cursor: 'pointer',
@@ -1331,7 +1331,7 @@ export const AssessmentRunnerPage = () => {
                       width: '20px',
                       height: '20px',
                       borderRadius: '50%',
-                      border: isSelected ? '6px solid #2563EB' : '2px solid #CBD5E1',
+                      border: isSelected ? '6px solid #07866A' : '2px solid #DFE8E1',
                       backgroundColor: '#FFFFFF',
                       flexShrink: 0,
                     }}

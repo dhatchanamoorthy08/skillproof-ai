@@ -8,12 +8,12 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
   const getRoleBadge = (role) => {
     switch (role) {
       case 'recruiter':
-        return { label: 'Corporate Recruiter', bg: '#fef3c7', color: '#92400e', border: '#fde68a' };
+        return { label: 'Corporate Recruiter', bg: '#FEF8ED', color: '#B27315', border: '#F7D49E' };
       case 'placement_officer':
-        return { label: 'Placement Director', bg: '#e0e7ff', color: '#3730a3', border: '#c7d2fe' };
+        return { label: 'Placement Director', bg: '#EDF3F1', color: '#142D2B', border: '#CADAD4' };
       case 'student':
       default:
-        return { label: 'Candidate', bg: '#dbeafe', color: '#1e40af', border: '#bfdbfe' };
+        return { label: 'Candidate', bg: '#F0F7F4', color: '#07866A', border: '#B9E2D8' };
     }
   };
 
@@ -31,7 +31,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
           style={{
             background: 'transparent',
             border: 'none',
-            color: '#0F172A',
+            color: '#202824',
             cursor: 'pointer',
             padding: '6px',
             borderRadius: '6px',
@@ -44,7 +44,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
         </button>
 
         <div className="institution-pill">
-          <ShieldCheck size={16} color="#2563eb" />
+          <ShieldCheck size={16} color="#07866A" />
           <span>
             {profile?.collegeName || profile?.companyName || 'National Institute of Technology'}
           </span>
@@ -52,14 +52,14 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
             style={{
               fontSize: '0.7rem',
               fontWeight: 700,
-              backgroundColor: '#ecfdf5',
-              color: '#059669',
-              padding: '2px 6px',
+              backgroundColor: '#EFF8F2',
+              color: '#247A48',
+              padding: '2px 8px',
               borderRadius: '9999px',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '3px',
-              border: '1px solid #a7f3d0',
+              border: '1px solid #A9DCBC',
             }}
           >
             <CheckCircle2 size={10} /> Verified
@@ -78,7 +78,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
             fontWeight: 600,
             color: 'var(--text-muted)',
             padding: '0.35rem 0.75rem',
-            backgroundColor: '#f8fafc',
+            backgroundColor: '#F4F6F2',
             borderRadius: 'var(--radius-full)',
             border: '1px solid var(--border-light)',
           }}
@@ -105,7 +105,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
             transition: 'all 0.15s ease',
           }}
           title="Notifications"
-          onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#cbd5e1')}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--border-medium)')}
           onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-light)')}
         >
           <Bell size={17} />
@@ -117,7 +117,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
               width: '8px',
               height: '8px',
               borderRadius: '50%',
-              backgroundColor: '#ef4444',
+              backgroundColor: '#C83E4D',
               boxShadow: '0 0 0 2px #ffffff',
             }}
           />
@@ -141,8 +141,9 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
               width: '34px',
               height: '34px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #2563eb, #4f46e5)',
-              color: '#ffffff',
+              background: '#142D2B',
+              color: '#FAFAF5',
+              border: '1.5px solid #07866A',
               fontWeight: 700,
               fontSize: '0.85rem',
               display: 'flex',
@@ -150,7 +151,6 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
               justifyContent: 'center',
               overflow: 'hidden',
               flexShrink: 0,
-              boxShadow: '0 2px 4px rgba(37, 99, 235, 0.25)',
             }}
           >
             {(user?.avatar || profile?.avatar) ? (

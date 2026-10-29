@@ -57,7 +57,7 @@ export const StudentDashboard = () => {
       <div
         className="card"
         style={{
-          background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+          background: '#142D2B',
           color: '#ffffff',
           marginBottom: '2rem',
           padding: '2.25rem',
@@ -67,31 +67,60 @@ export const StudentDashboard = () => {
           flexWrap: 'wrap',
           gap: '1.5rem',
           boxShadow: 'var(--shadow-md)',
+          border: '1px solid rgba(223, 232, 225, 0.15)',
         }}
       >
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#38bdf8', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.5rem' }}>
-            <Sparkles size={16} /> Evidence-Backed Candidate Profile
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              color: '#E8A23A',
+              backgroundColor: 'rgba(232, 162, 58, 0.12)',
+              border: '1px solid rgba(232, 162, 58, 0.25)',
+              padding: '3px 10px',
+              borderRadius: '999px',
+              fontSize: '0.78rem',
+              fontWeight: 700,
+              marginBottom: '0.65rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
+            }}
+          >
+            <ShieldCheck size={14} /> Evidence-Backed Candidate Profile
           </div>
-          <h2 style={{ fontSize: '1.85rem', color: '#ffffff', marginBottom: '0.4rem' }}>
+          <h2 style={{ fontSize: '1.85rem', color: '#FAFAF5', marginBottom: '0.4rem', fontWeight: 800 }}>
             Welcome back, {user?.fullName || 'Student'}!
           </h2>
-          <p style={{ color: '#94a3b8', fontSize: '0.95rem', maxWidth: '600px' }}>
+          <p style={{ color: '#A3B8B2', fontSize: '0.95rem', maxWidth: '600px' }}>
             {profile?.department || 'Computer Science'} &bull; Target Role:{' '}
-            <strong style={{ color: '#e2e8f0' }}>{profile?.targetRole || 'Full Stack Developer'}</strong>
+            <strong style={{ color: '#FAFAF5' }}>{profile?.targetRole || 'Full Stack Developer'}</strong>
           </p>
         </div>
 
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-          <Link to="/student/evidence" className="btn" style={{ gap: '0.5rem', background: '#14B8A6', color: '#ffffff', border: 'none', display: 'inline-flex', alignItems: 'center' }}>
+          <Link
+            to="/student/evidence"
+            className="btn btn-accent"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700 }}
+          >
             <FileCode2 size={18} />
             <span>Submit Certificates</span>
           </Link>
-          <Link to="/student/passport" className="btn btn-primary" style={{ gap: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
+          <Link
+            to="/student/passport"
+            className="btn btn-primary"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700 }}
+          >
             <ShieldCheck size={18} />
             <span>View Skill Passport</span>
           </Link>
-          <Link to="/assessments" className="btn btn-secondary" style={{ color: '#ffffff', backgroundColor: '#334155', border: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+          <Link
+            to="/assessments"
+            className="btn btn-secondary"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}
+          >
             <Award size={18} />
             <span>Take Assessment</span>
           </Link>
@@ -105,8 +134,8 @@ export const StudentDashboard = () => {
           value={`${passport?.jobReadinessIndex || 50}%`}
           subtitle={<ReadinessTierBadge tier={passport?.readinessTier} />}
           icon={<TrendingUp size={22} />}
-          iconBg="#eff6ff"
-          iconColor="#2563eb"
+          iconBg="#F0F7F4"
+          iconColor="#07866A"
         />
 
         <MetricCard
@@ -114,8 +143,8 @@ export const StudentDashboard = () => {
           value={`${profile?.profileCompletion || 65}%`}
           subtitle="Add links and resume"
           icon={<CheckCircle2 size={22} />}
-          iconBg="#ecfdf5"
-          iconColor="#059669"
+          iconBg="#EFF8F2"
+          iconColor="#247A48"
         />
 
         <MetricCard
@@ -123,8 +152,8 @@ export const StudentDashboard = () => {
           value={demonstratedCount}
           subtitle="Backed by code/projects"
           icon={<FileCode2 size={22} />}
-          iconBg="#fef3c7"
-          iconColor="#d97706"
+          iconBg="#FEF8ED"
+          iconColor="#E8A23A"
         />
 
         <MetricCard
@@ -132,8 +161,8 @@ export const StudentDashboard = () => {
           value={verifiedCount}
           subtitle="Audited by placement"
           icon={<ShieldCheck size={22} />}
-          iconBg="#e0e7ff"
-          iconColor="#4f46e5"
+          iconBg="#EDF3F1"
+          iconColor="#142D2B"
         />
       </div>
 
@@ -159,7 +188,7 @@ export const StudentDashboard = () => {
                   style={{
                     width: `${((passport?.readinessBreakdown?.assessedScore || 0) / 35) * 100}%`,
                     height: '100%',
-                    backgroundColor: '#6366f1',
+                    backgroundColor: '#07866A',
                     borderRadius: '4px',
                   }}
                 />
@@ -176,7 +205,7 @@ export const StudentDashboard = () => {
                   style={{
                     width: `${((passport?.readinessBreakdown?.demonstratedScore || 0) / 25) * 100}%`,
                     height: '100%',
-                    backgroundColor: '#10b981',
+                    backgroundColor: '#142D2B',
                     borderRadius: '4px',
                   }}
                 />
@@ -193,7 +222,7 @@ export const StudentDashboard = () => {
                   style={{
                     width: `${((passport?.readinessBreakdown?.verifiedScore || 0) / 25) * 100}%`,
                     height: '100%',
-                    backgroundColor: '#2563eb',
+                    backgroundColor: '#247A48',
                     borderRadius: '4px',
                   }}
                 />
@@ -210,7 +239,7 @@ export const StudentDashboard = () => {
                   style={{
                     width: `${((passport?.readinessBreakdown?.profileCompletenessScore || 0) / 15) * 100}%`,
                     height: '100%',
-                    backgroundColor: '#f59e0b',
+                    backgroundColor: '#E8A23A',
                     borderRadius: '4px',
                   }}
                 />

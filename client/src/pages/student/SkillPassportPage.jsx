@@ -261,7 +261,7 @@ export const SkillPassportPage = () => {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <FileCode2 size={18} color="#2563eb" />
+                    <FileCode2 size={18} color="#07866A" />
                     <div>
                       <h4 style={{ fontSize: '1rem', fontWeight: 700, margin: 0 }}>
                         {ev.title || ev.courseName || ev.companyName}
@@ -304,8 +304,8 @@ export const SkillPassportPage = () => {
                       fontSize: '0.78rem',
                       padding: '0.4rem 0.6rem',
                       borderRadius: '4px',
-                      background: ev.verificationStatus === 'verified' ? '#DCFCE7' : '#FEE2E2',
-                      color: ev.verificationStatus === 'verified' ? '#166534' : '#991B1B',
+                      background: ev.verificationStatus === 'verified' ? '#EFF8F2' : '#FCF0F2',
+                      color: ev.verificationStatus === 'verified' ? '#247A48' : '#C83E4D',
                     }}
                   >
                     <strong>Faculty Audit:</strong> {ev.verificationNotes}
@@ -315,10 +315,10 @@ export const SkillPassportPage = () => {
                 <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
                   {ev.fileUrl && (
                     <a
-                      href={ev.fileUrl.startsWith('http') ? ev.fileUrl : `http://localhost:5000${ev.fileUrl}`}
+                      href={ev.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: '#2563EB', textDecoration: 'none', fontWeight: 600 }}
+                      style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: '#07866A', textDecoration: 'none', fontWeight: 600 }}
                     >
                       <ExternalLink size={12} />
                       <span>View Uploaded Certificate</span>

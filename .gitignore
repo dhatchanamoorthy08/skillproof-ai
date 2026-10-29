@@ -37,6 +37,7 @@ Thumbs.db
 cloudflared.exe
 mobile_qr.png
 *.apk
+scratch/
 .gradle/
 client/android/.gradle/
 client/android/app/build/

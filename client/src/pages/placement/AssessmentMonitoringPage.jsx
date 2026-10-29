@@ -111,7 +111,7 @@ export const AssessmentMonitoringPage = () => {
   return (
     <div style={{ maxWidth: '1280px', margin: '0 auto', paddingBottom: '3rem' }}>
       {/* Header */}
-      <div className="card" style={{ marginBottom: '1.5rem', background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
+      <div className="card" style={{ marginBottom: '1.5rem', background: '#FFFFFF', border: '1px solid #DFE8E1' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
@@ -124,16 +124,16 @@ export const AssessmentMonitoringPage = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#2563EB',
+                  color: '#07866A',
                 }}
               >
                 <ShieldAlert size={22} />
               </div>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: '#0F172A' }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: '#142D2B' }}>
                 Online Assessment Proctoring & Security Command
               </h2>
             </div>
-            <p style={{ color: '#64748B', fontSize: '0.925rem', margin: 0 }}>
+            <p style={{ color: '#68756F', fontSize: '0.925rem', margin: 0 }}>
               Real-time monitoring of candidate assessments. Inspect webcam connection integrity, tab switches, focus loss, and proctoring violation event histories.
             </p>
           </div>
@@ -156,28 +156,28 @@ export const AssessmentMonitoringPage = () => {
             gap: '1rem',
             marginTop: '1.5rem',
             paddingTop: '1.25rem',
-            borderTop: '1px solid #F1F5F9',
+            borderTop: '1px solid #FAFAF5',
           }}
         >
-          <div style={{ padding: '0.875rem 1rem', background: '#F8FAFC', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748B', textTransform: 'uppercase' }}>Total Attempts</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0F172A', marginTop: '0.2rem' }}>{stats.totalAttempts}</div>
+          <div style={{ padding: '0.875rem 1rem', background: '#FAFAF5', borderRadius: '8px', border: '1px solid #DFE8E1' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#68756F', textTransform: 'uppercase' }}>Total Attempts</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#142D2B', marginTop: '0.2rem' }}>{stats.totalAttempts}</div>
           </div>
-          <div style={{ padding: '0.875rem 1rem', background: '#EFF6FF', borderRadius: '8px', border: '1px solid #BFDBFE' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#1E40AF', textTransform: 'uppercase' }}>In Progress Active</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#2563EB', marginTop: '0.2rem' }}>{stats.inProgressCount}</div>
+          <div style={{ padding: '0.875rem 1rem', background: '#F0F7F4', borderRadius: '8px', border: '1px solid #DFE8E1' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#142D2B', textTransform: 'uppercase' }}>In Progress Active</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#07866A', marginTop: '0.2rem' }}>{stats.inProgressCount}</div>
           </div>
-          <div style={{ padding: '0.875rem 1rem', background: '#FEE2E2', borderRadius: '8px', border: '1px solid #FECACA' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#991B1B', textTransform: 'uppercase' }}>Flagged For Review</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#DC2626', marginTop: '0.2rem' }}>{stats.flaggedCount}</div>
+          <div style={{ padding: '0.875rem 1rem', background: '#FCF0F2', borderRadius: '8px', border: '1px solid #F7D4D7' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#822430', textTransform: 'uppercase' }}>Flagged For Review</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#C83E4D', marginTop: '0.2rem' }}>{stats.flaggedCount}</div>
           </div>
-          <div style={{ padding: '0.875rem 1rem', background: '#DCFCE7', borderRadius: '8px', border: '1px solid #BBF7D0' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#166534', textTransform: 'uppercase' }}>Completed & Passed</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#16A34A', marginTop: '0.2rem' }}>{stats.completedCount}</div>
+          <div style={{ padding: '0.875rem 1rem', background: '#EFF8F2', borderRadius: '8px', border: '1px solid #C8E6D2' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#247A48', textTransform: 'uppercase' }}>Completed & Passed</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#247A48', marginTop: '0.2rem' }}>{stats.completedCount}</div>
           </div>
-          <div style={{ padding: '0.875rem 1rem', background: '#FEF2F2', borderRadius: '8px', border: '1.5px solid #FCA5A5' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#991B1B', textTransform: 'uppercase' }}>Terminated (Violations)</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#B91C1C', marginTop: '0.2rem' }}>{stats.terminatedCount || 0}</div>
+          <div style={{ padding: '0.875rem 1rem', background: '#FCF0F2', borderRadius: '8px', border: '1.5px solid #F7D4D7' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#822430', textTransform: 'uppercase' }}>Terminated (Violations)</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#A32F3D', marginTop: '0.2rem' }}>{stats.terminatedCount || 0}</div>
           </div>
         </div>
       </div>
@@ -188,7 +188,7 @@ export const AssessmentMonitoringPage = () => {
         style={{
           marginBottom: '1.5rem',
           background: '#FFFFFF',
-          border: '1px solid #E2E8F0',
+          border: '1px solid #DFE8E1',
           padding: '1rem',
         }}
       >
@@ -198,7 +198,7 @@ export const AssessmentMonitoringPage = () => {
             <div style={{ position: 'relative', width: '100%' }}>
               <Search
                 size={16}
-                style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }}
+                style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#8B9892' }}
               />
               <input
                 type="text"
@@ -216,8 +216,8 @@ export const AssessmentMonitoringPage = () => {
 
           {/* Status Filter */}
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <Filter size={15} style={{ color: '#64748B' }} />
-            <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748B' }}>Status:</span>
+            <Filter size={15} style={{ color: '#68756F' }} />
+            <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#68756F' }}>Status:</span>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
@@ -237,14 +237,14 @@ export const AssessmentMonitoringPage = () => {
 
       {/* Attempts Table */}
       {loading ? (
-        <div className="card" style={{ textAlign: 'center', padding: '3.5rem', color: '#64748B' }}>
-          <RefreshCw size={28} className="animate-spin" style={{ margin: '0 auto 1rem', color: '#2563EB' }} />
+        <div className="card" style={{ textAlign: 'center', padding: '3.5rem', color: '#68756F' }}>
+          <RefreshCw size={28} className="animate-spin" style={{ margin: '0 auto 1rem', color: '#07866A' }} />
           <div>Loading assessment proctoring records...</div>
         </div>
       ) : attempts.length === 0 ? (
-        <div className="card" style={{ textAlign: 'center', padding: '3.5rem 1rem', color: '#64748B' }}>
-          <ShieldCheck size={44} style={{ color: '#94A3B8', margin: '0 auto 1rem' }} />
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#0F172A', marginBottom: '0.4rem' }}>
+        <div className="card" style={{ textAlign: 'center', padding: '3.5rem 1rem', color: '#68756F' }}>
+          <ShieldCheck size={44} style={{ color: '#8B9892', margin: '0 auto 1rem' }} />
+          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#142D2B', marginBottom: '0.4rem' }}>
             No assessment attempts found
           </h3>
           <p style={{ fontSize: '0.875rem', margin: 0 }}>
@@ -257,7 +257,7 @@ export const AssessmentMonitoringPage = () => {
         <div className="table-container card" style={{ padding: 0, overflow: 'hidden' }}>
           <table className="table" style={{ margin: 0 }}>
             <thead>
-              <tr style={{ background: '#F8FAFC' }}>
+              <tr style={{ background: '#FAFAF5' }}>
                 <th>Candidate</th>
                 <th>Assessment</th>
                 <th>Camera Status</th>
@@ -279,12 +279,12 @@ export const AssessmentMonitoringPage = () => {
                 return (
                   <tr key={att._id}>
                     <td>
-                      <div style={{ fontWeight: 700, color: '#0F172A' }}>{att.candidateName || 'Candidate'}</div>
-                      <div style={{ fontSize: '0.78rem', color: '#64748B' }}>{att.candidateEmail || 'student@skillproof.ai'}</div>
+                      <div style={{ fontWeight: 700, color: '#142D2B' }}>{att.candidateName || 'Candidate'}</div>
+                      <div style={{ fontSize: '0.78rem', color: '#68756F' }}>{att.candidateEmail || 'student@skillproof.ai'}</div>
                     </td>
                     <td>
-                      <div style={{ fontWeight: 600, color: '#0F172A', fontSize: '0.875rem' }}>{att.assessmentTitle}</div>
-                      <div style={{ fontSize: '0.75rem', color: '#64748B' }}>
+                      <div style={{ fontWeight: 600, color: '#142D2B', fontSize: '0.875rem' }}>{att.assessmentTitle}</div>
+                      <div style={{ fontSize: '0.75rem', color: '#68756F' }}>
                         {att.startedAt ? new Date(att.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—'}
                         {att.submittedAt ? ` • Done ${new Date(att.submittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : ''}
                       </div>
@@ -296,8 +296,8 @@ export const AssessmentMonitoringPage = () => {
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '4px',
-                            background: '#DCFCE7',
-                            color: '#166534',
+                            background: '#EFF8F2',
+                            color: '#247A48',
                             padding: '3px 8px',
                             borderRadius: '999px',
                             fontSize: '0.75rem',
@@ -312,8 +312,8 @@ export const AssessmentMonitoringPage = () => {
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '4px',
-                            background: '#FEE2E2',
-                            color: '#991B1B',
+                            background: '#FCF0F2',
+                            color: '#822430',
                             padding: '3px 8px',
                             borderRadius: '999px',
                             fontSize: '0.75rem',
@@ -328,7 +328,7 @@ export const AssessmentMonitoringPage = () => {
                       <span
                         style={{
                           fontWeight: 700,
-                          color: (att.tabSwitches || 0) > 0 ? '#DC2626' : '#16A34A',
+                          color: (att.tabSwitches || 0) > 0 ? '#C83E4D' : '#247A48',
                         }}
                       >
                         {att.tabSwitches || 0}
@@ -338,7 +338,7 @@ export const AssessmentMonitoringPage = () => {
                       <span
                         style={{
                           fontWeight: 700,
-                          color: (att.focusLossCount || 0) > 0 ? '#D97706' : '#16A34A',
+                          color: (att.focusLossCount || 0) > 0 ? '#E8A23A' : '#247A48',
                         }}
                       >
                         {att.focusLossCount || 0}
@@ -348,7 +348,7 @@ export const AssessmentMonitoringPage = () => {
                       <span
                         style={{
                           fontWeight: 700,
-                          color: (att.cameraInterruptions || 0) > 0 ? '#DC2626' : '#64748B',
+                          color: (att.cameraInterruptions || 0) > 0 ? '#C83E4D' : '#68756F',
                         }}
                       >
                         {att.cameraInterruptions || 0}
@@ -358,9 +358,9 @@ export const AssessmentMonitoringPage = () => {
                       {isTerminated && (
                         <span
                           style={{
-                            background: '#FEF2F2',
-                            color: '#B91C1C',
-                            border: '1px solid #FECACA',
+                            background: '#FCF0F2',
+                            color: '#A32F3D',
+                            border: '1px solid #F7D4D7',
                             padding: '3px 8px',
                             borderRadius: '999px',
                             fontSize: '0.75rem',
@@ -376,8 +376,8 @@ export const AssessmentMonitoringPage = () => {
                       {isInProgress && (
                         <span
                           style={{
-                            background: '#EFF6FF',
-                            color: '#1E40AF',
+                            background: '#F0F7F4',
+                            color: '#142D2B',
                             padding: '3px 8px',
                             borderRadius: '999px',
                             fontSize: '0.75rem',
@@ -390,8 +390,8 @@ export const AssessmentMonitoringPage = () => {
                       {isFlagged && (
                         <span
                           style={{
-                            background: '#FEE2E2',
-                            color: '#DC2626',
+                            background: '#FCF0F2',
+                            color: '#C83E4D',
                             padding: '3px 8px',
                             borderRadius: '999px',
                             fontSize: '0.75rem',
@@ -407,8 +407,8 @@ export const AssessmentMonitoringPage = () => {
                       {isCompleted && (
                         <span
                           style={{
-                            background: '#DCFCE7',
-                            color: '#16A34A',
+                            background: '#EFF8F2',
+                            color: '#247A48',
                             padding: '3px 8px',
                             borderRadius: '999px',
                             fontSize: '0.75rem',
@@ -421,8 +421,8 @@ export const AssessmentMonitoringPage = () => {
                       {isPaused && (
                         <span
                           style={{
-                            background: '#FEF3C7',
-                            color: '#92400E',
+                            background: '#FEF7ED',
+                            color: '#A0681B',
                             padding: '3px 8px',
                             borderRadius: '999px',
                             fontSize: '0.75rem',
@@ -463,18 +463,18 @@ export const AssessmentMonitoringPage = () => {
             <div
               style={{
                 padding: '1rem',
-                background: '#F8FAFC',
+                background: '#FAFAF5',
                 borderRadius: '8px',
-                border: '1px solid #E2E8F0',
+                border: '1px solid #DFE8E1',
                 marginBottom: '1.25rem',
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: '#0F172A' }}>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: '#142D2B' }}>
                     {selectedAttempt.candidateName}
                   </h4>
-                  <div style={{ fontSize: '0.825rem', color: '#64748B', marginTop: '2px' }}>
+                  <div style={{ fontSize: '0.825rem', color: '#68756F', marginTop: '2px' }}>
                     {selectedAttempt.candidateEmail} &bull; {selectedAttempt.assessmentTitle}
                   </div>
                 </div>
@@ -484,8 +484,8 @@ export const AssessmentMonitoringPage = () => {
                     borderRadius: '4px',
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    background: selectedAttempt.status === 'terminated' ? '#FEE2E2' : selectedAttempt.status === 'flagged' ? '#FEF3C7' : '#DCFCE7',
-                    color: selectedAttempt.status === 'terminated' ? '#B91C1C' : selectedAttempt.status === 'flagged' ? '#B45309' : '#16A34A',
+                    background: selectedAttempt.status === 'terminated' ? '#FCF0F2' : selectedAttempt.status === 'flagged' ? '#FEF7ED' : '#EFF8F2',
+                    color: selectedAttempt.status === 'terminated' ? '#A32F3D' : selectedAttempt.status === 'flagged' ? '#C48227' : '#247A48',
                   }}
                 >
                   {selectedAttempt.status?.toUpperCase()}
@@ -498,10 +498,10 @@ export const AssessmentMonitoringPage = () => {
                   style={{
                     marginTop: '0.75rem',
                     padding: '0.75rem',
-                    background: '#FEF2F2',
-                    border: '1px solid #FECACA',
+                    background: '#FCF0F2',
+                    border: '1px solid #F7D4D7',
                     borderRadius: '6px',
-                    color: '#991B1B',
+                    color: '#822430',
                     fontSize: '0.825rem',
                   }}
                 >
@@ -517,7 +517,7 @@ export const AssessmentMonitoringPage = () => {
               )}
 
               {/* Counters summary */}
-              <div style={{ display: 'flex', gap: '1.25rem', marginTop: '0.75rem', fontSize: '0.8rem', color: '#475569', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '1.25rem', marginTop: '0.75rem', fontSize: '0.8rem', color: '#4A5651', flexWrap: 'wrap' }}>
                 <div>Tab Switches: <strong>{selectedAttempt.tabSwitches || 0}</strong></div>
                 <div>Focus Losses: <strong>{selectedAttempt.focusLossCount || 0}</strong></div>
                 <div>Fullscreen Exits: <strong>{selectedAttempt.fullscreenExits || 0}</strong></div>
@@ -527,7 +527,7 @@ export const AssessmentMonitoringPage = () => {
             </div>
 
             {/* Timestamped Events Timeline */}
-            <h5 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0F172A', marginBottom: '0.6rem' }}>
+            <h5 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#142D2B', marginBottom: '0.6rem' }}>
               Timestamped Event Chronology ({selectedAttempt.violations?.length || 0} events):
             </h5>
 
@@ -542,7 +542,7 @@ export const AssessmentMonitoringPage = () => {
               }}
             >
               {(!selectedAttempt.violations || selectedAttempt.violations.length === 0) ? (
-                <div style={{ textAlign: 'center', padding: '1.5rem', color: '#64748B', fontSize: '0.85rem' }}>
+                <div style={{ textAlign: 'center', padding: '1.5rem', color: '#68756F', fontSize: '0.85rem' }}>
                   No security violation events recorded for this candidate attempt.
                 </div>
               ) : (
@@ -552,8 +552,8 @@ export const AssessmentMonitoringPage = () => {
                     style={{
                       padding: '0.65rem 0.85rem',
                       borderRadius: '6px',
-                      background: '#FFFBEB',
-                      border: '1px solid #FDE68A',
+                      background: '#FEF7ED',
+                      border: '1px solid #FCDCA6',
                       display: 'flex',
                       alignItems: 'flex-start',
                       justifyContent: 'space-between',
@@ -562,12 +562,12 @@ export const AssessmentMonitoringPage = () => {
                     }}
                   >
                     <div>
-                      <strong style={{ color: '#B45309', textTransform: 'capitalize' }}>
+                      <strong style={{ color: '#C48227', textTransform: 'capitalize' }}>
                         {ev.type?.replace(/_/g, ' ')}:
                       </strong>{' '}
-                      <span style={{ color: '#475569' }}>{ev.details}</span>
+                      <span style={{ color: '#4A5651' }}>{ev.details}</span>
                     </div>
-                    <span style={{ fontSize: '0.75rem', color: '#94A3B8', whiteSpace: 'nowrap' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#8B9892', whiteSpace: 'nowrap' }}>
                       {new Date(ev.timestamp).toLocaleTimeString()}
                     </span>
                   </div>
@@ -576,7 +576,7 @@ export const AssessmentMonitoringPage = () => {
             </div>
 
             {/* Admin Resolution Actions */}
-            <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+            <div style={{ borderTop: '1px solid #DFE8E1', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <button
                   onClick={() => handleAllowRestart(selectedAttempt._id)}
@@ -590,7 +590,7 @@ export const AssessmentMonitoringPage = () => {
                   onClick={() => handleUpdateStatus('completed')}
                   disabled={statusUpdating}
                   className="btn btn-secondary btn-sm"
-                  style={{ color: '#16A34A', borderColor: '#BBF7D0' }}
+                  style={{ color: '#247A48', borderColor: '#C8E6D2' }}
                 >
                   Clear Flags & Approve
                 </button>
@@ -598,7 +598,7 @@ export const AssessmentMonitoringPage = () => {
                   onClick={() => handleUpdateStatus('flagged')}
                   disabled={statusUpdating}
                   className="btn btn-secondary btn-sm"
-                  style={{ color: '#DC2626', borderColor: '#FECACA' }}
+                  style={{ color: '#C83E4D', borderColor: '#F7D4D7' }}
                 >
                   Flag for Disqualification
                 </button>

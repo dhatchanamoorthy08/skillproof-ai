@@ -50,7 +50,7 @@ export const RecruiterDashboard = () => {
       <div
         className="card"
         style={{
-          background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+          background: '#142D2B',
           color: '#ffffff',
           marginBottom: '2rem',
           padding: '2.25rem',
@@ -59,35 +59,52 @@ export const RecruiterDashboard = () => {
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '1.5rem',
+          border: '1px solid rgba(223, 232, 225, 0.15)',
         }}
       >
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: isVerified ? '#34d399' : '#fbbf24', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.5rem' }}>
-            {isVerified ? <ShieldCheck size={16} /> : <AlertTriangle size={16} />}
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              color: isVerified ? '#247A48' : '#E8A23A',
+              backgroundColor: isVerified ? 'rgba(36, 122, 72, 0.15)' : 'rgba(232, 162, 58, 0.15)',
+              border: `1px solid ${isVerified ? 'rgba(36, 122, 72, 0.3)' : 'rgba(232, 162, 58, 0.3)'}`,
+              padding: '3px 10px',
+              borderRadius: '999px',
+              fontSize: '0.78rem',
+              fontWeight: 700,
+              marginBottom: '0.65rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
+            }}
+          >
+            {isVerified ? <ShieldCheck size={14} /> : <AlertTriangle size={14} />}
             {isVerified ? 'Accredited Campus Recruitment Partner' : 'Verification Under Placement Audit'}
           </div>
-          <h2 style={{ fontSize: '1.85rem', color: '#ffffff', marginBottom: '0.4rem' }}>
+          <h2 style={{ fontSize: '1.85rem', color: '#FAFAF5', marginBottom: '0.4rem', fontWeight: 800 }}>
             {profile?.companyName || 'Corporate Partner'}
           </h2>
-          <p style={{ color: '#94a3b8', fontSize: '0.95rem' }}>
-            Recruiter: <strong style={{ color: '#ffffff' }}>{user?.fullName}</strong> &bull; {profile?.location || 'Bangalore, India'}
+          <p style={{ color: '#A3B8B2', fontSize: '0.95rem' }}>
+            Recruiter: <strong style={{ color: '#FAFAF5' }}>{user?.fullName}</strong> &bull; {profile?.location || 'Bangalore, India'}
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           {isVerified ? (
             <>
-              <Link to="/recruiter/post-job" className="btn btn-primary" style={{ gap: '0.5rem' }}>
+              <Link to="/recruiter/post-job" className="btn btn-primary" style={{ gap: '0.5rem', fontWeight: 700 }}>
                 <Plus size={18} />
                 <span>Post New Job</span>
               </Link>
-              <Link to="/recruiter/candidates" className="btn btn-secondary" style={{ color: '#ffffff', backgroundColor: '#334155', border: 'none' }}>
+              <Link to="/recruiter/candidates" className="btn btn-secondary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}>
                 <Search size={18} />
                 <span>Search Passports</span>
               </Link>
             </>
           ) : (
-            <Link to="/recruiter/verification" className="btn btn-primary">
+            <Link to="/recruiter/verification" className="btn btn-primary" style={{ fontWeight: 700 }}>
               Complete Company Verification &rarr;
             </Link>
           )}
@@ -100,9 +117,9 @@ export const RecruiterDashboard = () => {
           style={{
             padding: '1.25rem',
             borderRadius: 'var(--radius-md)',
-            backgroundColor: '#fffbeb',
-            border: '1px solid #fde68a',
-            color: '#92400e',
+            backgroundColor: 'var(--warning-light)',
+            border: '1px solid var(--warning-border)',
+            color: '#B27315',
             marginBottom: '2rem',
             display: 'flex',
             alignItems: 'center',
@@ -112,10 +129,10 @@ export const RecruiterDashboard = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <AlertTriangle size={22} color="#d97706" style={{ flexShrink: 0 }} />
+            <AlertTriangle size={22} color="#E8A23A" style={{ flexShrink: 0 }} />
             <div>
               <strong style={{ fontSize: '0.95rem' }}>2-Step Company Verification Pending</strong>
-              <p style={{ fontSize: '0.85rem', color: '#b45309', margin: '2px 0 0 0' }}>
+              <p style={{ fontSize: '0.85rem', color: '#92400E', margin: '2px 0 0 0' }}>
                 Per institutional guidelines, only approved recruiters can publish jobs or browse candidate passports.
               </p>
             </div>
@@ -133,8 +150,8 @@ export const RecruiterDashboard = () => {
           value={analytics?.activeJobs || 0}
           subtitle="Currently published"
           icon={<Briefcase size={22} />}
-          iconBg="#eff6ff"
-          iconColor="#2563eb"
+          iconBg="#F0F7F4"
+          iconColor="#07866A"
         />
 
         <MetricCard
@@ -142,8 +159,8 @@ export const RecruiterDashboard = () => {
           value={analytics?.totalApplications || 0}
           subtitle="Received to date"
           icon={<Users size={22} />}
-          iconBg="#fef3c7"
-          iconColor="#d97706"
+          iconBg="#FEF8ED"
+          iconColor="#E8A23A"
         />
 
         <MetricCard
@@ -151,8 +168,8 @@ export const RecruiterDashboard = () => {
           value={analytics?.shortlistedCount || 0}
           subtitle="Passed evidence screening"
           icon={<CheckCircle2 size={22} />}
-          iconBg="#ecfdf5"
-          iconColor="#059669"
+          iconBg="#EFF8F2"
+          iconColor="#247A48"
         />
 
         <MetricCard
@@ -160,8 +177,8 @@ export const RecruiterDashboard = () => {
           value={`${analytics?.conversionRate || 0}%`}
           subtitle="Application to Offer"
           icon={<TrendingUp size={22} />}
-          iconBg="#e0e7ff"
-          iconColor="#4f46e5"
+          iconBg="#EDF3F1"
+          iconColor="#142D2B"
         />
       </div>
 

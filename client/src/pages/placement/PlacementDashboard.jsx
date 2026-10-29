@@ -48,7 +48,7 @@ export const PlacementDashboard = () => {
       <div
         className="card"
         style={{
-          background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+          background: '#142D2B',
           color: '#ffffff',
           marginBottom: '2rem',
           padding: '2.25rem',
@@ -57,17 +57,34 @@ export const PlacementDashboard = () => {
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '1.5rem',
+          border: '1px solid rgba(223, 232, 225, 0.15)',
         }}
       >
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#38bdf8', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.5rem' }}>
-            <GraduationCap size={16} /> University Placement & Career Command Center
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              color: '#E8A23A',
+              backgroundColor: 'rgba(232, 162, 58, 0.12)',
+              border: '1px solid rgba(232, 162, 58, 0.25)',
+              padding: '3px 10px',
+              borderRadius: '999px',
+              fontSize: '0.78rem',
+              fontWeight: 700,
+              marginBottom: '0.65rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
+            }}
+          >
+            <GraduationCap size={15} /> University Placement & Career Command Center
           </div>
-          <h2 style={{ fontSize: '1.85rem', color: '#ffffff', marginBottom: '0.4rem' }}>
+          <h2 style={{ fontSize: '1.85rem', color: '#FAFAF5', marginBottom: '0.4rem', fontWeight: 800 }}>
             {profile?.collegeName || 'National Institute of Technology'}
           </h2>
-          <p style={{ color: '#94a3b8', fontSize: '0.95rem' }}>
-            Director: <strong style={{ color: '#ffffff' }}>{user?.fullName}</strong> &bull; Central Placement Operations
+          <p style={{ color: '#A3B8B2', fontSize: '0.95rem' }}>
+            Director: <strong style={{ color: '#FAFAF5' }}>{user?.fullName}</strong> &bull; Central Placement Operations
           </p>
         </div>
 
@@ -75,7 +92,7 @@ export const PlacementDashboard = () => {
           <button
             onClick={() => handleExport('csv')}
             className="btn btn-secondary"
-            style={{ color: '#ffffff', backgroundColor: '#334155', border: 'none', gap: '0.4rem' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }}
           >
             <FileSpreadsheet size={16} />
             <span>Export CSV</span>
@@ -83,7 +100,7 @@ export const PlacementDashboard = () => {
           <button
             onClick={() => handleExport('pdf')}
             className="btn btn-primary"
-            style={{ gap: '0.4rem' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700 }}
           >
             <FileText size={16} />
             <span>Generate PDF Report</span>
@@ -98,8 +115,8 @@ export const PlacementDashboard = () => {
           value={`${stats?.placementPercentage || 0}%`}
           subtitle={`${stats?.placedCount || 0} of ${stats?.totalStudents || 0} placed`}
           icon={<TrendingUp size={22} />}
-          iconBg="#ecfdf5"
-          iconColor="#059669"
+          iconBg="#EFF8F2"
+          iconColor="#247A48"
         />
 
         <MetricCard
@@ -107,8 +124,8 @@ export const PlacementDashboard = () => {
           value={stats?.placementReadyCount || 0}
           subtitle="Meets corporate benchmarks"
           icon={<ShieldCheck size={22} />}
-          iconBg="#eff6ff"
-          iconColor="#2563eb"
+          iconBg="#F0F7F4"
+          iconColor="#07866A"
         />
 
         <MetricCard
@@ -116,8 +133,8 @@ export const PlacementDashboard = () => {
           value={stats?.supportNeededCount || 0}
           subtitle="Flagged in early alerts"
           icon={<AlertTriangle size={22} />}
-          iconBg="#fee2e2"
-          iconColor="#dc2626"
+          iconBg="#FCF0F2"
+          iconColor="#C83E4D"
         />
 
         <MetricCard
@@ -125,8 +142,8 @@ export const PlacementDashboard = () => {
           value={stats?.approvedRecruiters || 0}
           subtitle={`${stats?.pendingVerifications || 0} pending reviews`}
           icon={<Building2 size={22} />}
-          iconBg="#fef3c7"
-          iconColor="#d97706"
+          iconBg="#FEF8ED"
+          iconColor="#E8A23A"
         />
       </div>
 

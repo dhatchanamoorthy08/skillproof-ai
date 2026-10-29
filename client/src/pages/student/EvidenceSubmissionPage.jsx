@@ -331,7 +331,7 @@ export const EvidenceSubmissionPage = () => {
         }}
       >
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: 700, color: '#14B8A6', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.25rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: 700, color: '#07866A', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.25rem' }}>
             <ShieldCheck size={16} /> Skill Proof Verification Module
           </div>
           <h1 style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--text-main)', margin: '0 0 0.4rem', letterSpacing: '-0.02em' }}>
@@ -349,7 +349,7 @@ export const EvidenceSubmissionPage = () => {
           }}
           className="btn btn-primary"
           style={{
-            backgroundColor: '#14213D',
+            backgroundColor: '#142D2B',
             color: '#FFFFFF',
             padding: '0.75rem 1.4rem',
             fontSize: '0.95rem',
@@ -372,9 +372,9 @@ export const EvidenceSubmissionPage = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            backgroundColor: alertMsg.type === 'success' ? '#DCFCE7' : '#FEE2E2',
-            border: `1px solid ${alertMsg.type === 'success' ? '#86EFAC' : '#FCA5A5'}`,
-            color: alertMsg.type === 'success' ? '#15803D' : '#DC2626',
+            backgroundColor: alertMsg.type === 'success' ? '#EFF8F2' : '#FCF0F2',
+            border: `1px solid ${alertMsg.type === 'success' ? '#C8E6D2' : '#F7D4D7'}`,
+            color: alertMsg.type === 'success' ? '#247A48' : '#C83E4D',
             fontSize: '0.9rem',
             fontWeight: 600,
           }}
@@ -406,7 +406,7 @@ export const EvidenceSubmissionPage = () => {
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
               Total Submitted
             </span>
-            <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-md)', backgroundColor: '#EFF6FF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2563EB' }}>
+            <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-md)', backgroundColor: '#F0F7F4', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#07866A' }}>
               <FileCheck size={20} />
             </div>
           </div>
@@ -423,11 +423,11 @@ export const EvidenceSubmissionPage = () => {
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
               Pending Verification
             </span>
-            <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-md)', backgroundColor: '#FEF3C7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#D97706' }}>
+            <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-md)', backgroundColor: '#FEF7ED', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#E8A23A' }}>
               <Clock size={20} />
             </div>
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#D97706', marginTop: '0.5rem' }}>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#E8A23A', marginTop: '0.5rem' }}>
             {pendingCount}
           </div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
@@ -440,11 +440,11 @@ export const EvidenceSubmissionPage = () => {
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
               Verified &amp; Approved
             </span>
-            <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-md)', backgroundColor: '#DCFCE7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16A34A' }}>
+            <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-md)', backgroundColor: '#EFF8F2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#247A48' }}>
               <CheckCircle2 size={20} />
             </div>
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#16A34A', marginTop: '0.5rem' }}>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#247A48', marginTop: '0.5rem' }}>
             {verifiedCount}
           </div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
@@ -457,11 +457,11 @@ export const EvidenceSubmissionPage = () => {
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
               Needs Attention
             </span>
-            <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-md)', backgroundColor: '#FEE2E2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DC2626' }}>
+            <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-md)', backgroundColor: '#FCF0F2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C83E4D' }}>
               <AlertTriangle size={20} />
             </div>
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#DC2626', marginTop: '0.5rem' }}>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#C83E4D', marginTop: '0.5rem' }}>
             {rejectedCount}
           </div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
@@ -493,8 +493,8 @@ export const EvidenceSubmissionPage = () => {
               borderRadius: 'var(--radius-md)',
               fontSize: '0.85rem',
               fontWeight: 600,
-              border: activeTab === 'all' ? '1px solid #14213D' : '1px solid var(--border-light)',
-              backgroundColor: activeTab === 'all' ? '#14213D' : '#ffffff',
+              border: activeTab === 'all' ? '1px solid #142D2B' : '1px solid var(--border-light)',
+              backgroundColor: activeTab === 'all' ? '#142D2B' : '#ffffff',
               color: activeTab === 'all' ? '#ffffff' : 'var(--text-secondary)',
               cursor: 'pointer',
             }}
@@ -509,8 +509,8 @@ export const EvidenceSubmissionPage = () => {
               borderRadius: 'var(--radius-md)',
               fontSize: '0.85rem',
               fontWeight: 600,
-              border: activeTab === 'course' ? '1px solid #2563EB' : '1px solid var(--border-light)',
-              backgroundColor: activeTab === 'course' ? '#2563EB' : '#ffffff',
+              border: activeTab === 'course' ? '1px solid #07866A' : '1px solid var(--border-light)',
+              backgroundColor: activeTab === 'course' ? '#07866A' : '#ffffff',
               color: activeTab === 'course' ? '#ffffff' : 'var(--text-secondary)',
               cursor: 'pointer',
               display: 'inline-flex',
@@ -528,8 +528,8 @@ export const EvidenceSubmissionPage = () => {
               borderRadius: 'var(--radius-md)',
               fontSize: '0.85rem',
               fontWeight: 600,
-              border: activeTab === 'internship' ? '1px solid #14B8A6' : '1px solid var(--border-light)',
-              backgroundColor: activeTab === 'internship' ? '#14B8A6' : '#ffffff',
+              border: activeTab === 'internship' ? '1px solid #07866A' : '1px solid var(--border-light)',
+              backgroundColor: activeTab === 'internship' ? '#07866A' : '#ffffff',
               color: activeTab === 'internship' ? '#ffffff' : 'var(--text-secondary)',
               cursor: 'pointer',
               display: 'inline-flex',
@@ -547,8 +547,8 @@ export const EvidenceSubmissionPage = () => {
               borderRadius: 'var(--radius-md)',
               fontSize: '0.85rem',
               fontWeight: 600,
-              border: activeTab === 'additional' ? '1px solid #6366F1' : '1px solid var(--border-light)',
-              backgroundColor: activeTab === 'additional' ? '#6366F1' : '#ffffff',
+              border: activeTab === 'additional' ? '1px solid #142D2B' : '1px solid var(--border-light)',
+              backgroundColor: activeTab === 'additional' ? '#142D2B' : '#ffffff',
               color: activeTab === 'additional' ? '#ffffff' : 'var(--text-secondary)',
               cursor: 'pointer',
               display: 'inline-flex',
@@ -596,7 +596,7 @@ export const EvidenceSubmissionPage = () => {
         </div>
       ) : filteredEvidence.length === 0 ? (
         <div className="card" style={{ padding: '3.5rem 2rem', textAlign: 'center', borderRadius: 'var(--radius-lg)' }}>
-          <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: '#F8FAFC', border: '1px solid var(--border-light)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+          <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: '#FAFAF5', border: '1px solid var(--border-light)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', marginBottom: '1rem' }}>
             <FileText size={28} />
           </div>
           <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: '0 0 0.5rem', color: 'var(--text-main)' }}>
@@ -613,7 +613,7 @@ export const EvidenceSubmissionPage = () => {
               setShowUploadModal(true);
             }}
             className="btn btn-primary"
-            style={{ backgroundColor: '#14213D' }}
+            style={{ backgroundColor: '#142D2B' }}
           >
             <Plus size={16} /> Submit Your First Certificate
           </button>
@@ -632,7 +632,7 @@ export const EvidenceSubmissionPage = () => {
                 style={{
                   padding: '1.5rem',
                   borderRadius: 'var(--radius-lg)',
-                  borderLeft: `4px solid ${isVerified ? '#16A34A' : isRejected ? '#DC2626' : '#D97706'}`,
+                  borderLeft: `4px solid ${isVerified ? '#247A48' : isRejected ? '#C83E4D' : '#E8A23A'}`,
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '1rem',
@@ -647,9 +647,9 @@ export const EvidenceSubmissionPage = () => {
                         height: '44px',
                         borderRadius: 'var(--radius-md)',
                         backgroundColor:
-                          item.type === 'course' ? '#EFF6FF' : item.type === 'internship' ? '#F0FDFA' : '#EEF2FF',
+                          item.type === 'course' ? '#F0F7F4' : item.type === 'internship' ? '#F0F7F4' : '#F0F7F4',
                         color:
-                          item.type === 'course' ? '#2563EB' : item.type === 'internship' ? '#14B8A6' : '#6366F1',
+                          item.type === 'course' ? '#07866A' : item.type === 'internship' ? '#07866A' : '#142D2B',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -670,9 +670,9 @@ export const EvidenceSubmissionPage = () => {
                             padding: '0.15rem 0.55rem',
                             borderRadius: '9999px',
                             backgroundColor:
-                              item.type === 'course' ? '#EFF6FF' : item.type === 'internship' ? '#F0FDFA' : '#EEF2FF',
+                              item.type === 'course' ? '#F0F7F4' : item.type === 'internship' ? '#F0F7F4' : '#F0F7F4',
                             color:
-                              item.type === 'course' ? '#2563EB' : item.type === 'internship' ? '#0F766E' : '#4F46E5',
+                              item.type === 'course' ? '#07866A' : item.type === 'internship' ? '#07866A' : '#142D2B',
                             textTransform: 'uppercase',
                           }}
                         >
@@ -708,9 +708,9 @@ export const EvidenceSubmissionPage = () => {
                           borderRadius: '9999px',
                           fontSize: '0.8rem',
                           fontWeight: 700,
-                          backgroundColor: '#DCFCE7',
-                          color: '#15803D',
-                          border: '1px solid #86EFAC',
+                          backgroundColor: '#EFF8F2',
+                          color: '#247A48',
+                          border: '1px solid #C8E6D2',
                         }}
                       >
                         <ShieldCheck size={14} /> Verified &amp; Added to Passport
@@ -727,9 +727,9 @@ export const EvidenceSubmissionPage = () => {
                           borderRadius: '9999px',
                           fontSize: '0.8rem',
                           fontWeight: 700,
-                          backgroundColor: '#FEF3C7',
-                          color: '#B45309',
-                          border: '1px solid #FDE68A',
+                          backgroundColor: '#FEF7ED',
+                          color: '#C48227',
+                          border: '1px solid #FCDCA6',
                         }}
                       >
                         <Clock size={14} /> Pending Placement Audit
@@ -746,9 +746,9 @@ export const EvidenceSubmissionPage = () => {
                           borderRadius: '9999px',
                           fontSize: '0.8rem',
                           fontWeight: 700,
-                          backgroundColor: '#FEE2E2',
-                          color: '#DC2626',
-                          border: '1px solid #FCA5A5',
+                          backgroundColor: '#FCF0F2',
+                          color: '#C83E4D',
+                          border: '1px solid #F7D4D7',
                         }}
                       >
                         <AlertTriangle size={14} /> Needs Attention / Rejected
@@ -766,7 +766,7 @@ export const EvidenceSubmissionPage = () => {
                     justifyContent: 'space-between',
                     gap: '0.75rem',
                     padding: '0.75rem 1rem',
-                    backgroundColor: '#F8FAFC',
+                    backgroundColor: '#FAFAF5',
                     borderRadius: 'var(--radius-md)',
                     border: '1px solid var(--border-light)',
                     fontSize: '0.825rem',
@@ -828,7 +828,7 @@ export const EvidenceSubmissionPage = () => {
                         }}
                         className="btn btn-sm"
                         style={{
-                          backgroundColor: '#14213D',
+                          backgroundColor: '#142D2B',
                           color: '#ffffff',
                           fontWeight: 600,
                           gap: '4px',
@@ -858,9 +858,9 @@ export const EvidenceSubmissionPage = () => {
                       fontSize: '0.8rem',
                       padding: '0.65rem 0.9rem',
                       borderRadius: 'var(--radius-sm)',
-                      backgroundColor: isVerified ? '#F0FDF4' : isRejected ? '#FEF2F2' : '#FFFBEB',
-                      border: `1px solid ${isVerified ? '#BBF7D0' : isRejected ? '#FECACA' : '#FDE68A'}`,
-                      color: isVerified ? '#166534' : isRejected ? '#991B1B' : '#92400E',
+                      backgroundColor: isVerified ? '#EFF8F2' : isRejected ? '#FCF0F2' : '#FEF7ED',
+                      border: `1px solid ${isVerified ? '#C8E6D2' : isRejected ? '#F7D4D7' : '#FCDCA6'}`,
+                      color: isVerified ? '#247A48' : isRejected ? '#822430' : '#A0681B',
                     }}
                   >
                     <strong>Placement Audit Note:</strong> {item.verificationNotes}
@@ -934,9 +934,9 @@ export const EvidenceSubmissionPage = () => {
                 style={{
                   padding: '0.65rem',
                   borderRadius: 'var(--radius-md)',
-                  border: uploadCategory === 'course' ? '2px solid #2563EB' : '1px solid var(--border-light)',
-                  backgroundColor: uploadCategory === 'course' ? '#EFF6FF' : '#ffffff',
-                  color: uploadCategory === 'course' ? '#2563EB' : 'var(--text-secondary)',
+                  border: uploadCategory === 'course' ? '2px solid #07866A' : '1px solid var(--border-light)',
+                  backgroundColor: uploadCategory === 'course' ? '#F0F7F4' : '#ffffff',
+                  color: uploadCategory === 'course' ? '#07866A' : 'var(--text-secondary)',
                   fontWeight: 700,
                   fontSize: '0.8rem',
                   display: 'flex',
@@ -956,9 +956,9 @@ export const EvidenceSubmissionPage = () => {
                 style={{
                   padding: '0.65rem',
                   borderRadius: 'var(--radius-md)',
-                  border: uploadCategory === 'internship' ? '2px solid #14B8A6' : '1px solid var(--border-light)',
-                  backgroundColor: uploadCategory === 'internship' ? '#F0FDFA' : '#ffffff',
-                  color: uploadCategory === 'internship' ? '#0F766E' : 'var(--text-secondary)',
+                  border: uploadCategory === 'internship' ? '2px solid #07866A' : '1px solid var(--border-light)',
+                  backgroundColor: uploadCategory === 'internship' ? '#F0F7F4' : '#ffffff',
+                  color: uploadCategory === 'internship' ? '#07866A' : 'var(--text-secondary)',
                   fontWeight: 700,
                   fontSize: '0.8rem',
                   display: 'flex',
@@ -978,9 +978,9 @@ export const EvidenceSubmissionPage = () => {
                 style={{
                   padding: '0.65rem',
                   borderRadius: 'var(--radius-md)',
-                  border: uploadCategory === 'additional' ? '2px solid #6366F1' : '1px solid var(--border-light)',
-                  backgroundColor: uploadCategory === 'additional' ? '#EEF2FF' : '#ffffff',
-                  color: uploadCategory === 'additional' ? '#4F46E5' : 'var(--text-secondary)',
+                  border: uploadCategory === 'additional' ? '2px solid #142D2B' : '1px solid var(--border-light)',
+                  backgroundColor: uploadCategory === 'additional' ? '#F0F7F4' : '#ffffff',
+                  color: uploadCategory === 'additional' ? '#142D2B' : 'var(--text-secondary)',
                   fontWeight: 700,
                   fontSize: '0.8rem',
                   display: 'flex',
@@ -1281,15 +1281,15 @@ export const EvidenceSubmissionPage = () => {
               {/* Dedicated Certificate File Upload Area */}
               <div
                 style={{
-                  border: '2px dashed #CBD5E1',
+                  border: '2px dashed #DFE8E1',
                   borderRadius: 'var(--radius-lg)',
                   padding: '1.5rem',
                   textAlign: 'center',
-                  backgroundColor: '#F8FAFC',
+                  backgroundColor: '#FAFAF5',
                   marginBottom: '1.25rem',
                 }}
               >
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#EFF6FF', color: '#2563EB', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.5rem' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#F0F7F4', color: '#07866A', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.5rem' }}>
                   <Upload size={22} />
                 </div>
                 <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)', marginBottom: '0.2rem' }}>
@@ -1331,7 +1331,7 @@ export const EvidenceSubmissionPage = () => {
                 </div>
 
                 {fileError && (
-                  <div style={{ color: '#DC2626', fontSize: '0.8rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                  <div style={{ color: '#C83E4D', fontSize: '0.8rem', marginTop: '0.5rem', fontWeight: 600 }}>
                     {fileError}
                   </div>
                 )}
@@ -1343,7 +1343,7 @@ export const EvidenceSubmissionPage = () => {
                   fontSize: '0.775rem',
                   color: 'var(--text-muted)',
                   padding: '0.65rem 0.85rem',
-                  backgroundColor: '#F1F5F9',
+                  backgroundColor: '#FAFAF5',
                   borderRadius: 'var(--radius-sm)',
                   marginBottom: '1.5rem',
                   display: 'flex',
@@ -1351,7 +1351,7 @@ export const EvidenceSubmissionPage = () => {
                   gap: '6px',
                 }}
               >
-                <ShieldCheck size={16} color="#14B8A6" style={{ flexShrink: 0 }} />
+                <ShieldCheck size={16} color="#07866A" style={{ flexShrink: 0 }} />
                 <span>
                   All submitted evidence is encrypted, audited by faculty reviewers, and credited to your verified Skill Passport upon approval.
                 </span>
@@ -1369,7 +1369,7 @@ export const EvidenceSubmissionPage = () => {
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  style={{ backgroundColor: '#14213D' }}
+                  style={{ backgroundColor: '#142D2B' }}
                   disabled={submitting}
                 >
                   {submitting ? 'Uploading & Verifying...' : 'Submit for Verification'}
@@ -1428,10 +1428,10 @@ export const EvidenceSubmissionPage = () => {
                 style={{
                   fontSize: '0.825rem',
                   padding: '0.75rem',
-                  backgroundColor: '#FEF2F2',
-                  border: '1px solid #FCA5A5',
+                  backgroundColor: '#FCF0F2',
+                  border: '1px solid #F7D4D7',
                   borderRadius: 'var(--radius-md)',
-                  color: '#991B1B',
+                  color: '#822430',
                   marginBottom: '1.25rem',
                 }}
               >
@@ -1475,7 +1475,7 @@ export const EvidenceSubmissionPage = () => {
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  style={{ backgroundColor: '#14213D' }}
+                  style={{ backgroundColor: '#142D2B' }}
                   disabled={submitting}
                 >
                   {submitting ? 'Resubmitting...' : 'Confirm Resubmission'}
@@ -1532,7 +1532,7 @@ export const EvidenceSubmissionPage = () => {
               </button>
             </div>
 
-            <div style={{ flex: 1, marginTop: '1rem', overflow: 'hidden', backgroundColor: '#F8FAFC', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ flex: 1, marginTop: '1rem', overflow: 'hidden', backgroundColor: '#FAFAF5', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {previewDoc.fileUrl?.endsWith('.pdf') ? (
                 <iframe
                   src={previewDoc.fileUrl}
@@ -1550,7 +1550,7 @@ export const EvidenceSubmissionPage = () => {
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: '1px solid var(--border-light)' }}>
               <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                Status: <strong style={{ textTransform: 'capitalize', color: previewDoc.verificationStatus === 'verified' ? '#16A34A' : '#D97706' }}>{previewDoc.verificationStatus}</strong>
+                Status: <strong style={{ textTransform: 'capitalize', color: previewDoc.verificationStatus === 'verified' ? '#247A48' : '#E8A23A' }}>{previewDoc.verificationStatus}</strong>
               </span>
               <a
                 href={previewDoc.fileUrl}
