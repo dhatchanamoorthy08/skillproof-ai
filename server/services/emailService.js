@@ -16,7 +16,7 @@ const normalize = (email) => (email || '').trim().toLowerCase();
 
 // Hash OTP with email salt for secure storage (never store plain-text OTPs)
 const hashOtp = (otp, email) => {
-  const secret = process.env.JWT_SECRET || 'skillproof_otp_secret_salt_2026';
+  const secret = process.env.JWT_SECRET || 'ephemeral_dev_salt';
   return crypto.createHash('sha256').update(`${otp.trim()}:${normalize(email)}:${secret}`).digest('hex');
 };
 
@@ -224,8 +224,10 @@ const generateAndSendOtp = async (email) => {
     }
   }
 
-  // Backup log to server terminal for instant inspection/debug
-  console.log(`[SECURE EMAIL OTP SERVICE] OTP code generated for ${normalizedEmail}: [${code}] (Valid for 60s)`);
+  // Never log raw OTP codes in production
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`[DEBUG OTP] Code generated for ${normalizedEmail}: [${code}] (Dev mode only)`);
+  }
 
   return {
     success: true,
@@ -233,7 +235,6 @@ const generateAndSendOtp = async (email) => {
     expiresInSeconds: 60,
     cooldownSeconds: 30,
     emailDispatched,
-    code,
   };
 };
 

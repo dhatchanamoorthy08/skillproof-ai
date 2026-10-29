@@ -6,6 +6,12 @@ const StudentProfile = require('../models/StudentProfile');
 const { calculateJobMatch } = require('../services/matching/hybridMatcher');
 const { fallbackJobs, fallbackSkills, fallbackStudentProfile } = require('../services/fallbackStore');
 
+// ReDoS Defense: Escape special regex characters and cap length
+const escapeRegex = (str) => {
+  if (typeof str !== 'string') return '';
+  return str.slice(0, 100).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
 // @desc    Get all active jobs with filtering
 // @route   GET /api/v1/jobs
 // @access  Public / Private
@@ -17,22 +23,24 @@ const getAllJobs = async (req, res, next) => {
     if (mongoose.connection.readyState === 1) {
       let query = { status: 'active' };
       if (domain) query.domain = domain;
-      if (location) query.location = new RegExp(location, 'i');
+      if (location) query.location = new RegExp(escapeRegex(location), 'i');
       if (workMode) query.workMode = workMode;
       if (jobType) query.jobType = jobType;
 
       if (skill) {
+        const safeSkill = escapeRegex(skill);
         query.$or = [
-          { requiredSkills: { $in: [new RegExp(skill, 'i')] } },
-          { preferredSkills: { $in: [new RegExp(skill, 'i')] } },
+          { requiredSkills: { $in: [new RegExp(safeSkill, 'i')] } },
+          { preferredSkills: { $in: [new RegExp(safeSkill, 'i')] } },
         ];
       }
 
       if (search) {
+        const safeSearch = escapeRegex(search);
         query.$or = [
-          { title: new RegExp(search, 'i') },
-          { companyName: new RegExp(search, 'i') },
-          { description: new RegExp(search, 'i') },
+          { title: new RegExp(safeSearch, 'i') },
+          { companyName: new RegExp(safeSearch, 'i') },
+          { description: new RegExp(safeSearch, 'i') },
         ];
       }
 

@@ -29,9 +29,12 @@ const { logSecurityEvent } = require('../services/auditService');
 
 // Generate JWT token helper
 const generateToken = (id, email, role) => {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET is not configured on the server.');
+  }
   return jwt.sign(
     { id, email, role },
-    process.env.JWT_SECRET || 'skillproof_super_secret_jwt_key_2026_production_grade',
+    process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXPIRES_IN || '7d',
     }
@@ -170,6 +173,28 @@ const register = async (req, res, next) => {
       });
     }
 
+    // Role Escalation Defense: Placement Officer & Admin accounts cannot be self-registered
+    if (role === 'placement_officer' || role === 'admin') {
+      return res.status(403).json({
+        success: false,
+        message: 'Placement Officer and Administrator accounts cannot be self-registered. They must be provisioned directly by campus administration.',
+      });
+    }
+
+    if (role !== 'student' && role !== 'recruiter') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid registration role. Only Student and Recruiter accounts can be created.',
+      });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 8 characters long for account security.',
+      });
+    }
+
     const normalizedEmail = email.trim().toLowerCase();
 
     // 1. Check duplicate user
@@ -297,8 +322,8 @@ const register = async (req, res, next) => {
           pincode: pincode || '',
           address: address || '',
           hiringDomains: hiringDomains || 'Full Stack & Cloud Systems',
-          verificationStatus: 'approved',
-          verificationStep: 2,
+          verificationStatus: 'pending',
+          verificationStep: 1,
         };
       } else if (role === 'placement_officer') {
         fallbackPlacementProfiles[userId] = {
@@ -420,8 +445,8 @@ const register = async (req, res, next) => {
         pincode: pincode || '',
         address: address || '',
         hiringDomains: hiringDomains || 'Full Stack & Cloud Systems',
-        verificationStatus: 'approved',
-        verificationStep: 2,
+        verificationStatus: 'pending',
+        verificationStep: 1,
       });
     } else if (role === 'placement_officer') {
       await PlacementOfficerProfile.create({
@@ -503,15 +528,11 @@ const login = async (req, res, next) => {
       }
 
       let isMatch = false;
-      if (matched.password) {
-        if (matched.password.startsWith('$2a$') || matched.password.startsWith('$2b$')) {
-          isMatch = await bcrypt.compare(password, matched.password);
-        } else {
-          isMatch = matched.password === password;
-        }
-      } else {
-        // Pre-seeded demo account fallback
-        isMatch = password === 'Password@123';
+      if (matched.password && (matched.password.startsWith('$2a$') || matched.password.startsWith('$2b$'))) {
+        isMatch = await bcrypt.compare(password, matched.password);
+      } else if (process.env.NODE_ENV !== 'production') {
+        // Development local fallback only
+        isMatch = matched.password ? matched.password === password : password === 'Password@123';
       }
 
       if (!isMatch) {

@@ -359,7 +359,8 @@ const getAllEvidenceSubmissions = async (req, res, next) => {
     if (status && status !== 'all') query.verificationStatus = status;
     if (type && type !== 'all') query.type = type;
     if (search && search.trim()) {
-      const regex = new RegExp(search.trim(), 'i');
+      const cleanSearch = (search || '').slice(0, 100).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(cleanSearch, 'i');
       query.$or = [
         { title: regex },
         { studentName: regex },

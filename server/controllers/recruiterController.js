@@ -461,30 +461,6 @@ const getMatchesForJob = async (req, res, next) => {
   }
 };
 
-const deleteCandidate = async (req, res, next) => {
-  try {
-    const candidateId = req.params.id;
-
-    if (mongoose.connection.readyState === 1) {
-      await User.findByIdAndDelete(candidateId);
-      await StudentProfile.deleteOne({ user: candidateId });
-      await SkillPassport.deleteOne({ student: candidateId });
-    } else {
-      const idx = fallbackUsers.findIndex((u) => u._id?.toString() === candidateId);
-      if (idx !== -1) {
-        fallbackUsers.splice(idx, 1);
-      }
-      delete fallbackStudentProfiles[candidateId];
-      delete fallbackPassports[candidateId];
-      saveStore();
-    }
-
-    res.json({ success: true, message: 'Candidate account removed successfully.' });
-  } catch (error) {
-    next(error);
-  }
-};
-
 module.exports = {
   getRecruiterProfile,
   submitCompanyVerification,
@@ -496,5 +472,4 @@ module.exports = {
   getRecruiterApplications,
   updateApplicationStatus,
   getRecruiterAnalytics,
-  deleteCandidate,
 };

@@ -25,23 +25,25 @@ const protect = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET || 'skillproof_super_secret_jwt_key_2026_production_grade'
-    );
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // If MongoDB is connected, query DB
     if (mongoose.connection.readyState === 1) {
       req.user = await User.findById(decoded.id).select('-password');
     } else {
-      // Offline fallback lookup
-      req.user = fallbackUsers.find((u) => u._id === decoded.id || u.email === decoded.email) || {
-        _id: decoded.id,
-        email: decoded.email || 'student@skillproof.ai',
-        fullName: 'Aarav Mehta',
-        role: decoded.role || 'student',
-        status: 'active',
-      };
+      // Offline fallback lookup strictly against verified store
+      const matched = (fallbackUsers || []).find((u) => u._id === decoded.id || u.email === decoded.email);
+      if (matched) {
+        req.user = {
+          _id: matched._id,
+          email: matched.email,
+          fullName: matched.fullName,
+          role: matched.role,
+          status: matched.status || 'active',
+        };
+      } else {
+        req.user = null;
+      }
     }
 
     if (!req.user) {
@@ -93,21 +95,21 @@ const optionalProtect = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET || 'skillproof_super_secret_jwt_key_2026_production_grade'
-    );
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     if (mongoose.connection.readyState === 1) {
       req.user = await User.findById(decoded.id).select('-password');
     } else {
-      req.user = fallbackUsers.find((u) => u._id === decoded.id || u.email === decoded.email) || {
-        _id: decoded.id,
-        email: decoded.email || 'student@skillproof.ai',
-        fullName: 'Student User',
-        role: decoded.role || 'student',
-        status: 'active',
-      };
+      const matched = (fallbackUsers || []).find((u) => u._id === decoded.id || u.email === decoded.email);
+      if (matched) {
+        req.user = {
+          _id: matched._id,
+          email: matched.email,
+          fullName: matched.fullName,
+          role: matched.role,
+          status: matched.status || 'active',
+        };
+      }
     }
   } catch (err) {
     // Ignore invalid token on optional route

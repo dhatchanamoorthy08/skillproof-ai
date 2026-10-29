@@ -48,7 +48,6 @@ router.post('/jobs', createJob);
 router.get('/jobs', getMyJobs);
 router.put('/jobs/:id', updateJob);
 router.get('/candidates', searchCandidates);
-router.delete('/candidates/:id', deleteCandidate);
 router.get('/jobs/:id/matches', getMatchesForJob);
 router.get('/applications', getRecruiterApplications);
 router.put('/applications/:id/status', updateApplicationStatus);

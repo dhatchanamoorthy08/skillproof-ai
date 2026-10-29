@@ -105,6 +105,18 @@ const loginLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+// Rate Limiter for Registration to prevent automated account creation spam
+const registerLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10, // max 10 account creations per hour per IP
+  message: {
+    success: false,
+    message: 'Too many registration attempts from this network. Please wait before creating more accounts.',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 const { isDashboardRestricted, RESTRICTION_MESSAGE } = require('../config/restriction');
 
 // Restriction status check (public endpoint for frontend dynamic synchronization)
@@ -122,7 +134,7 @@ router.get('/pincode/:pincode', getPincodeDetails);
 
 router.post('/send-otp', otpSendLimiter, sendOtp);
 router.post('/verify-otp', otpVerifyLimiter, confirmOtp);
-router.post('/register', register);
+router.post('/register', registerLimiter, register);
 router.post('/login', loginLimiter, login);
 router.get('/me', protect, getMe);
 

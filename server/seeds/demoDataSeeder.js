@@ -14,6 +14,11 @@ const HiringDrive = require('../models/HiringDrive');
 const CompanyVerification = require('../models/CompanyVerification');
 
 const seedData = async () => {
+  if (process.env.NODE_ENV === 'production' && !process.env.ALLOW_PROD_SEED) {
+    console.error('[SECURITY BLOCKED] Database seeding is strictly forbidden in production to prevent data loss.');
+    process.exit(1);
+  }
+
   const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/skillproof_ai';
 
   try {

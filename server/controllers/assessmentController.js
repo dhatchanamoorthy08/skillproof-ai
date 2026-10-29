@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const crypto = require('crypto');
 const Assessment = require('../models/Assessment');
 const AssessmentAttempt = require('../models/AssessmentAttempt');
 const SkillPassport = require('../models/SkillPassport');
@@ -108,7 +109,31 @@ const getAssessmentById = async (req, res, next) => {
   try {
     if (mongoose.connection.readyState !== 1) {
       const ass = fallbackAssessments.find((a) => a._id === req.params.id) || fallbackAssessments[0];
-      return res.json({ success: true, assessment: ass });
+      if (!ass) {
+        return res.status(404).json({ success: false, message: 'Assessment not found.' });
+      }
+      // Security Enforcement: ALWAYS strip isCorrect and explanations from client responses
+      const sanitized = {
+        _id: ass._id,
+        title: ass.title,
+        domain: ass.domain,
+        description: ass.description,
+        durationMinutes: ass.durationMinutes,
+        passingScorePercentage: ass.passingScorePercentage,
+        primarySkills: ass.primarySkills,
+        difficulty: ass.difficulty,
+        questionCount: ass.questions?.length || 0,
+        questions: (ass.questions || []).map((q) => ({
+          _id: q._id,
+          questionText: q.questionText,
+          type: q.type,
+          codeSnippet: q.codeSnippet,
+          points: q.points || 10,
+          skillTag: q.skillTag,
+          options: (q.options || []).map((opt) => ({ text: opt.text })),
+        })),
+      };
+      return res.json({ success: true, assessment: sanitized });
     }
 
     const assessment = await Assessment.findById(req.params.id)
@@ -138,7 +163,7 @@ const startAssessment = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Assessment not found.' });
     }
 
-    const attemptId = `66800000000000000000${Date.now().toString().slice(-4)}`;
+    const attemptId = `att_${crypto.randomUUID()}`;
     const expiresAt = new Date(Date.now() + ass.durationMinutes * 60 * 1000 + 30 * 1000);
 
     // Randomize all 30 questions from this domain with shuffled option choices
@@ -339,6 +364,38 @@ const submitAssessment = async (req, res, next) => {
         : fallbackAssessments.find((a) => a._id === req.params.id) || fallbackAssessments[0];
 
     const activeAttempt = memoryAttempts[attemptId];
+
+    // Ownership Enforcement: Validate caller owns the attempt
+    if (activeAttempt && activeAttempt.studentId && activeAttempt.studentId !== studentId) {
+      return res.status(403).json({
+        success: false,
+        message: 'Unauthorized: This attempt belongs to another candidate.',
+      });
+    }
+
+    // Single-Submission Enforcement: Prevent duplicate / multiple answer submissions
+    if (activeAttempt && activeAttempt.status === 'completed') {
+      return res.status(400).json({
+        success: false,
+        message: 'This assessment attempt has already been submitted and scored.',
+      });
+    }
+
+    // Server-Side Time Enforcement: Reject answers submitted past attempt expiration
+    if (activeAttempt && activeAttempt.expiresAt && Date.now() > new Date(activeAttempt.expiresAt).getTime() + 60000) {
+      activeAttempt.status = 'terminated';
+      activeAttempt.terminationReason = 'Assessment time limit exceeded.';
+      return res.status(403).json({
+        success: false,
+        message: 'Assessment time limit exceeded. Submissions are no longer accepted for this attempt.',
+      });
+    }
+
+    // Mark attempt as completed
+    if (activeAttempt) {
+      activeAttempt.status = 'completed';
+    }
+
     // Grade against the exact question set and option orders served to this attempt!
     const questionsToGrade = activeAttempt?.questions || ass.questions;
 

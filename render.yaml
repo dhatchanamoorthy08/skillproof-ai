@@ -17,3 +17,5 @@ services:
         value: 7d
       - key: RESTRICT_DASHBOARDS
         value: false
+      - key: MONGODB_URI
+        sync: false

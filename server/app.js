@@ -16,6 +16,9 @@ const sanitizeInput = require('./middleware/sanitize');
 
 const app = express();
 
+// Trust reverse proxy (Render, Cloudflare) for accurate client IP in express-rate-limit
+app.set('trust proxy', 1);
+
 // Security and utility middleware
 app.use(
   helmet({
@@ -30,16 +33,27 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: '15mb' }));
-app.use(express.urlencoded({ extended: true, limit: '15mb' }));
+// Enforce standard 100kb payload limit for JSON/urlencoded bodies (blocks payload DoS)
+app.use(express.json({ limit: '100kb' }));
+app.use(express.urlencoded({ extended: true, limit: '100kb' }));
 app.use(sanitizeInput);
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// Serve uploaded documents statically
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Serve uploaded documents with strict security headers (prevent XSS / sniffing)
+app.use(
+  '/uploads',
+  express.static(path.join(__dirname, 'uploads'), {
+    dotfiles: 'ignore',
+    setHeaders: (res) => {
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      res.setHeader('Content-Security-Policy', "default-src 'none'");
+      res.setHeader('X-Frame-Options', 'DENY');
+    },
+  })
+);
 
 // Health check endpoint
 app.get('/api/v1/health', (req, res) => {

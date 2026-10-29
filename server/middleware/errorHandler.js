@@ -31,9 +31,14 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  res.status(error.statusCode || 500).json({
+  const isProd = process.env.NODE_ENV === 'production';
+  const statusCode = error.statusCode || 500;
+
+  res.status(statusCode).json({
     success: false,
-    message: error.message || 'Internal Server Error. Please try again later.',
+    message: statusCode >= 500 && isProd
+      ? 'An unexpected internal server error occurred. Please try again later.'
+      : (error.message || 'Internal Server Error. Please try again later.'),
   });
 };
 

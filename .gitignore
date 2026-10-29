@@ -24,6 +24,7 @@ build/
 # Uploads & Temporary files
 server/uploads/*
 !server/uploads/.gitkeep
+server/data/*.json
 temp/
 coverage/
 
