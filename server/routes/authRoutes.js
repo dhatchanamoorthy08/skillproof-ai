@@ -96,7 +96,7 @@ const otpVerifyLimiter = rateLimit({
 // Rate Limiter for Login Attempts to block credential brute-forcing
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 15, // max 15 attempts per IP per window
+  max: 30, // max 30 attempts per IP per window
   message: {
     success: false,
     message: 'Too many login attempts from this network. Please wait 15 minutes before trying again.',

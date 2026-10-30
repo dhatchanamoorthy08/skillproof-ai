@@ -4,11 +4,15 @@ const path = require('path');
 const dataDir = path.join(__dirname, '../data');
 const dataFilePath = path.join(dataDir, 'fallbackStore.json');
 
+// Default Bcrypt hash for standard demo accounts (Password@123)
+const BCRYPT_DEFAULT_HASH = '$2a$10$szOfS8nvaTI1LtccbNIk0.BAxbEDGJ6pKRM5iO1nmk7ACvoJ9crPi';
+
 // Default initial seeds
 const defaultUsers = [
   {
     _id: '660000000000000000000001',
     email: 'student@skillproof.ai',
+    password: BCRYPT_DEFAULT_HASH,
     fullName: 'Aarav Mehta',
     role: 'student',
     status: 'active',
@@ -16,6 +20,7 @@ const defaultUsers = [
   {
     _id: '660000000000000000000002',
     email: 'atrisk@skillproof.ai',
+    password: BCRYPT_DEFAULT_HASH,
     fullName: 'Rohan Verma',
     role: 'student',
     status: 'active',
@@ -23,6 +28,7 @@ const defaultUsers = [
   {
     _id: '660000000000000000000003',
     email: 'recruiter@skillproof.ai',
+    password: BCRYPT_DEFAULT_HASH,
     fullName: 'Elena Rostova',
     role: 'recruiter',
     status: 'active',
@@ -30,6 +36,7 @@ const defaultUsers = [
   {
     _id: '660000000000000000000004',
     email: 'pending@skillproof.ai',
+    password: BCRYPT_DEFAULT_HASH,
     fullName: 'Marcus Vance',
     role: 'recruiter',
     status: 'active',
@@ -37,6 +44,15 @@ const defaultUsers = [
   {
     _id: '660000000000000000000005',
     email: 'officer@skillproof.ai',
+    password: BCRYPT_DEFAULT_HASH,
+    fullName: 'Dr. Aris Thorne',
+    role: 'placement_officer',
+    status: 'active',
+  },
+  {
+    _id: '660000000000000000000006',
+    email: 'placement@skillproof.ai',
+    password: BCRYPT_DEFAULT_HASH,
     fullName: 'Dr. Aris Thorne',
     role: 'placement_officer',
     status: 'active',
@@ -341,15 +357,25 @@ function loadStore() {
       const parsed = JSON.parse(content);
       if (parsed && Array.isArray(parsed.users)) {
         store = parsed;
-        // Ensure default users are present (e.g. student@skillproof.ai)
+        // Ensure default users are present (e.g. student@skillproof.ai, placement@skillproof.ai) and have bcrypt hashes
         defaultUsers.forEach((defU) => {
-          if (!store.users.some((u) => u.email.toLowerCase() === defU.email.toLowerCase())) {
+          const existing = store.users.find((u) => u.email.toLowerCase() === defU.email.toLowerCase());
+          if (!existing) {
             store.users.unshift(defU);
+          } else if (!existing.password || !existing.password.startsWith('$2a$')) {
+            existing.password = BCRYPT_DEFAULT_HASH;
           }
         });
         if (!store.studentProfiles) store.studentProfiles = {};
         if (!store.studentProfiles['660000000000000000000001']) {
           store.studentProfiles['660000000000000000000001'] = defaultStudentProfile;
+        }
+        if (!store.placementProfiles) store.placementProfiles = {};
+        if (!store.placementProfiles['660000000000000000000005']) {
+          store.placementProfiles['660000000000000000000005'] = defaultPlacementProfile;
+        }
+        if (!store.placementProfiles['660000000000000000000006']) {
+          store.placementProfiles['660000000000000000000006'] = defaultPlacementProfile;
         }
         if (!store.passports) store.passports = {};
         if (!store.passports['660000000000000000000001']) {

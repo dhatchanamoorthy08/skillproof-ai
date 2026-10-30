@@ -68,7 +68,7 @@ export const Login = () => {
         setError(serverMsg);
       } else if (!err.response) {
         setError(
-          'Cannot reach SkillProof backend API at http://localhost:5000. Please ensure the backend server is running.'
+          'Cannot reach SkillProof backend API. Please check your network connection or try again in a few moments.'
         );
       } else {
         setError(err.message || RESTRICTION_MESSAGE);

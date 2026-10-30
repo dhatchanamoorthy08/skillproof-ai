@@ -59,6 +59,24 @@ const seedData = async () => {
       phone: '+91 98450 11223',
     });
 
+    // Also support placement@skillproof.ai alias
+    const placementAliasUser = await User.create({
+      email: 'placement@skillproof.ai',
+      password: 'Password@123',
+      fullName: 'Dr. Aris Thorne',
+      role: 'placement_officer',
+      isEmailVerified: true,
+      status: 'active',
+    });
+
+    await PlacementOfficerProfile.create({
+      user: placementAliasUser._id,
+      collegeName: 'National Institute of Technology',
+      designation: 'Director of University Placements & Career Affairs',
+      department: 'Central Placement Office',
+      phone: '+91 98450 11223',
+    });
+
     // 2. Create Approved Recruiter
     const recruiterUser = await User.create({
       email: 'recruiter@skillproof.ai',
