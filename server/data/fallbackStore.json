@@ -5654,6 +5654,43 @@
       "startedAt": "2026-10-29T15:24:14.503Z",
       "submittedAt": "2026-10-29T15:24:14.503Z",
       "adminResetBy": "Placement Director"
+    },
+    {
+      "_id": "att_24a0d503-edf7-4bf5-8c2d-e340a1f13ff4",
+      "student": "660000000000000000006449",
+      "candidateName": "Dhatchanamoorthy p",
+      "candidateEmail": "palanidhatchana@gmail.com",
+      "assessment": "665000000000000000000001",
+      "assessmentTitle": "Full Stack Web Engineering Assessment",
+      "assessmentDomain": "Full Stack Development",
+      "scorePercentage": 0,
+      "earnedPoints": 0,
+      "totalPoints": 300,
+      "passed": false,
+      "status": "terminated",
+      "terminationReason": "Assessment terminated due to a proctoring violation.",
+      "terminatedAt": "2026-10-30T13:02:10.435Z",
+      "isRestartAllowed": true,
+      "fullscreenExits": 0,
+      "cameraStatus": "connected",
+      "cameraInterruptions": 0,
+      "tabSwitches": 0,
+      "focusLossCount": 0,
+      "violationCount": 2,
+      "violations": [
+        {
+          "type": "face_missing",
+          "details": "Candidate left camera view.",
+          "timestamp": "2026-10-30T13:02:10.434Z"
+        },
+        {
+          "type": "phone_usage",
+          "details": "Assessment terminated due to a proctoring violation.",
+          "timestamp": "2026-10-30T13:02:10.435Z"
+        }
+      ],
+      "startedAt": "2026-10-30T13:02:10.430Z",
+      "submittedAt": "2026-10-30T13:02:10.435Z"
     }
   ]
 }

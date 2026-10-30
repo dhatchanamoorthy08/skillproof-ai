@@ -159,15 +159,16 @@ export const Register = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   // Extended Student Profile Fields
   const [dob, setDob] = useState('');
-  const [yearOfPassing, setYearOfPassing] = useState('2026');
-  const [collegeName, setCollegeName] = useState('National Institute of Technology');
+  const [yearOfPassing, setYearOfPassing] = useState('');
+  const [collegeName, setCollegeName] = useState('');
   const [rollNumber, setRollNumber] = useState('');
-  const [degree, setDegree] = useState('B.Tech');
-  const [department, setDepartment] = useState('Computer Science & Engineering');
-  const [cgpa, setCgpa] = useState('8.5');
+  const [degree, setDegree] = useState('');
+  const [department, setDepartment] = useState('');
+  const [cgpa, setCgpa] = useState('');
   const [country, setCountry] = useState('India');
   const [state, setState] = useState('');
   const [district, setDistrict] = useState('');
@@ -177,19 +178,19 @@ export const Register = () => {
   const [userPhoto, setUserPhoto] = useState('');
 
   // Target Career Role
-  const [targetRole, setTargetRole] = useState('Full Stack Developer');
+  const [targetRole, setTargetRole] = useState('');
   const [customRole, setCustomRole] = useState('');
   const [isCustomRole, setIsCustomRole] = useState(false);
 
   // Recruiter Profile Fields
   const [companyName, setCompanyName] = useState('');
-  const [recruiterDesignation, setRecruiterDesignation] = useState('Senior HR Manager');
+  const [recruiterDesignation, setRecruiterDesignation] = useState('');
   const [recruiterPhone, setRecruiterPhone] = useState('');
   const [companyWebsite, setCompanyWebsite] = useState('');
-  const [companyIndustry, setCompanyIndustry] = useState('Information Technology & Software Services');
-  const [companySize, setCompanySize] = useState('51-200 Employees (Growth Scaleup)');
+  const [companyIndustry, setCompanyIndustry] = useState('');
+  const [companySize, setCompanySize] = useState('');
   const [companyRegistrationNumber, setCompanyRegistrationNumber] = useState('');
-  const [recruiterHiringDomains, setRecruiterHiringDomains] = useState('Full Stack, AI/ML, Cloud & DevOps');
+  const [recruiterHiringDomains, setRecruiterHiringDomains] = useState('');
   const [recruiterCountry, setRecruiterCountry] = useState('India');
   const [recruiterState, setRecruiterState] = useState('');
   const [recruiterDistrict, setRecruiterDistrict] = useState('');
@@ -198,13 +199,13 @@ export const Register = () => {
   const [recruiterAddress, setRecruiterAddress] = useState('');
 
   // Placement Officer Profile Fields
-  const [placementCollegeName, setPlacementCollegeName] = useState('National Institute of Technology');
-  const [placementDesignation, setPlacementDesignation] = useState('Head of Training & Placement');
-  const [placementDepartment, setPlacementDepartment] = useState('Central Training & Placement Cell');
+  const [placementCollegeName, setPlacementCollegeName] = useState('');
+  const [placementDesignation, setPlacementDesignation] = useState('');
+  const [placementDepartment, setPlacementDepartment] = useState('');
   const [placementEmployeeId, setPlacementEmployeeId] = useState('');
   const [placementPhone, setPlacementPhone] = useState('');
   const [collegeCode, setCollegeCode] = useState('');
-  const [institutionType, setInstitutionType] = useState('Autonomous Engineering Institute');
+  const [institutionType, setInstitutionType] = useState('');
   const [collegeWebsite, setCollegeWebsite] = useState('');
   const [placementCountry, setPlacementCountry] = useState('India');
   const [placementState, setPlacementState] = useState('');
@@ -360,6 +361,11 @@ export const Register = () => {
 
     if (password.length < 6) {
       setError('Password must be at least 6 characters long.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match. Please verify your confirm password.');
       return;
     }
 
@@ -663,7 +669,7 @@ export const Register = () => {
         )}
 
         {/* Registration Form */}
-        <form onSubmit={handleRegister}>
+        <form onSubmit={handleRegister} autoComplete="off">
           {/* User Photo / Avatar Upload */}
           <div
             style={{
@@ -785,13 +791,6 @@ export const Register = () => {
               <input
                 type="text"
                 className="form-control"
-                placeholder={
-                  role === 'student'
-                    ? 'e.g. Dhatchanamoorthy P'
-                    : role === 'recruiter'
-                    ? 'e.g. Elena Rostova'
-                    : 'e.g. Dr. Aris Thorne'
-                }
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required
@@ -805,13 +804,6 @@ export const Register = () => {
               <input
                 type="email"
                 className="form-control"
-                placeholder={
-                  role === 'student'
-                    ? 'e.g. name@gmail.com'
-                    : role === 'recruiter'
-                    ? 'e.g. elena@nexiscloud.io'
-                    : 'e.g. placement@nit.edu'
-                }
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -819,17 +811,38 @@ export const Register = () => {
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="At least 6 characters"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-            />
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '1rem',
+            }}
+          >
+            <div className="form-group">
+              <label className="form-label">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={6}
+                autoComplete="new-password"
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Confirm Password</label>
+              <input
+                type="password"
+                className="form-control"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                minLength={6}
+                autoComplete="new-password"
+              />
+            </div>
           </div>
 
           {/* Student Specific Fields */}
@@ -858,7 +871,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. National Institute of Technology"
                     value={collegeName}
                     onChange={(e) => setCollegeName(e.target.value)}
                     required
@@ -870,7 +882,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. 2026CS108"
                     value={rollNumber}
                     onChange={(e) => setRollNumber(e.target.value)}
                     required
@@ -885,7 +896,9 @@ export const Register = () => {
                     className="form-control form-select"
                     value={degree}
                     onChange={(e) => setDegree(e.target.value)}
+                    required
                   >
+                    <option value="">Select Degree Program</option>
                     {DEGREES.map((d) => (
                       <option key={d} value={d}>
                         {d}
@@ -900,7 +913,9 @@ export const Register = () => {
                     className="form-control form-select"
                     value={yearOfPassing}
                     onChange={(e) => setYearOfPassing(e.target.value)}
+                    required
                   >
+                    <option value="">Select Passing Year</option>
                     {PASSING_YEARS.map((y) => (
                       <option key={y} value={y}>
                         {y}
@@ -917,7 +932,9 @@ export const Register = () => {
                     className="form-control form-select"
                     value={department}
                     onChange={(e) => handleDepartmentChange(e.target.value)}
+                    required
                   >
+                    <option value="">Select Department</option>
                     <option value="Computer Science & Engineering">Computer Science & Engineering</option>
                     <option value="Information Technology">Information Technology</option>
                     <option value="Artificial Intelligence & Data Science">AI & Data Science</option>
@@ -933,7 +950,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. 8.5 or 85%"
                     value={cgpa}
                     onChange={(e) => setCgpa(e.target.value)}
                     required
@@ -987,6 +1003,7 @@ export const Register = () => {
                   onChange={(e) => handleTargetRoleSelect(e.target.value)}
                   style={{ marginBottom: '0.5rem' }}
                 >
+                  <option value="">Select Target Job Role</option>
                   {currentDepartmentRoles.map((r) => (
                     <option key={r} value={r}>
                       {r}
@@ -999,7 +1016,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Enter custom role title (e.g. Game Engine Developer)..."
                     value={customRole}
                     onChange={(e) => {
                       setCustomRole(e.target.value);
@@ -1101,7 +1117,6 @@ export const Register = () => {
                       type="text"
                       maxLength={6}
                       className="form-control"
-                      placeholder="e.g. 600001"
                       value={pincode}
                       onChange={(e) => handlePincodeLookup(e.target.value, 'student')}
                       required
@@ -1126,7 +1141,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. Tamil Nadu"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
                     required
@@ -1138,7 +1152,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. Chennai"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     required
@@ -1151,7 +1164,6 @@ export const Register = () => {
                 <textarea
                   className="form-control"
                   rows={2}
-                  placeholder="e.g. Flat 4B, Green Valley Apartments, Anna Nagar"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   required
@@ -1187,7 +1199,9 @@ export const Register = () => {
                     className="form-control form-select"
                     value={recruiterDesignation}
                     onChange={(e) => setRecruiterDesignation(e.target.value)}
+                    required
                   >
+                    <option value="">Select Designation</option>
                     {RECRUITER_DESIGNATIONS.map((desig) => (
                       <option key={desig} value={desig}>
                         {desig}
@@ -1201,7 +1215,6 @@ export const Register = () => {
                   <input
                     type="tel"
                     className="form-control"
-                    placeholder="e.g. +91 98765 43210"
                     value={recruiterPhone}
                     onChange={(e) => setRecruiterPhone(e.target.value)}
                     required
@@ -1232,7 +1245,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. Nexis Cloud &amp; AI Labs"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     required
@@ -1244,7 +1256,6 @@ export const Register = () => {
                   <input
                     type="url"
                     className="form-control"
-                    placeholder="e.g. https://nexiscloud.io"
                     value={companyWebsite}
                     onChange={(e) => setCompanyWebsite(e.target.value)}
                     required
@@ -1259,7 +1270,9 @@ export const Register = () => {
                     className="form-control form-select"
                     value={companyIndustry}
                     onChange={(e) => setCompanyIndustry(e.target.value)}
+                    required
                   >
+                    <option value="">Select Industry</option>
                     {RECRUITER_INDUSTRIES.map((ind) => (
                       <option key={ind} value={ind}>
                         {ind}
@@ -1274,7 +1287,9 @@ export const Register = () => {
                     className="form-control form-select"
                     value={companySize}
                     onChange={(e) => setCompanySize(e.target.value)}
+                    required
                   >
+                    <option value="">Select Company Size</option>
                     {COMPANY_SIZES.map((sz) => (
                       <option key={sz} value={sz}>
                         {sz}
@@ -1290,7 +1305,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. CIN-U72200KA2021PTC148892"
                     value={companyRegistrationNumber}
                     onChange={(e) => setCompanyRegistrationNumber(e.target.value)}
                     required
@@ -1302,7 +1316,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. Full Stack, AI/ML, Cloud &amp; DevOps"
                     value={recruiterHiringDomains}
                     onChange={(e) => setRecruiterHiringDomains(e.target.value)}
                     required
@@ -1361,7 +1374,6 @@ export const Register = () => {
                       type="text"
                       maxLength={6}
                       className="form-control"
-                      placeholder="e.g. 560100"
                       value={recruiterPincode}
                       onChange={(e) => handlePincodeLookup(e.target.value, 'recruiter')}
                       required
@@ -1386,7 +1398,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. Karnataka"
                     value={recruiterState}
                     onChange={(e) => setRecruiterState(e.target.value)}
                     required
@@ -1398,7 +1409,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. Bangalore"
                     value={recruiterCity}
                     onChange={(e) => setRecruiterCity(e.target.value)}
                     required
@@ -1411,7 +1421,6 @@ export const Register = () => {
                 <textarea
                   className="form-control"
                   rows={2}
-                  placeholder="e.g. Level 5, Cyber Park, Electronic City Phase 1"
                   value={recruiterAddress}
                   onChange={(e) => setRecruiterAddress(e.target.value)}
                   required
@@ -1447,7 +1456,9 @@ export const Register = () => {
                     className="form-control form-select"
                     value={placementDesignation}
                     onChange={(e) => setPlacementDesignation(e.target.value)}
+                    required
                   >
+                    <option value="">Select Designation</option>
                     {PLACEMENT_DESIGNATIONS.map((d) => (
                       <option key={d} value={d}>
                         {d}
@@ -1461,7 +1472,6 @@ export const Register = () => {
                   <input
                     type="tel"
                     className="form-control"
-                    placeholder="e.g. +91 98765 12340"
                     value={placementPhone}
                     onChange={(e) => setPlacementPhone(e.target.value)}
                     required
@@ -1475,7 +1485,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. Central Training &amp; Placement Cell"
                     value={placementDepartment}
                     onChange={(e) => setPlacementDepartment(e.target.value)}
                     required
@@ -1487,7 +1496,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. TPO-FAC-2024"
                     value={placementEmployeeId}
                     onChange={(e) => setPlacementEmployeeId(e.target.value)}
                     required
@@ -1518,7 +1526,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. National Institute of Technology"
                     value={placementCollegeName}
                     onChange={(e) => setPlacementCollegeName(e.target.value)}
                     required
@@ -1530,7 +1537,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. NIT-C-3419 or AICTE-1-49201"
                     value={collegeCode}
                     onChange={(e) => setCollegeCode(e.target.value)}
                     required
@@ -1545,7 +1551,9 @@ export const Register = () => {
                     className="form-control form-select"
                     value={institutionType}
                     onChange={(e) => setInstitutionType(e.target.value)}
+                    required
                   >
+                    <option value="">Select Institution Category</option>
                     {INSTITUTION_TYPES.map((t) => (
                       <option key={t} value={t}>
                         {t}
@@ -1559,7 +1567,6 @@ export const Register = () => {
                   <input
                     type="url"
                     className="form-control"
-                    placeholder="e.g. https://nit.edu"
                     value={collegeWebsite}
                     onChange={(e) => setCollegeWebsite(e.target.value)}
                     required
@@ -1618,7 +1625,6 @@ export const Register = () => {
                       type="text"
                       maxLength={6}
                       className="form-control"
-                      placeholder="e.g. 620015"
                       value={placementPincode}
                       onChange={(e) => handlePincodeLookup(e.target.value, 'placement_officer')}
                       required
@@ -1643,7 +1649,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. Tamil Nadu"
                     value={placementState}
                     onChange={(e) => setPlacementState(e.target.value)}
                     required
@@ -1655,7 +1660,6 @@ export const Register = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g. Tiruchirappalli"
                     value={placementCity}
                     onChange={(e) => setPlacementCity(e.target.value)}
                     required
@@ -1668,7 +1672,6 @@ export const Register = () => {
                 <textarea
                   className="form-control"
                   rows={2}
-                  placeholder="e.g. Tanjore Main Road, National Highway 67, Near BHEL, Thuvakudi"
                   value={placementAddress}
                   onChange={(e) => setPlacementAddress(e.target.value)}
                   required

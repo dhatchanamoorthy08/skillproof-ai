@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   getAssessments,
   getAssessmentById,
+  getActiveAttempt,
   startAssessment,
   logViolation,
   submitAssessment,
@@ -39,6 +40,7 @@ router.post(
   allowAttemptRestart
 );
 
+router.get('/:id/active', authorize('student'), getActiveAttempt);
 router.post('/:id/start', authorize('student'), startAssessment);
 router.post('/:id/violations', authorize('student'), logViolation);
 router.post('/:id/submit', authorize('student'), submitAssessment);

@@ -251,6 +251,68 @@ const startAssessment = async (req, res, next) => {
   }
 };
 
+// @desc    Get active assessment attempt if one is in progress (allows timer & session to persist across browser refresh)
+// @route   GET /api/v1/assessments/:id/active
+// @access  Private (Student)
+const getActiveAttempt = async (req, res, next) => {
+  try {
+    const studentId = req.user?._id?.toString();
+    const assessmentId = req.params.id;
+
+    // Check memoryAttempts for active attempt
+    let activeAttempt = Object.values(memoryAttempts).find(
+      (att) =>
+        att.assessmentId?.toString() === assessmentId &&
+        att.studentId?.toString() === studentId &&
+        att.status === 'in_progress'
+    );
+
+    if (!activeAttempt) {
+      return res.json({ success: true, hasActiveAttempt: false });
+    }
+
+    const now = Date.now();
+    const expiresAtMs = new Date(activeAttempt.expiresAt).getTime();
+    const remainingSeconds = Math.max(0, Math.floor((expiresAtMs - now) / 1000));
+
+    if (remainingSeconds <= 0) {
+      activeAttempt.status = 'expired';
+      return res.json({
+        success: true,
+        hasActiveAttempt: false,
+        expired: true,
+        message: 'Assessment countdown concluded and session expired.',
+      });
+    }
+
+    res.json({
+      success: true,
+      hasActiveAttempt: true,
+      attemptId: activeAttempt.attemptId,
+      startedAt: activeAttempt.startedAt,
+      expiresAt: activeAttempt.expiresAt,
+      remainingSeconds,
+      maxAllowedViolations: activeAttempt.maxAllowedViolations || 5,
+      assessment: {
+        id: activeAttempt.assessmentId,
+        title: activeAttempt.assessmentTitle,
+        durationMinutes: Math.round((expiresAtMs - new Date(activeAttempt.startedAt).getTime()) / 60000),
+        questions: (activeAttempt.questions || []).map((q) => ({
+          _id: q._id,
+          questionText: q.questionText,
+          type: q.type,
+          codeSnippet: q.codeSnippet,
+          points: q.points || 10,
+          skillTag: q.skillTag,
+          options: (q.options || []).map((opt) => ({ text: opt.text })),
+        })),
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Log proctoring violation & track webcam/focus events
 // @route   POST /api/v1/assessments/:id/violations
 // @access  Private (Student)
@@ -755,6 +817,10 @@ const getAssessmentAttempts = async (req, res, next) => {
 
     // Collect active memory attempts
     Object.values(memoryAttempts).forEach((m) => {
+      const now = Date.now();
+      const expiresAtMs = m.expiresAt ? new Date(m.expiresAt).getTime() : 0;
+      const remainingSeconds = m.status === 'in_progress' && expiresAtMs ? Math.max(0, Math.floor((expiresAtMs - now) / 1000)) : 0;
+
       allAttempts.push({
         _id: m.attemptId,
         student: m.studentId,
@@ -764,7 +830,9 @@ const getAssessmentAttempts = async (req, res, next) => {
         assessmentTitle: m.assessmentTitle || 'Technical Assessment',
         assessmentDomain: m.assessmentDomain || 'Computer Science',
         startedAt: m.startedAt,
-        submittedAt: m.terminatedAt || null,
+        submittedAt: m.terminatedAt || (m.status === 'completed' ? m.submittedAt : null),
+        expiresAt: m.expiresAt,
+        remainingSeconds,
         status: m.status || 'in_progress',
         cameraStatus: m.cameraStatus || 'connected',
         cameraInterruptions: m.cameraInterruptions || 0,
@@ -796,6 +864,8 @@ const getAssessmentAttempts = async (req, res, next) => {
           assessmentDomain: att.assessmentDomain || assObj?.domain || 'Full Stack Development',
           startedAt: att.startedAt || new Date(new Date(att.submittedAt).getTime() - 25 * 60000),
           submittedAt: att.submittedAt,
+          expiresAt: null,
+          remainingSeconds: 0,
           status: att.status || (att.violationCount >= 3 ? 'flagged' : 'completed'),
           cameraStatus: att.cameraStatus || 'connected',
           cameraInterruptions: att.cameraInterruptions || 0,
@@ -883,6 +953,7 @@ const updateAttemptStatus = async (req, res, next) => {
 module.exports = {
   getAssessments,
   getAssessmentById,
+  getActiveAttempt,
   startAssessment,
   logViolation,
   submitAssessment,

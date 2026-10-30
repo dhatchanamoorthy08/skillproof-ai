@@ -60,11 +60,38 @@ export const AssessmentRunnerPage = () => {
   const streamRef = useRef(null);
   const canvasRef = useRef(null);
   const faceMissingCounterRef = useRef(0);
+  const phoneDetectedCounterRef = useRef(0);
+  const multiFaceCounterRef = useRef(0);
 
-  // 1. Initial Assessment Metadata Fetch
+  // 1. Initial Assessment Metadata Fetch & Refresh Persistence
   useEffect(() => {
     const fetchAssessmentInfo = async () => {
       try {
+        // Step A: Check if an active attempt is already in-progress on the backend
+        try {
+          const activeRes = await api.get(`/assessments/${id}/active`);
+          if (activeRes.data.success && activeRes.data.hasActiveAttempt) {
+            setAttemptId(activeRes.data.attemptId);
+            setAssessment(activeRes.data.assessment);
+            setTimeLeftSeconds(activeRes.data.remainingSeconds);
+            setWarningLimit(activeRes.data.maxAllowedViolations || 5);
+            setPhase('in_exam');
+            setCameraGranted(true);
+            setConsentChecked(true);
+
+            // Re-acquire camera stream for active examination
+            requestCameraAccess();
+
+            // Request Fullscreen
+            if (document.documentElement.requestFullscreen) {
+              document.documentElement.requestFullscreen().catch(() => {});
+            }
+            return;
+          }
+        } catch {
+          // If no active attempt or error, proceed to normal pre-check flow
+        }
+
         const res = await api.get(`/assessments/${id}`);
         if (res.data.success) {
           setAssessment(res.data.assessment);
@@ -273,69 +300,173 @@ export const AssessmentRunnerPage = () => {
   const handleCameraInterrupted = (reason) => {
     if (phase !== 'in_exam') return;
     handleImmediateTermination(
-      reason || 'Assessment Terminated: Mandatory webcam connection was disconnected or camera permission was revoked.',
+      reason || 'Assessment terminated due to a proctoring violation.',
       'camera_disconnected'
     );
   };
 
-  // 3. Periodic Camera & Face-Presence Analysis Heuristic
+  // Log Violation Event to Backend
+  const reportViolation = async (type, details) => {
+    setViolationsCount((prev) => prev + 1);
+    try {
+      await api.post(`/assessments/${id}/violations`, {
+        attemptId,
+        type,
+        details,
+        cameraStatus: cameraGranted ? 'connected' : 'disconnected',
+      });
+    } catch (err) {
+      console.warn('Failed to report violation to backend:', err);
+    }
+  };
+
+  // 3. Periodic Camera, Face-Presence & Mobile Phone Detection Engine
   useEffect(() => {
     if (phase !== 'in_exam' || !liveVideoRef.current || !canvasRef.current) return;
 
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
       const video = liveVideoRef.current;
       const canvas = canvasRef.current;
 
       // Verify stream is actively sending frames
       if (!streamRef.current || !streamRef.current.active) {
-        handleCameraInterrupted('Assessment Terminated: Mandatory webcam video track stopped.');
+        handleCameraInterrupted('Assessment terminated due to a proctoring violation.');
         return;
       }
 
       if (video.videoWidth > 0 && video.videoHeight > 0) {
-        const ctx = canvas.getContext('2d');
-        canvas.width = 64;
-        canvas.height = 48;
-        ctx.drawImage(video, 0, 0, 64, 48);
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        const W = 96;
+        const H = 72;
+        canvas.width = W;
+        canvas.height = H;
+        ctx.drawImage(video, 0, 0, W, H);
 
-        // Read pixels to evaluate luminosity & variance
+        // --- STEP 1: CHROMIUM SHAPE DETECTION API (Native Face Detector if available) ---
+        let detectedFaceCount = -1;
+        if ('FaceDetector' in window) {
+          try {
+            const faceDetector = new window.FaceDetector({ fastMode: true, maxDetectedFaces: 5 });
+            const faces = await faceDetector.detect(video);
+            detectedFaceCount = faces.length;
+          } catch {
+            detectedFaceCount = -1;
+          }
+        }
+
+        // --- STEP 2: PIXEL-LEVEL LUMINANCE & COMPUTER VISION ANALYSIS ---
         try {
-          const imgData = ctx.getImageData(0, 0, 64, 48).data;
+          const imgData = ctx.getImageData(0, 0, W, H).data;
           let totalLuminance = 0;
           let pixelCount = imgData.length / 4;
+          let skinPixelsTotal = 0;
+          let skinLeft = 0;
+          let skinRight = 0;
 
-          for (let i = 0; i < imgData.length; i += 4) {
-            const r = imgData[i];
-            const g = imgData[i + 1];
-            const b = imgData[i + 2];
-            totalLuminance += (0.299 * r + 0.587 * g + 0.114 * b);
+          // Potential mobile phone screen glow / rectangular specular highlights in lower hand region
+          let phoneGlowPixels = 0;
+
+          for (let y = 0; y < H; y++) {
+            for (let x = 0; x < W; x++) {
+              const idx = (y * W + x) * 4;
+              const r = imgData[idx];
+              const g = imgData[idx + 1];
+              const b = imgData[idx + 2];
+
+              const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+              totalLuminance += lum;
+
+              // Peer-reviewed RGB Skin Color Segmentation (Kovac / Chai)
+              const isSkin =
+                r > 95 &&
+                g > 40 &&
+                b > 20 &&
+                Math.max(r, g, b) - Math.min(r, g, b) > 15 &&
+                Math.abs(r - g) > 15 &&
+                r > g &&
+                r > b;
+
+              if (isSkin) {
+                skinPixelsTotal++;
+                if (x < W / 2) skinLeft++;
+                else skinRight++;
+              }
+
+              // Mobile phone screen detection: bright rectangular high-contrast screen in lower half
+              if (y > H * 0.55 && lum > 215 && (b >= r - 10 || b > 200)) {
+                phoneGlowPixels++;
+              }
+            }
           }
 
           const avgLuminance = totalLuminance / pixelCount;
+          const skinRatio = skinPixelsTotal / pixelCount;
 
-          // If frame is pitch black (< 6) or overexposed (> 250), candidate may have covered lens
-          if (avgLuminance < 8 || avgLuminance > 250) {
+          // Lens covered or completely dark
+          if (avgLuminance < 6 || avgLuminance > 252) {
             faceMissingCounterRef.current += 1;
           } else {
-            faceMissingCounterRef.current = 0;
-            setFaceInFrame(true);
+            // FACE ABSENCE / CANDIDATE LEAVING CAMERA VIEW
+            if (detectedFaceCount === 0 || (detectedFaceCount === -1 && skinRatio < 0.025)) {
+              faceMissingCounterRef.current += 1;
+            } else {
+              faceMissingCounterRef.current = 0;
+              setFaceInFrame(true);
+            }
+
+            // MULTIPLE FACES DETECTION
+            if (
+              detectedFaceCount > 1 ||
+              (detectedFaceCount === -1 && skinLeft > pixelCount * 0.08 && skinRight > pixelCount * 0.08)
+            ) {
+              multiFaceCounterRef.current += 1;
+            } else {
+              multiFaceCounterRef.current = 0;
+            }
+
+            // MOBILE PHONE USAGE DETECTION (concentrated screen glow or device in candidate frame)
+            if (phoneGlowPixels > 55) {
+              phoneDetectedCounterRef.current += 1;
+            } else {
+              if (phoneDetectedCounterRef.current > 0) {
+                phoneDetectedCounterRef.current -= 1;
+              }
+            }
           }
 
-          // If face missing or covered for 3 consecutive checks (9 seconds)
+          // Violation Trigger 1: Candidate leaves camera view
           if (faceMissingCounterRef.current >= 3) {
             setFaceInFrame(false);
-            setWarningMessage('Security Warning: Candidate face not clearly visible in webcam. Maintain lighting and face camera.');
+            setWarningMessage('Security Warning: Candidate face not in camera view. Return to frame immediately.');
+            reportViolation('face_missing', 'Candidate face out of camera view.');
             setTimeout(() => setWarningMessage(null), 5000);
             faceMissingCounterRef.current = 0;
+          }
+
+          // Violation Trigger 2: Multiple faces detected
+          if (multiFaceCounterRef.current >= 2) {
+            setWarningMessage('Security Violation: Multiple individuals detected in proctored camera view.');
+            reportViolation('multiple_faces', 'Multiple faces detected in proctored camera view.');
+            setTimeout(() => setWarningMessage(null), 5000);
+            multiFaceCounterRef.current = 0;
+          }
+
+          // Violation Trigger 3: Mobile phone detected -> AUTOMATIC IMMEDIATE TERMINATION
+          if (phoneDetectedCounterRef.current >= 2) {
+            phoneDetectedCounterRef.current = 0;
+            handleImmediateTermination(
+              'Assessment terminated due to a proctoring violation.',
+              'phone_usage'
+            );
           }
         } catch {
           // Canvas read error bypass
         }
       }
-    }, 3000);
+    }, 2000);
 
     return () => clearInterval(interval);
-  }, [phase]);
+  }, [phase, attemptId]);
 
   // 4. Strict Browser Security Event Listeners (Zero Tolerance)
   useEffect(() => {
@@ -505,11 +636,12 @@ export const AssessmentRunnerPage = () => {
     }
   };
 
-  // Format Timer mm:ss
+  // Format Timer HH:MM:SS
   const formatTime = (secs) => {
-    const m = Math.floor(secs / 60);
+    const h = Math.floor(secs / 3600);
+    const m = Math.floor((secs % 3600) / 60);
     const s = secs % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
   // Current Question
@@ -777,12 +909,12 @@ export const AssessmentRunnerPage = () => {
             Zero Tolerance Security Action
           </span>
 
-          <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.5rem' }}>
-            Assessment Terminated Immediately
+          <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#C83E4D', marginBottom: '0.5rem' }}>
+            Assessment terminated due to a proctoring violation.
           </h2>
 
           <p style={{ color: '#68756F', fontSize: '0.925rem', margin: '0 auto 1.5rem', maxWidth: '520px', lineHeight: 1.55 }}>
-            This assessment attempt was immediately terminated and submitted because a strict proctoring anti-cheating policy violation was detected by the monitoring system.
+            This assessment attempt was automatically terminated and submitted because a proctoring policy violation was detected by the monitoring system.
           </p>
 
           {/* Details Box */}

@@ -40,6 +40,14 @@ export const AssessmentMonitoringPage = () => {
   const [statusUpdating, setStatusUpdating] = useState(false);
   const [reviewNote, setReviewNote] = useState('');
 
+  const formatRemainingTime = (secs) => {
+    if (!secs || secs <= 0) return '00:00:00';
+    const h = Math.floor(secs / 3600);
+    const m = Math.floor((secs % 3600) / 60);
+    const s = secs % 60;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
   const fetchAttempts = async () => {
     setLoading(true);
     try {
@@ -258,13 +266,12 @@ export const AssessmentMonitoringPage = () => {
           <table className="table" style={{ margin: 0 }}>
             <thead>
               <tr style={{ background: '#FAFAF5' }}>
-                <th>Candidate</th>
-                <th>Assessment</th>
-                <th>Camera Status</th>
-                <th>Tab Switches</th>
-                <th>Focus Losses</th>
-                <th>Interruptions</th>
-                <th>Status / Result</th>
+                <th>Student Candidate</th>
+                <th>Assessment &amp; Status</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Remaining Time</th>
+                <th>Violation Log &amp; Reasons</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -276,6 +283,20 @@ export const AssessmentMonitoringPage = () => {
                 const isPaused = att.status === 'paused';
                 const isTerminated = att.status === 'terminated';
 
+                const startTimeFormatted = att.startedAt
+                  ? new Date(att.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+                  : '—';
+
+                const endTimeFormatted = att.submittedAt
+                  ? new Date(att.submittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+                  : isInProgress
+                  ? 'In Progress'
+                  : '—';
+
+                const remainingTimeFormatted = isInProgress
+                  ? formatRemainingTime(att.remainingSeconds)
+                  : '—';
+
                 return (
                   <tr key={att._id}>
                     <td>
@@ -284,153 +305,109 @@ export const AssessmentMonitoringPage = () => {
                     </td>
                     <td>
                       <div style={{ fontWeight: 600, color: '#142D2B', fontSize: '0.875rem' }}>{att.assessmentTitle}</div>
-                      <div style={{ fontSize: '0.75rem', color: '#68756F' }}>
-                        {att.startedAt ? new Date(att.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—'}
-                        {att.submittedAt ? ` • Done ${new Date(att.submittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : ''}
+                      <div style={{ marginTop: '4px' }}>
+                        {isTerminated && (
+                          <span
+                            style={{
+                              background: '#FCF0F2',
+                              color: '#A32F3D',
+                              border: '1px solid #F7D4D7',
+                              padding: '2px 8px',
+                              borderRadius: '999px',
+                              fontSize: '0.72rem',
+                              fontWeight: 800,
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px',
+                            }}
+                          >
+                            <AlertOctagon size={11} /> Terminated
+                          </span>
+                        )}
+                        {isInProgress && (
+                          <span
+                            style={{
+                              background: '#F0F7F4',
+                              color: '#07866A',
+                              padding: '2px 8px',
+                              borderRadius: '999px',
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                            }}
+                          >
+                            In Progress
+                          </span>
+                        )}
+                        {isFlagged && (
+                          <span
+                            style={{
+                              background: '#FCF0F2',
+                              color: '#C83E4D',
+                              padding: '2px 8px',
+                              borderRadius: '999px',
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '3px',
+                            }}
+                          >
+                            <AlertTriangle size={11} /> Flagged
+                          </span>
+                        )}
+                        {isCompleted && (
+                          <span
+                            style={{
+                              background: '#EFF8F2',
+                              color: '#247A48',
+                              padding: '2px 8px',
+                              borderRadius: '999px',
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                            }}
+                          >
+                            Completed ({att.scorePercentage}%)
+                          </span>
+                        )}
+                        {isPaused && (
+                          <span
+                            style={{
+                              background: '#FEF7ED',
+                              color: '#A0681B',
+                              padding: '2px 8px',
+                              borderRadius: '999px',
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                            }}
+                          >
+                            Paused
+                          </span>
+                        )}
                       </div>
                     </td>
+                    <td style={{ fontSize: '0.85rem', color: '#142D2B', fontWeight: 600 }}>
+                      {startTimeFormatted}
+                    </td>
+                    <td style={{ fontSize: '0.85rem', color: '#142D2B', fontWeight: 600 }}>
+                      {endTimeFormatted}
+                    </td>
+                    <td style={{ fontSize: '0.85rem', fontWeight: 700, color: isInProgress ? '#07866A' : '#68756F' }}>
+                      {remainingTimeFormatted}
+                    </td>
                     <td>
-                      {att.cameraStatus === 'connected' ? (
-                        <span
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '4px',
-                            background: '#EFF8F2',
-                            color: '#247A48',
-                            padding: '3px 8px',
-                            borderRadius: '999px',
-                            fontSize: '0.75rem',
-                            fontWeight: 700,
-                          }}
-                        >
-                          <Video size={12} /> Connected
-                        </span>
+                      {isTerminated ? (
+                        <div style={{ fontSize: '0.78rem', color: '#C83E4D', fontWeight: 600, maxWidth: '240px' }}>
+                          <strong>Violation:</strong> {att.terminationReason || 'Assessment terminated due to a proctoring violation.'}
+                        </div>
                       ) : (
-                        <span
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '4px',
-                            background: '#FCF0F2',
-                            color: '#822430',
-                            padding: '3px 8px',
-                            borderRadius: '999px',
-                            fontSize: '0.75rem',
-                            fontWeight: 700,
-                          }}
-                        >
-                          <VideoOff size={12} /> Disconnected
-                        </span>
-                      )}
-                    </td>
-                    <td>
-                      <span
-                        style={{
-                          fontWeight: 700,
-                          color: (att.tabSwitches || 0) > 0 ? '#C83E4D' : '#247A48',
-                        }}
-                      >
-                        {att.tabSwitches || 0}
-                      </span>
-                    </td>
-                    <td>
-                      <span
-                        style={{
-                          fontWeight: 700,
-                          color: (att.focusLossCount || 0) > 0 ? '#E8A23A' : '#247A48',
-                        }}
-                      >
-                        {att.focusLossCount || 0}
-                      </span>
-                    </td>
-                    <td>
-                      <span
-                        style={{
-                          fontWeight: 700,
-                          color: (att.cameraInterruptions || 0) > 0 ? '#C83E4D' : '#68756F',
-                        }}
-                      >
-                        {att.cameraInterruptions || 0}
-                      </span>
-                    </td>
-                    <td>
-                      {isTerminated && (
-                        <span
-                          style={{
-                            background: '#FCF0F2',
-                            color: '#A32F3D',
-                            border: '1px solid #F7D4D7',
-                            padding: '3px 8px',
-                            borderRadius: '999px',
-                            fontSize: '0.75rem',
-                            fontWeight: 800,
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '4px',
-                          }}
-                        >
-                          <AlertOctagon size={12} /> Terminated
-                        </span>
-                      )}
-                      {isInProgress && (
-                        <span
-                          style={{
-                            background: '#F0F7F4',
-                            color: '#142D2B',
-                            padding: '3px 8px',
-                            borderRadius: '999px',
-                            fontSize: '0.75rem',
-                            fontWeight: 700,
-                          }}
-                        >
-                          In Progress
-                        </span>
-                      )}
-                      {isFlagged && (
-                        <span
-                          style={{
-                            background: '#FCF0F2',
-                            color: '#C83E4D',
-                            padding: '3px 8px',
-                            borderRadius: '999px',
-                            fontSize: '0.75rem',
-                            fontWeight: 700,
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '3px',
-                          }}
-                        >
-                          <AlertTriangle size={12} /> Flagged
-                        </span>
-                      )}
-                      {isCompleted && (
-                        <span
-                          style={{
-                            background: '#EFF8F2',
-                            color: '#247A48',
-                            padding: '3px 8px',
-                            borderRadius: '999px',
-                            fontSize: '0.75rem',
-                            fontWeight: 700,
-                          }}
-                        >
-                          Score: {att.scorePercentage}% {att.passed ? '• Passed' : '• Failed'}
-                        </span>
-                      )}
-                      {isPaused && (
-                        <span
-                          style={{
-                            background: '#FEF7ED',
-                            color: '#A0681B',
-                            padding: '3px 8px',
-                            borderRadius: '999px',
-                            fontSize: '0.75rem',
-                            fontWeight: 700,
-                          }}
-                        >
-                          Paused
-                        </span>
+                        <div style={{ fontSize: '0.8rem', color: '#4A5651' }}>
+                          <span style={{ fontWeight: 700, color: (att.violationCount || 0) > 0 ? '#E8A23A' : '#247A48' }}>
+                            {att.violationCount || 0} Events
+                          </span>
+                          <span style={{ fontSize: '0.75rem', color: '#68756F' }}>
+                            {' '}• Tabs: {att.tabSwitches || 0} • Focus: {att.focusLossCount || 0}
+                          </span>
+                        </div>
                       )}
                     </td>
                     <td>
@@ -439,7 +416,7 @@ export const AssessmentMonitoringPage = () => {
                         className="btn btn-secondary btn-sm"
                         style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.8rem' }}
                       >
-                        <Eye size={13} /> Security Log
+                        <Eye size={13} /> Review Details
                       </button>
                     </td>
                   </tr>
@@ -515,6 +492,32 @@ export const AssessmentMonitoringPage = () => {
                   </div>
                 </div>
               )}
+
+              {/* Timing Metadata Grid */}
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 1fr)',
+                  gap: '0.75rem',
+                  marginTop: '0.75rem',
+                  paddingTop: '0.75rem',
+                  borderTop: '1px solid #DFE8E1',
+                  fontSize: '0.8rem',
+                }}
+              >
+                <div>
+                  <span style={{ color: '#68756F', display: 'block', fontSize: '0.72rem', fontWeight: 600 }}>START TIME</span>
+                  <strong>{selectedAttempt.startedAt ? new Date(selectedAttempt.startedAt).toLocaleString() : '—'}</strong>
+                </div>
+                <div>
+                  <span style={{ color: '#68756F', display: 'block', fontSize: '0.72rem', fontWeight: 600 }}>END TIME</span>
+                  <strong>{selectedAttempt.submittedAt ? new Date(selectedAttempt.submittedAt).toLocaleString() : selectedAttempt.status === 'in_progress' ? 'In Progress' : '—'}</strong>
+                </div>
+                <div>
+                  <span style={{ color: '#68756F', display: 'block', fontSize: '0.72rem', fontWeight: 600 }}>REMAINING TIME</span>
+                  <strong>{selectedAttempt.status === 'in_progress' ? formatRemainingTime(selectedAttempt.remainingSeconds) : '—'}</strong>
+                </div>
+              </div>
 
               {/* Counters summary */}
               <div style={{ display: 'flex', gap: '1.25rem', marginTop: '0.75rem', fontSize: '0.8rem', color: '#4A5651', flexWrap: 'wrap' }}>
