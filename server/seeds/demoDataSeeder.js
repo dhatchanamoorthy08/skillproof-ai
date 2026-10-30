@@ -304,6 +304,32 @@ const seedData = async () => {
       placementStatus: 'unplaced',
     });
 
+    // Create Dhatchanamoorthy P Student Account
+    const dhatchanaStudentUser = await User.create({
+      email: 'palanidhatchana@gmail.com',
+      password: 'Password@123',
+      fullName: 'Dhatchanamoorthy p',
+      role: 'student',
+      isEmailVerified: true,
+      status: 'active',
+    });
+
+    await StudentProfile.create({
+      user: dhatchanaStudentUser._id,
+      rollNumber: '510123104012',
+      collegeName: 'Adhiparasakthi College Of Engineering',
+      degree: 'B.E. - Bachelor of Engineering',
+      department: 'Computer Science & Engineering',
+      batch: '2027',
+      cgpa: 7.71,
+      phone: '9344193523',
+      bio: 'Aspiring Full Stack Developer',
+      targetRole: 'Full Stack Developer',
+      profileCompletion: 80,
+      placementStatus: 'unplaced',
+      resumeUrl: '/uploads/1792159012665-340265571-resume_DHATCHANA.pdf',
+    });
+
     // Evidence for Star Student
     const projectEvidence = await Evidence.create({
       student: starStudentUser._id,

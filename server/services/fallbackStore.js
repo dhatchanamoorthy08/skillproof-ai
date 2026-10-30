@@ -57,7 +57,229 @@ const defaultUsers = [
     role: 'placement_officer',
     status: 'active',
   },
+  {
+    _id: '660000000000000000006449',
+    email: 'palanidhatchana@gmail.com',
+    password: '$2a$10$dMbxityhmLFEF7JbR24miuPzhd/pE4jUeTIATza3nGWcR5RDhnxay',
+    fullName: 'Dhatchanamoorthy p',
+    role: 'student',
+    status: 'active',
+  },
+  {
+    _id: '660000000000000000008809',
+    email: 'dharani44@gmail.com',
+    password: '$2a$10$nrJU7vDX74dmLpkIS.sEV.I.Fv3i4fl2jgSdZNNFVRvgsNamBqlb6',
+    fullName: 'dharani',
+    role: 'recruiter',
+    status: 'active',
+  },
 ];
+
+const dhatchanaStudentProfile = {
+  _id: '661000000000000000006449',
+  user: '660000000000000000006449',
+  rollNumber: '510123104012',
+  collegeName: 'Adhiparasakthi College Of Engineering',
+  degree: 'B.E. - Bachelor of Engineering',
+  department: 'Computer Science & Engineering',
+  batch: '2027',
+  cgpa: '7.71',
+  dob: '2006-06-08',
+  city: 'cheyyar',
+  pincode: '604407',
+  address: 'chetty street, cheyyar',
+  avatar: '',
+  phone: '9344193523',
+  bio: 'Aspiring Full Stack Developer',
+  targetRole: 'Full Stack Developer',
+  links: {
+    github: '',
+    linkedin: '',
+    portfolio: '',
+  },
+  profileCompletion: 80,
+  placementStatus: 'unplaced',
+  mentoringNotes: [],
+  resumeUrl: '/uploads/1792159012665-340265571-resume_DHATCHANA.pdf',
+  resumeParsedData: {
+    extractedSkills: [
+      'javascript',
+      'react',
+      'html5',
+      'css3',
+      'node.js',
+      'express.js',
+      'python',
+      'java',
+      'rest api',
+      'mongodb',
+      'mysql',
+      'docker',
+      'git',
+      'machine learning',
+      'computer networks',
+    ],
+    extractedProjects: [
+      'Elegand Designers — Interior Designing Website',
+      '•  Developed a responsive interior design website using HTML5, CSS3, JavaScript, PHP, and MySQL.',
+      '•  Implemented dynamic pages including Home, About, Portfolio, Services, and Contact using PHP.',
+      '•  Integrated MySQL database operations to manage contact form data and improve website functionality.',
+    ],
+    extractedEducation: [
+      'Bachelor of Engineering (B.E.) in Computer Science and EngineeringCGPA: 7.71',
+      'Adhiparasakthi College of Engineering2023 – 2027',
+    ],
+    completenessScore: 100,
+    atsFeedback: [
+      'Found 15 normalized technical skills.',
+      'Project section detected. Ensure each project has measurable impact (e.g. latency, user volume).',
+      'Verified presence of GitHub repository link for code evidence.',
+    ],
+    parsedAt: '2026-10-16T13:56:53.004Z',
+  },
+};
+
+const dhatchanaPassport = {
+  _id: '662000000000000000006449',
+  student: '660000000000000000006449',
+  skills: [
+    {
+      skillName: 'JavaScript',
+      normalizedName: 'javascript',
+      category: 'Languages',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Claimed during onboarding registration.',
+    },
+    {
+      skillName: 'React',
+      normalizedName: 'react',
+      category: 'Frontend',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Claimed during onboarding registration.',
+    },
+    {
+      skillName: 'html5',
+      normalizedName: 'html5',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'css3',
+      normalizedName: 'css3',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'node.js',
+      normalizedName: 'node.js',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'express.js',
+      normalizedName: 'express.js',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'python',
+      normalizedName: 'python',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'java',
+      normalizedName: 'java',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'rest api',
+      normalizedName: 'rest api',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'mongodb',
+      normalizedName: 'mongodb',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'mysql',
+      normalizedName: 'mysql',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'docker',
+      normalizedName: 'docker',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'git',
+      normalizedName: 'git',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'machine learning',
+      normalizedName: 'machine learning',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+    {
+      skillName: 'computer networks',
+      normalizedName: 'computer networks',
+      category: 'Core Fundamentals',
+      status: 'claimed',
+      proficiency: 'Intermediate',
+      statusReason: 'Extracted from uploaded resume PDF. Verified via document parser.',
+    },
+  ],
+  jobReadinessIndex: 50,
+  readinessTier: 'Developing',
+  readinessBreakdown: {
+    assessedScore: 15,
+    demonstratedScore: 15,
+    verifiedScore: 10,
+    profileCompletenessScore: 10,
+  },
+  actionableSuggestions: [
+    {
+      text: 'Take your first technical assessment to upgrade your Skill Passport to Assessed tier.',
+      actionType: 'assessment',
+      targetSkill: 'Full Stack Web Engineering',
+    },
+  ],
+};
 
 const defaultStudentProfile = {
   _id: '661000000000000000000001',
@@ -331,10 +553,19 @@ const defaultDrives = [
 // Load persisted state or initialize with defaults
 let store = {
   users: defaultUsers,
-  studentProfiles: { '660000000000000000000001': defaultStudentProfile },
+  studentProfiles: {
+    '660000000000000000000001': defaultStudentProfile,
+    '660000000000000000006449': dhatchanaStudentProfile,
+  },
   recruiterProfiles: { '660000000000000000000003': defaultRecruiterProfile },
-  placementProfiles: { '660000000000000000000005': defaultPlacementProfile },
-  passports: { '660000000000000000000001': defaultPassport },
+  placementProfiles: {
+    '660000000000000000000005': defaultPlacementProfile,
+    '660000000000000000000006': defaultPlacementProfile,
+  },
+  passports: {
+    '660000000000000000000001': defaultPassport,
+    '660000000000000000006449': dhatchanaPassport,
+  },
   evidence: defaultEvidence,
   jobs: defaultJobs,
   assessments: expandedAssessments,
@@ -357,18 +588,21 @@ function loadStore() {
       const parsed = JSON.parse(content);
       if (parsed && Array.isArray(parsed.users)) {
         store = parsed;
-        // Ensure default users are present (e.g. student@skillproof.ai, placement@skillproof.ai) and have bcrypt hashes
+        // Ensure default users are present (e.g. student@skillproof.ai, placement@skillproof.ai, palanidhatchana@gmail.com) and have bcrypt hashes
         defaultUsers.forEach((defU) => {
           const existing = store.users.find((u) => u.email.toLowerCase() === defU.email.toLowerCase());
           if (!existing) {
             store.users.unshift(defU);
           } else if (!existing.password || !existing.password.startsWith('$2a$')) {
-            existing.password = BCRYPT_DEFAULT_HASH;
+            existing.password = defU.password || BCRYPT_DEFAULT_HASH;
           }
         });
         if (!store.studentProfiles) store.studentProfiles = {};
         if (!store.studentProfiles['660000000000000000000001']) {
           store.studentProfiles['660000000000000000000001'] = defaultStudentProfile;
+        }
+        if (!store.studentProfiles['660000000000000000006449']) {
+          store.studentProfiles['660000000000000000006449'] = dhatchanaStudentProfile;
         }
         if (!store.placementProfiles) store.placementProfiles = {};
         if (!store.placementProfiles['660000000000000000000005']) {
@@ -380,6 +614,9 @@ function loadStore() {
         if (!store.passports) store.passports = {};
         if (!store.passports['660000000000000000000001']) {
           store.passports['660000000000000000000001'] = defaultPassport;
+        }
+        if (!store.passports['660000000000000000006449']) {
+          store.passports['660000000000000000006449'] = dhatchanaPassport;
         }
         // Ensure assessments has all 6 domains and all 30 questions each with 40 mins duration
         const storeTotalQ = (store.assessments || []).reduce((acc, a) => acc + (a.questions?.length || 0), 0);

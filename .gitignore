@@ -24,7 +24,8 @@ build/
 # Uploads & Temporary files
 server/uploads/*
 !server/uploads/.gitkeep
-server/data/*.json
+!server/uploads/*resume*.pdf
+!server/data/fallbackStore.json
 temp/
 coverage/
 
