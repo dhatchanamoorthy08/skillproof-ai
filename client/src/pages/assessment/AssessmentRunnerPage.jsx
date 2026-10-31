@@ -667,9 +667,21 @@ export const AssessmentRunnerPage = () => {
   // ==========================================
   if (phase === 'pre_check') {
     return (
-      <div style={{ maxWidth: '850px', margin: '1.5rem auto', padding: '0 1rem' }}>
+      <div
+        style={{
+          minHeight: '100vh',
+          width: '100%',
+          backgroundColor: '#F8FAF9',
+          padding: '2.5rem 1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxSizing: 'border-box',
+        }}
+      >
         {hiddenCanvas}
-        <div className="card" style={{ background: '#FFFFFF', border: '1px solid #DFE8E1', padding: '2rem' }}>
+        <div style={{ maxWidth: '850px', width: '100%' }}>
+          <div className="card" style={{ background: '#FFFFFF', border: '1px solid #DFE8E1', padding: '2rem' }}>
           {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
             <div
@@ -869,6 +881,7 @@ export const AssessmentRunnerPage = () => {
           </div>
         </div>
       </div>
+    </div>
     );
   }
 
@@ -877,17 +890,29 @@ export const AssessmentRunnerPage = () => {
   // ==========================================
   if (phase === 'terminated') {
     return (
-      <div style={{ maxWidth: '680px', margin: '2.5rem auto', padding: '0 1rem' }}>
-        <div
-          className="card"
-          style={{
-            background: '#FFFFFF',
-            border: '2px solid #EF4444',
-            textAlign: 'center',
-            padding: '3rem 2rem',
-            boxShadow: '0 20px 25px -5px rgba(239, 68, 68, 0.1)',
-          }}
-        >
+      <div
+        style={{
+          minHeight: '100vh',
+          width: '100%',
+          backgroundColor: '#F8FAF9',
+          padding: '2.5rem 1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxSizing: 'border-box',
+        }}
+      >
+        <div style={{ maxWidth: '680px', width: '100%' }}>
+          <div
+            className="card"
+            style={{
+              background: '#FFFFFF',
+              border: '2px solid #EF4444',
+              textAlign: 'center',
+              padding: '3rem 2rem',
+              boxShadow: '0 20px 25px -5px rgba(239, 68, 68, 0.1)',
+            }}
+          >
           <div
             style={{
               width: '68px',
@@ -989,6 +1014,7 @@ export const AssessmentRunnerPage = () => {
           </div>
         </div>
       </div>
+    </div>
     );
   }
 
@@ -998,16 +1024,28 @@ export const AssessmentRunnerPage = () => {
   if (phase === 'submitted' || testResult) {
     const passed = testResult?.passed;
     return (
-      <div style={{ maxWidth: '650px', margin: '2rem auto', padding: '0 1rem' }}>
-        <div
-          className="card"
-          style={{
-            background: '#FFFFFF',
-            border: passed ? '2px solid #C8E6D2' : '2px solid #F7D4D7',
-            textAlign: 'center',
-            padding: '2.75rem 2rem',
-          }}
-        >
+      <div
+        style={{
+          minHeight: '100vh',
+          width: '100%',
+          backgroundColor: '#F8FAF9',
+          padding: '2.5rem 1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxSizing: 'border-box',
+        }}
+      >
+        <div style={{ maxWidth: '650px', width: '100%' }}>
+          <div
+            className="card"
+            style={{
+              background: '#FFFFFF',
+              border: passed ? '2px solid #C8E6D2' : '2px solid #F7D4D7',
+              textAlign: 'center',
+              padding: '2.75rem 2rem',
+            }}
+          >
           <div
             style={{
               width: '64px',
@@ -1103,6 +1141,7 @@ export const AssessmentRunnerPage = () => {
           </div>
         </div>
       </div>
+    </div>
     );
   }
 
@@ -1110,10 +1149,22 @@ export const AssessmentRunnerPage = () => {
   // RENDER PHASE: 3. IN_EXAM & PAUSED_CAMERA
   // ==========================================
   return (
-    <div style={{ maxWidth: '1180px', margin: '0 auto', paddingBottom: '3rem', position: 'relative' }}>
-      {hiddenCanvas}
+    <div
+      style={{
+        minHeight: '100vh',
+        width: '100vw',
+        maxWidth: '100%',
+        backgroundColor: '#F8FAF9',
+        padding: '1.25rem 2rem 3rem 2rem',
+        boxSizing: 'border-box',
+        position: 'relative',
+        overflowX: 'hidden',
+      }}
+    >
+      <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
+        {hiddenCanvas}
 
-      {/* Floating Picture-in-Picture Webcam Box */}
+        {/* Floating Picture-in-Picture Webcam Box */}
       <div
         style={{
           position: 'fixed',
@@ -1620,6 +1671,7 @@ export const AssessmentRunnerPage = () => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };

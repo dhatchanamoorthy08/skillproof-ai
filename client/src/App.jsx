@@ -109,7 +109,7 @@ export const App = () => {
             <Route path="settings" element={<StudentSettingsPage />} />
           </Route>
 
-          {/* Assessment Proctored Routes */}
+          {/* Assessment Proctored Routes (Catalog inside DashboardLayout) */}
           <Route
             path="/assessments"
             element={
@@ -119,8 +119,17 @@ export const App = () => {
             }
           >
             <Route index element={<AssessmentListPage />} />
-            <Route path=":id/run" element={<AssessmentRunnerPage />} />
           </Route>
+
+          {/* Dedicated Standalone Full-Screen Assessment Page (NO Dashboard, NO Sidebar, NO Navbar) */}
+          <Route
+            path="/assessments/:id/run"
+            element={
+              <ProtectedRoute allowedRoles={['student', 'placement_officer', 'recruiter']}>
+                <AssessmentRunnerPage />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Recruiter Protected Routes */}
           <Route
