@@ -614,6 +614,16 @@ export const AssessmentRunnerPage = () => {
 
   const handleSubmitExam = async () => {
     if (submitting || phase === 'submitted') return;
+
+    const answeredCount = Object.keys(selectedAnswers).length;
+    const totalCount = assessment?.questions?.length || 0;
+    if (answeredCount < totalCount) {
+      const confirmSubmit = window.confirm(
+        `You have answered ${answeredCount} of ${totalCount} questions. Are you sure you want to submit your assessment?`
+      );
+      if (!confirmSubmit) return;
+    }
+
     setSubmitting(true);
 
     const userAnswers = Object.entries(selectedAnswers).map(([questionId, selectedOptionIndex]) => ({
@@ -1467,23 +1477,21 @@ export const AssessmentRunnerPage = () => {
           </h2>
         </div>
 
-        {/* Timer Box */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            background: timeLeftSeconds < 180 ? '#FCF0F2' : '#F0F7F4',
-            color: timeLeftSeconds < 180 ? '#C83E4D' : '#07866A',
-            border: `1px solid ${timeLeftSeconds < 180 ? '#F7D4D7' : '#DFE8E1'}`,
-            padding: '0.5rem 1rem',
-            borderRadius: '8px',
-            fontWeight: 800,
-            fontSize: '1.25rem',
-          }}
-        >
-          <Clock size={20} />
-          <span>{formatTime(timeLeftSeconds)}</span>
+        {/* Top Right: Current Question Position */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div
+            style={{
+              padding: '0.45rem 1rem',
+              borderRadius: '8px',
+              background: '#F0F7F4',
+              border: '1px solid #DFE8E1',
+              color: '#07866A',
+              fontWeight: 700,
+              fontSize: '0.875rem',
+            }}
+          >
+            Question {currentQuestionIndex + 1} of {assessment?.questions?.length || 0}
+          </div>
         </div>
       </div>
 
@@ -1636,23 +1644,70 @@ export const AssessmentRunnerPage = () => {
             })}
           </div>
 
-          {/* Navigation Controls */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {/* Navigation Controls & Timer at Down (Bottom) of Assessment */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '1rem',
+              borderTop: '1px solid #DFE8E1',
+              paddingTop: '1.25rem',
+              marginTop: '1.5rem',
+            }}
+          >
+            {/* Previous Button */}
             <button
               type="button"
               onClick={() => setCurrentQuestionIndex((prev) => Math.max(prev - 1, 0))}
               className="btn btn-secondary btn-sm"
               disabled={currentQuestionIndex === 0}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                fontWeight: 600,
+                padding: '0.55rem 1.15rem',
+              }}
             >
               <ChevronLeft size={16} /> Previous
             </button>
 
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              {currentQuestionIndex < assessment.questions.length - 1 ? (
+            {/* Countdown Timer (Displayed at the bottom of the assessment) */}
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                background: timeLeftSeconds < 180 ? '#FCF0F2' : '#F0F7F4',
+                color: timeLeftSeconds < 180 ? '#C83E4D' : '#07866A',
+                border: `1.5px solid ${timeLeftSeconds < 180 ? '#F7D4D7' : '#DFE8E1'}`,
+                padding: '0.5rem 1.25rem',
+                borderRadius: '8px',
+                fontWeight: 800,
+                fontSize: '1.15rem',
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.04)',
+              }}
+            >
+              <Clock size={18} className={timeLeftSeconds < 180 ? 'animate-pulse' : ''} />
+              <span>Time Remaining: {formatTime(timeLeftSeconds)}</span>
+            </div>
+
+            {/* Next Button OR Final Submit Button */}
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+              {currentQuestionIndex < (assessment?.questions?.length || 0) - 1 ? (
                 <button
                   type="button"
                   onClick={() => setCurrentQuestionIndex((prev) => prev + 1)}
                   className="btn btn-primary btn-sm"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    fontWeight: 700,
+                    padding: '0.55rem 1.25rem',
+                  }}
                 >
                   Next <ChevronRight size={16} />
                 </button>
@@ -1662,9 +1717,18 @@ export const AssessmentRunnerPage = () => {
                   onClick={handleSubmitExam}
                   className="btn btn-primary"
                   disabled={submitting}
-                  style={{ fontWeight: 700 }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    fontWeight: 800,
+                    padding: '0.6rem 1.5rem',
+                    fontSize: '0.95rem',
+                    boxShadow: '0 4px 12px rgba(7, 134, 106, 0.25)',
+                  }}
                 >
-                  {submitting ? 'Submitting Answers...' : 'Finish & Submit Exam'}
+                  <CheckCircle2 size={18} />
+                  <span>{submitting ? 'Submitting Answers...' : 'Submit Assessment'}</span>
                 </button>
               )}
             </div>
