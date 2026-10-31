@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   Clock,
   Compass,
+  Play,
 } from 'lucide-react';
 import api from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
@@ -109,20 +110,20 @@ export const StudentDashboard = () => {
             <span>Submit Certificates</span>
           </Link>
           <Link
-            to="/student/passport"
+            to="/assessments"
             className="btn btn-primary"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700 }}
           >
-            <ShieldCheck size={18} />
-            <span>View Skill Passport</span>
+            <Play size={18} />
+            <span>Start Assessment</span>
           </Link>
           <Link
-            to="/assessments"
+            to="/student/passport"
             className="btn btn-secondary"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}
           >
-            <Award size={18} />
-            <span>Take Assessment</span>
+            <ShieldCheck size={18} />
+            <span>View Skill Passport</span>
           </Link>
         </div>
       </div>
@@ -270,7 +271,7 @@ export const StudentDashboard = () => {
                   to={sug.actionType === 'assessment' ? '/assessments' : '/student/passport'}
                   style={{ fontWeight: 600, fontSize: '0.8rem', whiteSpace: 'nowrap', marginLeft: '0.5rem' }}
                 >
-                  Take Action &rarr;
+                  {sug.actionType === 'assessment' ? 'Start Assessment →' : 'Take Action →'}
                 </Link>
               </div>
             ))}

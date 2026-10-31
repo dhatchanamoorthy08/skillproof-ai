@@ -48,13 +48,14 @@ export const AssessmentRunnerPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const [testResult, setTestResult] = useState(null);
   const [warningLimit, setWarningLimit] = useState(5);
+  const [needsFullscreenReentry, setNeedsFullscreenReentry] = useState(false);
 
   // Counters
   const [tabSwitches, setTabSwitches] = useState(0);
   const [focusLosses, setFocusLosses] = useState(0);
   const [cameraInterruptions, setCameraInterruptions] = useState(0);
 
-  // Video & Canvas Refs
+  // Video, Canvas & Fullscreen Refs
   const previewVideoRef = useRef(null);
   const liveVideoRef = useRef(null);
   const streamRef = useRef(null);
@@ -62,6 +63,7 @@ export const AssessmentRunnerPage = () => {
   const faceMissingCounterRef = useRef(0);
   const phoneDetectedCounterRef = useRef(0);
   const multiFaceCounterRef = useRef(0);
+  const hasEnteredFullscreenRef = useRef(false);
 
   // 1. Initial Assessment Metadata Fetch & Refresh Persistence
   useEffect(() => {
@@ -82,9 +84,12 @@ export const AssessmentRunnerPage = () => {
             // Re-acquire camera stream for active examination
             requestCameraAccess();
 
-            // Request Fullscreen
-            if (document.documentElement.requestFullscreen) {
-              document.documentElement.requestFullscreen().catch(() => {});
+            // Refresh exits fullscreen; prompt candidate to re-enter fullscreen via user gesture
+            if (!document.fullscreenElement) {
+              setNeedsFullscreenReentry(true);
+              hasEnteredFullscreenRef.current = false;
+            } else {
+              hasEnteredFullscreenRef.current = true;
             }
             return;
           }
@@ -211,9 +216,16 @@ export const AssessmentRunnerPage = () => {
 
         // Request Fullscreen
         if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen().catch(() => {
-            console.warn('Fullscreen entry prevented by browser gesture requirement.');
-          });
+          document.documentElement.requestFullscreen()
+            .then(() => {
+              hasEnteredFullscreenRef.current = true;
+            })
+            .catch(() => {
+              console.warn('Fullscreen entry prevented by browser gesture requirement.');
+              hasEnteredFullscreenRef.current = true;
+            });
+        } else {
+          hasEnteredFullscreenRef.current = true;
         }
 
         // Attach stream to live video element
@@ -472,11 +484,11 @@ export const AssessmentRunnerPage = () => {
   useEffect(() => {
     if (phase !== 'in_exam') return;
 
-    // Fullscreen Exit -> Immediate Termination without warning
+    // Fullscreen Exit -> Immediate Termination without warning once fullscreen was entered
     const handleFullscreenChange = () => {
-      if (!document.fullscreenElement) {
+      if (!document.fullscreenElement && hasEnteredFullscreenRef.current) {
         handleImmediateTermination(
-          'Assessment Terminated: Candidate exited full-screen mode.',
+          'Assessment terminated due to a proctoring violation.',
           'fullscreen_exit'
         );
       }
@@ -486,7 +498,7 @@ export const AssessmentRunnerPage = () => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
         handleImmediateTermination(
-          'Assessment Terminated: Browser tab switch or window minimization detected.',
+          'Assessment terminated due to a proctoring violation.',
           'tab_hidden'
         );
       }
@@ -495,7 +507,7 @@ export const AssessmentRunnerPage = () => {
     // Window Blur (Focus Loss to external window/application) -> Immediate Termination
     const handleWindowBlur = () => {
       handleImmediateTermination(
-        'Assessment Terminated: Page lost focus to an external window or background application.',
+        'Assessment terminated due to a proctoring violation.',
         'focus_loss'
       );
     };
@@ -1232,6 +1244,105 @@ export const AssessmentRunnerPage = () => {
               style={{ width: '100%', padding: '0.75rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
             >
               <RefreshCw size={16} /> Reconnect Webcam & Resume Exam
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Fullscreen Required Modal on Active Exam Restore */}
+      {needsFullscreenReentry && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(15, 23, 42, 0.94)',
+            backdropFilter: 'blur(8px)',
+            zIndex: 99999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1.5rem',
+          }}
+        >
+          <div
+            className="card"
+            style={{
+              maxWidth: '520px',
+              width: '100%',
+              background: '#FFFFFF',
+              borderRadius: '14px',
+              padding: '2.5rem 2rem',
+              textAlign: 'center',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.45)',
+            }}
+          >
+            <div
+              style={{
+                width: '64px',
+                height: '64px',
+                borderRadius: '50%',
+                background: '#EFF8F2',
+                color: '#07866A',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 1.25rem',
+              }}
+            >
+              <Maximize2 size={32} />
+            </div>
+
+            <h3 style={{ fontSize: '1.45rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.5rem' }}>
+              Active Assessment Session Resumed
+            </h3>
+            <p style={{ color: '#68756F', fontSize: '0.875rem', lineHeight: 1.6, marginBottom: '1.25rem' }}>
+              Your proctored session is currently in progress and the timer is running. To adhere to exam security regulations, you must re-enter full-screen mode to continue.
+            </p>
+
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                background: '#F0F7F4',
+                color: '#07866A',
+                border: '1px solid #DFE8E1',
+                padding: '0.5rem 1.25rem',
+                borderRadius: '8px',
+                fontWeight: 800,
+                fontSize: '1.15rem',
+                marginBottom: '1.75rem',
+              }}
+            >
+              <Clock size={18} />
+              <span>Time Left: {formatTime(timeLeftSeconds)}</span>
+            </div>
+
+            <button
+              onClick={async () => {
+                try {
+                  if (document.documentElement.requestFullscreen) {
+                    await document.documentElement.requestFullscreen();
+                  }
+                } catch (e) {
+                  console.warn('Fullscreen entry rejected:', e);
+                }
+                hasEnteredFullscreenRef.current = true;
+                setNeedsFullscreenReentry(false);
+              }}
+              className="btn btn-primary"
+              style={{
+                width: '100%',
+                padding: '0.85rem',
+                fontWeight: 700,
+                fontSize: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
+              }}
+            >
+              <Maximize2 size={18} /> Re-enter Full-Screen Mode & Resume
             </button>
           </div>
         </div>
