@@ -318,20 +318,51 @@ const getActiveAttempt = async (req, res, next) => {
 // @access  Private (Student)
 const logViolation = async (req, res, next) => {
   try {
-    const { attemptId, type, details, cameraStatus } = req.body;
+    const { attemptId, type, details, cameraStatus, severity, actionTaken, confidence } = req.body;
+    const studentId = req.user?._id?.toString();
+    const assessmentId = req.params.id;
+
+    // Severity mapping default
+    const calculatedSeverity =
+      severity ||
+      (type === 'phone_detected' || type === 'fullscreen_exit'
+        ? 'high'
+        : type === 'multiple_faces' || type === 'tab_hidden' || type === 'focus_loss'
+        ? 'medium'
+        : 'low');
+
+    const calculatedAction =
+      actionTaken ||
+      (type === 'camera_disconnected' ? 'session_paused' : 'warning_recorded');
+
+    const event = {
+      studentId,
+      assessmentId,
+      type: type || 'focus_loss',
+      details: details || '',
+      severity: calculatedSeverity,
+      actionTaken: calculatedAction,
+      confidence: confidence || 1.0,
+      timestamp: new Date(),
+    };
 
     if (memoryAttempts[attemptId]) {
       const att = memoryAttempts[attemptId];
-      const event = {
-        type: type || 'focus_loss',
-        details: details || '',
-        timestamp: new Date(),
-      };
+      att.violations = att.violations || [];
       att.violations.push(event);
       att.violationCount = att.violations.length;
 
+      if (type === 'fullscreen_exit') att.fullscreenExits = (att.fullscreenExits || 0) + 1;
       if (type === 'tab_hidden') att.tabSwitches = (att.tabSwitches || 0) + 1;
       if (type === 'focus_loss') att.focusLossCount = (att.focusLossCount || 0) + 1;
+      if (type === 'phone_detected') att.phoneDetections = (att.phoneDetections || 0) + 1;
+      if (type === 'multiple_faces') att.multipleFaceDetections = (att.multipleFaceDetections || 0) + 1;
+      if (type === 'copy_paste_attempt' || type === 'clipboard_blocked' || type === 'context_menu') {
+        att.copyPasteAttempts = (att.copyPasteAttempts || 0) + 1;
+      }
+      if (type === 'suspicious_navigation' || type === 'navigation_attempt') {
+        att.suspiciousNavigationCount = (att.suspiciousNavigationCount || 0) + 1;
+      }
       if (type === 'camera_disconnected' || type === 'camera_permission_revoked') {
         att.cameraInterruptions = (att.cameraInterruptions || 0) + 1;
         att.cameraStatus = 'disconnected';
@@ -352,12 +383,15 @@ const logViolation = async (req, res, next) => {
         att.cameraStatus = 'connected';
       }
 
+      saveStore();
+
       return res.json({
         success: true,
         violationCount: att.violationCount,
         tabSwitches: att.tabSwitches || 0,
         focusLossCount: att.focusLossCount || 0,
         cameraInterruptions: att.cameraInterruptions || 0,
+        phoneDetections: att.phoneDetections || 0,
         cameraStatus: att.cameraStatus,
         shouldAutoSubmit,
         shouldPause,
@@ -369,10 +403,16 @@ const logViolation = async (req, res, next) => {
     if (mongoose.connection.readyState === 1) {
       const attempt = await AssessmentAttempt.findById(attemptId);
       if (attempt) {
-        attempt.violations.push({ type, details, timestamp: new Date() });
+        attempt.violations.push(event);
         attempt.violationCount = attempt.violations.length;
+        if (type === 'fullscreen_exit') attempt.fullscreenExits = (attempt.fullscreenExits || 0) + 1;
         if (type === 'tab_hidden') attempt.tabSwitches = (attempt.tabSwitches || 0) + 1;
         if (type === 'focus_loss') attempt.focusLossCount = (attempt.focusLossCount || 0) + 1;
+        if (type === 'phone_detected') attempt.phoneDetections = (attempt.phoneDetections || 0) + 1;
+        if (type === 'multiple_faces') attempt.multipleFaceDetections = (attempt.multipleFaceDetections || 0) + 1;
+        if (type === 'copy_paste_attempt' || type === 'clipboard_blocked') {
+          attempt.copyPasteAttempts = (attempt.copyPasteAttempts || 0) + 1;
+        }
         if (type === 'camera_disconnected' || type === 'camera_permission_revoked') {
           attempt.cameraInterruptions = (attempt.cameraInterruptions || 0) + 1;
           attempt.cameraStatus = 'disconnected';
@@ -381,7 +421,7 @@ const logViolation = async (req, res, next) => {
         return res.json({
           success: true,
           violationCount: attempt.violationCount,
-          shouldAutoSubmit: attempt.violationCount >= 5,
+          shouldAutoSubmit: attempt.violationCount >= (attempt.maxAllowedViolations || 5),
         });
       }
     }
@@ -676,7 +716,11 @@ const terminateAssessment = async (req, res, next) => {
     const terminatedAt = new Date();
 
     const violationEvent = {
+      studentId,
+      assessmentId: ass._id?.toString(),
       type: violationType || 'security_termination',
+      severity: 'critical',
+      actionTaken: 'session_terminated',
       details: terminationReason,
       timestamp: terminatedAt,
     };

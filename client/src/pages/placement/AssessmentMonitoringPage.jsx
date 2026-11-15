@@ -549,32 +549,68 @@ export const AssessmentMonitoringPage = () => {
                   No security violation events recorded for this candidate attempt.
                 </div>
               ) : (
-                selectedAttempt.violations.map((ev, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      padding: '0.65rem 0.85rem',
-                      borderRadius: '6px',
-                      background: '#FEF7ED',
-                      border: '1px solid #FCDCA6',
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      justifyContent: 'space-between',
-                      gap: '0.5rem',
-                      fontSize: '0.825rem',
-                    }}
-                  >
-                    <div>
-                      <strong style={{ color: '#C48227', textTransform: 'capitalize' }}>
-                        {ev.type?.replace(/_/g, ' ')}:
-                      </strong>{' '}
-                      <span style={{ color: '#4A5651' }}>{ev.details}</span>
+                selectedAttempt.violations.map((ev, idx) => {
+                  const isCritical = ev.severity === 'critical' || ev.type === 'phone_detected' || ev.type === 'fullscreen_exit';
+                  const isHigh = ev.severity === 'high' || ev.type === 'tab_hidden' || ev.type === 'focus_loss';
+                  const isAdvisory = ev.type === 'face_missing' || ev.type === 'context_menu' || ev.severity === 'low';
+
+                  return (
+                    <div
+                      key={idx}
+                      style={{
+                        padding: '0.75rem 0.95rem',
+                        borderRadius: '8px',
+                        background: isCritical ? '#FCF0F2' : isHigh ? '#FEF8ED' : '#FAFAF5',
+                        border: `1px solid ${isCritical ? '#F7D4D7' : isHigh ? '#FCDCA6' : '#DFE8E1'}`,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.35rem',
+                        fontSize: '0.825rem',
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                          <span
+                            style={{
+                              fontSize: '0.675rem',
+                              fontWeight: 800,
+                              textTransform: 'uppercase',
+                              padding: '2px 6px',
+                              borderRadius: '4px',
+                              background: isCritical ? '#C83E4D' : isHigh ? '#D97706' : '#64748B',
+                              color: '#FFFFFF',
+                            }}
+                          >
+                            {ev.severity ? ev.severity.toUpperCase() : isCritical ? 'CRITICAL' : isHigh ? 'HIGH' : 'ADVISORY'}
+                          </span>
+
+                          <span style={{ fontSize: '0.7rem', fontWeight: 700, color: isAdvisory ? '#64748B' : '#0F172A' }}>
+                            {isAdvisory ? 'DETECTED EVENT (ADVISORY)' : 'CONFIRMED INTEGRITY VIOLATION'}
+                          </span>
+                        </div>
+
+                        <span style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600 }}>
+                          {new Date(ev.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2px' }}>
+                        <div>
+                          <strong style={{ color: isCritical ? '#991B1B' : isHigh ? '#B45309' : '#142D2B', textTransform: 'capitalize' }}>
+                            {ev.type?.replace(/_/g, ' ')}:
+                          </strong>{' '}
+                          <span style={{ color: '#334155' }}>{ev.details}</span>
+                        </div>
+
+                        {ev.actionTaken && (
+                          <span style={{ fontSize: '0.7rem', color: '#64748B', background: 'rgba(0,0,0,0.04)', padding: '2px 6px', borderRadius: '4px', whiteSpace: 'nowrap' }}>
+                            Action: {ev.actionTaken.replace(/_/g, ' ')}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <span style={{ fontSize: '0.75rem', color: '#8B9892', whiteSpace: 'nowrap' }}>
-                      {new Date(ev.timestamp).toLocaleTimeString()}
-                    </span>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
 

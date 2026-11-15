@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const violationSchema = new mongoose.Schema({
+  studentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  assessmentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Assessment',
+  },
   type: {
     type: String,
     enum: [
@@ -10,11 +18,32 @@ const violationSchema = new mongoose.Schema({
       'camera_disconnected',
       'camera_permission_revoked',
       'no_face_detected',
+      'face_missing',
+      'multiple_faces',
+      'phone_detected',
+      'copy_paste_attempt',
       'clipboard_blocked',
       'context_menu',
       'navigation_attempt',
+      'suspicious_navigation',
+      'screenshot_attempt',
+      'devtools_attempt',
     ],
     required: true,
+  },
+  severity: {
+    type: String,
+    enum: ['low', 'medium', 'high', 'critical'],
+    default: 'medium',
+  },
+  actionTaken: {
+    type: String,
+    enum: ['warning_displayed', 'warning_recorded', 'session_paused', 'session_terminated', 'audit_flagged'],
+    default: 'warning_recorded',
+  },
+  confidence: {
+    type: Number,
+    default: 1.0,
   },
   timestamp: {
     type: Date,
@@ -113,6 +142,22 @@ const assessmentAttemptSchema = new mongoose.Schema(
       default: 0,
     },
     focusLossCount: {
+      type: Number,
+      default: 0,
+    },
+    phoneDetections: {
+      type: Number,
+      default: 0,
+    },
+    multipleFaceDetections: {
+      type: Number,
+      default: 0,
+    },
+    copyPasteAttempts: {
+      type: Number,
+      default: 0,
+    },
+    suspiciousNavigationCount: {
       type: Number,
       default: 0,
     },

@@ -506,25 +506,25 @@ export const Register = () => {
 
   return (
     <div
+      className="bg-tech-grid"
       style={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '100vh',
         padding: '2.5rem 1rem',
-        background: '#FAFAF5',
+        backgroundColor: '#F8FAF9',
       }}
     >
       <div
-        className="card"
         style={{
           width: '100%',
           maxWidth: '780px',
           padding: '2.75rem 2.5rem',
-          boxShadow: '0 4px 20px -2px rgba(20, 45, 43, 0.06)',
-          borderRadius: 'var(--radius-xl)',
+          boxShadow: '0 20px 40px -15px rgba(20, 45, 43, 0.08), 0 0 1px 1px rgba(7, 134, 106, 0.1)',
+          borderRadius: '16px',
           backgroundColor: '#ffffff',
-          border: '1px solid var(--border-light)',
+          border: '1px solid #DFE8E1',
           transition: 'all 0.3s ease',
         }}
       >
@@ -532,20 +532,24 @@ export const Register = () => {
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div
             style={{
+              width: '50px',
+              height: '50px',
+              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+              borderRadius: '12px',
               display: 'inline-flex',
-              padding: '0.75rem',
-              backgroundColor: 'var(--primary-light)',
-              borderRadius: 'var(--radius-md)',
-              color: 'var(--primary)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#ffffff',
               marginBottom: '1rem',
+              boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
             }}
           >
-            <ShieldCheck size={28} />
+            <Sparkles size={24} />
           </div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem', color: 'var(--text-main)' }}>
+          <h1 style={{ fontSize: '1.85rem', fontWeight: 800, margin: '0 0 0.5rem', letterSpacing: '-0.025em', color: '#142D2B' }}>
             Create Your Account
           </h1>
-          <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.95rem' }}>
+          <p style={{ color: '#68756F', margin: 0, fontSize: '0.95rem' }}>
             Join the evidence-based skill verification and campus placement platform
           </p>
         </div>

@@ -86,49 +86,49 @@ export const Login = () => {
 
   return (
     <div
+      className="bg-tech-grid"
       style={{
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#FAFAF5',
+        backgroundColor: '#F8FAF9',
         padding: '2rem 1rem',
       }}
     >
       <div
-        className="card"
         style={{
           maxWidth: '460px',
           width: '100%',
           padding: '2.75rem 2.5rem',
-          boxShadow: '0 4px 20px -2px rgba(20, 45, 43, 0.06)',
-          borderRadius: 'var(--radius-xl)',
+          boxShadow: '0 20px 40px -15px rgba(20, 45, 43, 0.08), 0 0 1px 1px rgba(7, 134, 106, 0.1)',
+          borderRadius: '16px',
           backgroundColor: '#FFFFFF',
-          border: '1px solid var(--border-light)',
+          border: '1px solid #DFE8E1',
         }}
       >
         {/* Brand Header */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div
             style={{
-              width: '48px',
-              height: '48px',
-              background: 'var(--primary)',
-              borderRadius: 'var(--radius-md)',
+              width: '50px',
+              height: '50px',
+              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+              borderRadius: '12px',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#ffffff',
               marginBottom: '1rem',
-              boxShadow: '0 2px 8px rgba(7, 134, 106, 0.3)',
+              boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
             }}
           >
-            <ShieldCheck size={26} />
+            <Sparkles size={24} />
           </div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.35rem', letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
+          <h2 style={{ fontSize: '1.85rem', fontWeight: 800, margin: '0 0 0.35rem', letterSpacing: '-0.025em', color: '#142D2B' }}>
             Welcome Back
           </h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>
+          <p style={{ color: '#68756F', fontSize: '0.9rem', margin: 0 }}>
             Sign in to access your SkillProof AI platform
           </p>
         </div>

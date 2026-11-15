@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, ShieldCheck, User, CheckCircle2, ChevronDown, Menu } from 'lucide-react';
+import { Bell, ShieldCheck, User, CheckCircle2, Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
@@ -13,15 +13,32 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
         return { label: 'Placement Director', bg: '#EDF3F1', color: '#142D2B', border: '#CADAD4' };
       case 'student':
       default:
-        return { label: 'Candidate', bg: '#F0F7F4', color: '#07866A', border: '#B9E2D8' };
+        return { label: 'Candidate', bg: '#EFF8F2', color: '#059669', border: '#A7F3D0' };
     }
   };
 
   const roleBadge = getRoleBadge(user?.role);
 
   return (
-    <header className="topbar">
-      <div className="topbar-left" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+    <header
+      className="topbar"
+      style={{
+        height: '70px',
+        background: 'rgba(255, 255, 255, 0.94)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        borderBottom: '1px solid #DFE8E1',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 2rem',
+        position: 'sticky',
+        top: 0,
+        zIndex: 40,
+        boxShadow: '0 1px 4px rgba(20, 45, 43, 0.04)',
+      }}
+    >
+      <div className="topbar-left" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
         {/* Mobile Hamburger Menu Toggle */}
         <button
           type="button"
@@ -31,7 +48,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
           style={{
             background: 'transparent',
             border: 'none',
-            color: '#202824',
+            color: '#142D2B',
             cursor: 'pointer',
             padding: '6px',
             borderRadius: '6px',
@@ -43,23 +60,38 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
           <Menu size={22} />
         </button>
 
-        <div className="institution-pill">
-          <ShieldCheck size={16} color="#07866A" />
+        {/* Institution / College Pill */}
+        <div
+          className="institution-pill"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            padding: '0.4rem 0.9rem',
+            backgroundColor: '#F4FAF7',
+            border: '1px solid #D1E6DA',
+            borderRadius: '9999px',
+            fontSize: '0.825rem',
+            fontWeight: 600,
+            color: '#142D2B',
+          }}
+        >
+          <ShieldCheck size={16} color="#059669" />
           <span>
             {profile?.collegeName || profile?.companyName || 'National Institute of Technology'}
           </span>
           <span
             style={{
-              fontSize: '0.7rem',
-              fontWeight: 700,
+              fontSize: '0.675rem',
+              fontWeight: 800,
               backgroundColor: '#EFF8F2',
-              color: '#247A48',
+              color: '#059669',
               padding: '2px 8px',
               borderRadius: '9999px',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '3px',
-              border: '1px solid #A9DCBC',
+              border: '1px solid #A7F3D0',
             }}
           >
             <CheckCircle2 size={10} /> Verified
@@ -67,23 +99,23 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
         </div>
       </div>
 
-      <div className="topbar-right">
-        {/* Network & Live Status */}
+      <div className="topbar-right" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        {/* Telemetry / Live Status Pill */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: '0.45rem',
             fontSize: '0.775rem',
-            fontWeight: 600,
-            color: 'var(--text-muted)',
-            padding: '0.35rem 0.75rem',
-            backgroundColor: '#F4F6F2',
-            borderRadius: 'var(--radius-full)',
-            border: '1px solid var(--border-light)',
+            fontWeight: 700,
+            color: '#059669',
+            padding: '0.35rem 0.85rem',
+            backgroundColor: '#EFF8F2',
+            borderRadius: '9999px',
+            border: '1px solid #A7F3D0',
           }}
         >
-          <span className="live-indicator-dot" />
+          <span className="pulse-dot-emerald" style={{ width: '7px', height: '7px' }} />
           <span>Evidence Sync Active</span>
         </div>
 
@@ -91,22 +123,22 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
         <button
           style={{
             position: 'relative',
-            background: '#ffffff',
-            border: '1px solid var(--border-light)',
-            borderRadius: 'var(--radius-full)',
+            background: '#FFFFFF',
+            border: '1px solid #DFE8E1',
+            borderRadius: '50%',
             width: '38px',
             height: '38px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--text-secondary)',
+            color: '#4A5650',
             cursor: 'pointer',
-            boxShadow: 'var(--shadow-xs)',
+            boxShadow: '0 1px 2px rgba(20, 45, 43, 0.04)',
             transition: 'all 0.15s ease',
           }}
           title="Notifications"
-          onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--border-medium)')}
-          onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-light)')}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#059669')}
+          onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#DFE8E1')}
         >
           <Bell size={17} />
           <span
@@ -118,7 +150,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
               height: '8px',
               borderRadius: '50%',
               backgroundColor: '#C83E4D',
-              boxShadow: '0 0 0 2px #ffffff',
+              boxShadow: '0 0 0 2px #FFFFFF',
             }}
           />
         </button>
@@ -129,11 +161,11 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
             display: 'flex',
             alignItems: 'center',
             gap: '0.75rem',
-            padding: '0.35rem 0.75rem 0.35rem 0.5rem',
-            borderRadius: 'var(--radius-full)',
-            background: '#ffffff',
-            border: '1px solid var(--border-light)',
-            boxShadow: 'var(--shadow-xs)',
+            padding: '0.35rem 0.85rem 0.35rem 0.5rem',
+            borderRadius: '9999px',
+            background: '#FFFFFF',
+            border: '1px solid #DFE8E1',
+            boxShadow: '0 1px 3px rgba(20, 45, 43, 0.04)',
           }}
         >
           <div
@@ -141,10 +173,10 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
               width: '34px',
               height: '34px',
               borderRadius: '50%',
-              background: '#142D2B',
-              color: '#FAFAF5',
-              border: '1.5px solid #07866A',
-              fontWeight: 700,
+              background: '#070D1B',
+              color: '#FFFFFF',
+              border: '2px solid #059669',
+              fontWeight: 800,
               fontSize: '0.85rem',
               display: 'flex',
               alignItems: 'center',
@@ -153,7 +185,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
               flexShrink: 0,
             }}
           >
-            {(user?.avatar || profile?.avatar) ? (
+            {user?.avatar || profile?.avatar ? (
               <img
                 src={user?.avatar || profile?.avatar}
                 alt={user?.fullName || 'User'}
@@ -165,14 +197,14 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
           </div>
 
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontWeight: 700, fontSize: '0.825rem', color: 'var(--text-main)', lineHeight: 1.2 }}>
+            <div style={{ fontWeight: 800, fontSize: '0.825rem', color: '#142D2B', lineHeight: 1.2 }}>
               {user?.fullName || 'User Account'}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '2px' }}>
               <span
                 style={{
                   fontSize: '0.65rem',
-                  fontWeight: 700,
+                  fontWeight: 800,
                   padding: '1px 6px',
                   borderRadius: '9999px',
                   backgroundColor: roleBadge.bg,
@@ -191,3 +223,5 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
     </header>
   );
 };
+
+export default Navbar;

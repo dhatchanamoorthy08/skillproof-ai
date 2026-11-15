@@ -55,15 +55,40 @@ export const AssessmentRunnerPage = () => {
   const [focusLosses, setFocusLosses] = useState(0);
   const [cameraInterruptions, setCameraInterruptions] = useState(0);
 
-  // Video, Canvas & Fullscreen Refs
+  // Video, Canvas, Computer Vision & Fullscreen Refs
   const previewVideoRef = useRef(null);
   const liveVideoRef = useRef(null);
   const streamRef = useRef(null);
   const canvasRef = useRef(null);
+  const cocoModelRef = useRef(null);
+  const [visionModelReady, setVisionModelReady] = useState(false);
   const faceMissingCounterRef = useRef(0);
   const phoneDetectedCounterRef = useRef(0);
   const multiFaceCounterRef = useRef(0);
   const hasEnteredFullscreenRef = useRef(false);
+
+  // Initialize TensorFlow.js COCO-SSD Computer Vision Model
+  useEffect(() => {
+    let isMounted = true;
+    const loadVisionModel = async () => {
+      try {
+        const cocoSsd = await import('@tensorflow-models/coco-ssd');
+        await import('@tensorflow/tfjs');
+        const loaded = await cocoSsd.load({ base: 'lite_mobilenet_v2' });
+        if (isMounted) {
+          cocoModelRef.current = loaded;
+          setVisionModelReady(true);
+          console.log('[SkillProof AI Proctor] Computer Vision COCO-SSD Model Loaded Successfully');
+        }
+      } catch (err) {
+        console.warn('[SkillProof AI Proctor] ML Vision model fallback to visual heuristics:', err);
+      }
+    };
+    loadVisionModel();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // 1. Initial Assessment Metadata Fetch & Refresh Persistence
   useEffect(() => {
@@ -318,15 +343,30 @@ export const AssessmentRunnerPage = () => {
   };
 
   // Log Violation Event to Backend
-  const reportViolation = async (type, details) => {
+  const reportViolation = async (
+    type,
+    details,
+    severity = 'medium',
+    actionTaken = 'warning_recorded',
+    confidence = 1.0
+  ) => {
     setViolationsCount((prev) => prev + 1);
     try {
-      await api.post(`/assessments/${id}/violations`, {
+      const res = await api.post(`/assessments/${id}/violations`, {
         attemptId,
         type,
         details,
+        severity,
+        actionTaken,
+        confidence,
         cameraStatus: cameraGranted ? 'connected' : 'disconnected',
       });
+      if (res.data?.shouldAutoSubmit) {
+        handleImmediateTermination(
+          'Assessment terminated due to exceeding maximum allowed proctoring violations.',
+          'violation_limit_exceeded'
+        );
+      }
     } catch (err) {
       console.warn('Failed to report violation to backend:', err);
     }
@@ -347,6 +387,25 @@ export const AssessmentRunnerPage = () => {
       }
 
       if (video.videoWidth > 0 && video.videoHeight > 0) {
+        // --- STEP 1: TENSORFLOW.JS COCO-SSD OBJECT DETECTION (CELL PHONE DETECTION) ---
+        let detectedPhoneViaML = false;
+        let phoneMLConfidence = 0;
+
+        if (cocoModelRef.current && video.readyState >= 2) {
+          try {
+            const predictions = await cocoModelRef.current.detect(video);
+            const phonePred = predictions.find(
+              (p) => (p.class === 'cell phone' || p.class === 'remote') && p.score >= 0.52
+            );
+            if (phonePred) {
+              detectedPhoneViaML = true;
+              phoneMLConfidence = phonePred.score;
+            }
+          } catch (cvErr) {
+            // graceful fallback to canvas pixel vision
+          }
+        }
+
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
         const W = 96;
         const H = 72;
@@ -354,7 +413,7 @@ export const AssessmentRunnerPage = () => {
         canvas.height = H;
         ctx.drawImage(video, 0, 0, W, H);
 
-        // --- STEP 1: CHROMIUM SHAPE DETECTION API (Native Face Detector if available) ---
+        // --- STEP 2: CHROMIUM SHAPE DETECTION API (Native Face Detector if available) ---
         let detectedFaceCount = -1;
         if ('FaceDetector' in window) {
           try {
@@ -366,7 +425,7 @@ export const AssessmentRunnerPage = () => {
           }
         }
 
-        // --- STEP 2: PIXEL-LEVEL LUMINANCE & COMPUTER VISION ANALYSIS ---
+        // --- STEP 3: PIXEL-LEVEL LUMINANCE & COMPUTER VISION ANALYSIS ---
         try {
           const imgData = ctx.getImageData(0, 0, W, H).data;
           let totalLuminance = 0;
@@ -374,8 +433,6 @@ export const AssessmentRunnerPage = () => {
           let skinPixelsTotal = 0;
           let skinLeft = 0;
           let skinRight = 0;
-
-          // Potential mobile phone screen glow / rectangular specular highlights in lower hand region
           let phoneGlowPixels = 0;
 
           for (let y = 0; y < H; y++) {
@@ -404,7 +461,7 @@ export const AssessmentRunnerPage = () => {
                 else skinRight++;
               }
 
-              // Mobile phone screen detection: bright rectangular high-contrast screen in lower half
+              // Mobile phone screen detection: bright specular highlight in lower half
               if (y > H * 0.55 && lum > 215 && (b >= r - 10 || b > 200)) {
                 phoneGlowPixels++;
               }
@@ -436,9 +493,20 @@ export const AssessmentRunnerPage = () => {
               multiFaceCounterRef.current = 0;
             }
 
-            // MOBILE PHONE USAGE DETECTION (concentrated screen glow or device in candidate frame)
-            if (phoneGlowPixels > 55) {
+            // MOBILE PHONE USAGE DETECTION (ML Vision + Screen Glow Heuristic)
+            if (detectedPhoneViaML || phoneGlowPixels > 65) {
               phoneDetectedCounterRef.current += 1;
+              const conf = detectedPhoneViaML ? phoneMLConfidence : 0.82;
+              setWarningMessage(
+                `Proctor Alert: Mobile device visible in camera frame (${Math.round(conf * 100)}% confidence). Please remove external devices.`
+              );
+              reportViolation(
+                'phone_detected',
+                `Visible mobile device detected in camera frame (${Math.round(conf * 100)}% confidence).`,
+                'critical',
+                'warning_displayed',
+                conf
+              );
             } else {
               if (phoneDetectedCounterRef.current > 0) {
                 phoneDetectedCounterRef.current -= 1;
@@ -450,7 +518,7 @@ export const AssessmentRunnerPage = () => {
           if (faceMissingCounterRef.current >= 3) {
             setFaceInFrame(false);
             setWarningMessage('Security Warning: Candidate face not in camera view. Return to frame immediately.');
-            reportViolation('face_missing', 'Candidate face out of camera view.');
+            reportViolation('face_missing', 'Candidate face out of camera view.', 'medium', 'warning_displayed');
             setTimeout(() => setWarningMessage(null), 5000);
             faceMissingCounterRef.current = 0;
           }
@@ -458,7 +526,7 @@ export const AssessmentRunnerPage = () => {
           // Violation Trigger 2: Multiple faces detected
           if (multiFaceCounterRef.current >= 2) {
             setWarningMessage('Security Violation: Multiple individuals detected in proctored camera view.');
-            reportViolation('multiple_faces', 'Multiple faces detected in proctored camera view.');
+            reportViolation('multiple_faces', 'Multiple faces detected in proctored camera view.', 'high', 'warning_displayed');
             setTimeout(() => setWarningMessage(null), 5000);
             multiFaceCounterRef.current = 0;
           }
@@ -467,7 +535,7 @@ export const AssessmentRunnerPage = () => {
           if (phoneDetectedCounterRef.current >= 2) {
             phoneDetectedCounterRef.current = 0;
             handleImmediateTermination(
-              'Assessment terminated due to a proctoring violation.',
+              'Assessment terminated due to a proctoring violation: Visible mobile device detected during examination.',
               'phone_usage'
             );
           }
@@ -475,7 +543,7 @@ export const AssessmentRunnerPage = () => {
           // Canvas read error bypass
         }
       }
-    }, 2000);
+    }, 2200);
 
     return () => clearInterval(interval);
   }, [phase, attemptId]);
@@ -487,6 +555,7 @@ export const AssessmentRunnerPage = () => {
     // Fullscreen Exit -> Immediate Termination without warning once fullscreen was entered
     const handleFullscreenChange = () => {
       if (!document.fullscreenElement && hasEnteredFullscreenRef.current) {
+        reportViolation('fullscreen_exit', 'Candidate exited full-screen mode.', 'critical', 'session_terminated');
         handleImmediateTermination(
           'Assessment terminated due to a proctoring violation.',
           'fullscreen_exit'
@@ -497,6 +566,7 @@ export const AssessmentRunnerPage = () => {
     // Tab Switch / Page Visibility -> Immediate Termination without warning
     const handleVisibilityChange = () => {
       if (document.hidden) {
+        reportViolation('tab_hidden', 'Browser tab switch or window minimization detected.', 'critical', 'session_terminated');
         handleImmediateTermination(
           'Assessment terminated due to a proctoring violation.',
           'tab_hidden'
@@ -506,6 +576,7 @@ export const AssessmentRunnerPage = () => {
 
     // Window Blur (Focus Loss to external window/application) -> Immediate Termination
     const handleWindowBlur = () => {
+      reportViolation('focus_loss', 'Page lost focus to an external window or background application.', 'critical', 'session_terminated');
       handleImmediateTermination(
         'Assessment terminated due to a proctoring violation.',
         'focus_loss'
@@ -516,18 +587,21 @@ export const AssessmentRunnerPage = () => {
     const handleCopy = (e) => {
       e.preventDefault();
       setWarningMessage('Copy command is disabled in proctored assessments.');
+      reportViolation('copy_paste_attempt', 'Candidate attempted clipboard copy.', 'medium', 'warning_displayed');
       setTimeout(() => setWarningMessage(null), 3000);
     };
 
     const handleCut = (e) => {
       e.preventDefault();
       setWarningMessage('Cut command is disabled in proctored assessments.');
+      reportViolation('copy_paste_attempt', 'Candidate attempted clipboard cut.', 'medium', 'warning_displayed');
       setTimeout(() => setWarningMessage(null), 3000);
     };
 
     const handlePaste = (e) => {
       e.preventDefault();
       setWarningMessage('Paste command is disabled in proctored assessments.');
+      reportViolation('copy_paste_attempt', 'Candidate attempted clipboard paste.', 'medium', 'warning_displayed');
       setTimeout(() => setWarningMessage(null), 3000);
     };
 
@@ -535,25 +609,47 @@ export const AssessmentRunnerPage = () => {
     const handleContextMenu = (e) => {
       e.preventDefault();
       setWarningMessage('Right-click context menu is disabled in proctored assessments.');
+      reportViolation('context_menu', 'Right-click context menu requested.', 'low', 'warning_displayed');
       setTimeout(() => setWarningMessage(null), 3000);
     };
 
-    // Block Keyboard Shortcuts (Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+A, Ctrl+U, F12, etc.)
+    // Block Keyboard Shortcuts (Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+A, Ctrl+U, PrintScreen, F12, etc.)
     const handleKeyDown = (e) => {
+      // PrintScreen Screenshot Suppression
+      if (e.key === 'PrintScreen' || e.keyCode === 44) {
+        e.preventDefault();
+        setWarningMessage('Screen capture is disabled during proctored assessment.');
+        reportViolation('screenshot_attempt', 'PrintScreen key pressed during active assessment.', 'high', 'warning_displayed');
+        setTimeout(() => setWarningMessage(null), 3000);
+        return;
+      }
+
+      // Windows/Mac Snipping Tool Shortcut
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        setWarningMessage('Screen snipping shortcuts are disabled.');
+        reportViolation('screenshot_attempt', 'Screen snipping shortcut detected.', 'high', 'warning_displayed');
+        setTimeout(() => setWarningMessage(null), 3000);
+        return;
+      }
+
       if (
         (e.ctrlKey || e.metaKey) &&
         ['c', 'v', 'x', 'a', 'u', 'p', 's'].includes(e.key.toLowerCase())
       ) {
         e.preventDefault();
         setWarningMessage(`Prohibited shortcut (Ctrl+${e.key.toUpperCase()}) blocked.`);
+        reportViolation('copy_paste_attempt', `Shortcut Ctrl+${e.key.toUpperCase()} blocked.`, 'medium', 'warning_displayed');
         setTimeout(() => setWarningMessage(null), 3000);
       }
+
       if (
         e.key === 'F12' ||
         ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase()))
       ) {
         e.preventDefault();
         setWarningMessage('Developer Inspection Tools are disabled.');
+        reportViolation('devtools_attempt', 'Developer inspection shortcut blocked.', 'high', 'warning_displayed');
         setTimeout(() => setWarningMessage(null), 3000);
       }
     };
