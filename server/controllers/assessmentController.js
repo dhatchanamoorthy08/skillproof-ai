@@ -371,7 +371,8 @@ const logViolation = async (req, res, next) => {
       }
 
       const limit = att.maxAllowedViolations || 5;
-      const shouldAutoSubmit = att.violationCount >= limit;
+      const isZeroTolerance = type === 'phone_detected' || type === 'fullscreen_exit';
+      const shouldAutoSubmit = att.violationCount >= limit || isZeroTolerance;
       const shouldPause = type === 'camera_disconnected' || type === 'camera_permission_revoked';
 
       if (shouldAutoSubmit) {
@@ -417,11 +418,12 @@ const logViolation = async (req, res, next) => {
           attempt.cameraInterruptions = (attempt.cameraInterruptions || 0) + 1;
           attempt.cameraStatus = 'disconnected';
         }
+        const isZeroTolerance = type === 'phone_detected' || type === 'fullscreen_exit';
         await attempt.save();
         return res.json({
           success: true,
           violationCount: attempt.violationCount,
-          shouldAutoSubmit: attempt.violationCount >= (attempt.maxAllowedViolations || 5),
+          shouldAutoSubmit: attempt.violationCount >= (attempt.maxAllowedViolations || 5) || isZeroTolerance,
         });
       }
     }

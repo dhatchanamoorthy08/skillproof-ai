@@ -439,41 +439,26 @@ export const AssessmentRunnerPage = () => {
           }
         }
 
-        // Apply Warning & Policy when Phone is Detected
+        // ZERO TOLERANCE: IMMEDIATE TERMINATION & EXIT UPON PHONE DETECTION (NO WARNINGS)
         if (isPhoneDetected) {
           setPhoneDetectedInFrame(true);
-          const now = Date.now();
-
-          // Display required warning message
-          setWarningMessage('Mobile phone detected. Please remove your phone.');
-
-          // Cooldown between repeated violation count increments (4 seconds)
-          if (now - phoneDetectionCooldownRef.current > 4000) {
-            phoneDetectionCooldownRef.current = now;
-            const nextViolations = violationsCount + 1;
-            setViolationsCount(nextViolations);
-
-            reportViolation(
-              'phone_detected',
-              'Visible mobile phone detected in webcam frame.',
-              'high',
-              'warning_displayed',
-              detectionConfidence
-            );
-
-            // Terminate the assessment ONLY when the configured violation limit is reached
-            if (nextViolations >= warningLimit) {
-              handleImmediateTermination(
-                'Assessment terminated due to reaching the maximum permitted proctoring violation limit.',
-                'violation_limit_exceeded'
-              );
-            }
-          }
+          reportViolation(
+            'phone_detected',
+            `Visible mobile phone detected in camera frame (${Math.round(detectionConfidence * 100)}% confidence). Session terminated under zero-tolerance policy.`,
+            'critical',
+            'session_terminated',
+            detectionConfidence
+          );
+          handleImmediateTermination(
+            'Assessment terminated due to a proctoring violation: Visible mobile phone detected.',
+            'phone_detected'
+          );
+          return;
         } else {
           setPhoneDetectedInFrame(false);
         }
       }
-    }, 2000);
+    }, 1500);
 
     return () => clearInterval(interval);
   }, [phase, attemptId, violationsCount, warningLimit]);
@@ -848,7 +833,7 @@ export const AssessmentRunnerPage = () => {
               </h4>
               <ul style={{ paddingLeft: '1.2rem', color: '#4A5651', fontSize: '0.875rem', lineHeight: 1.6, margin: 0 }}>
                 <li>
-                  <strong style={{ color: '#142D2B' }}>Privacy-Friendly Camera:</strong> Your webcam is used exclusively for automated mobile phone detection. No facial recognition, eye tracking, or identity recording is performed.
+                  <strong style={{ color: '#142D2B' }}>Zero-Tolerance Phone Policy:</strong> Mobile phones are strictly prohibited. Detecting a mobile phone in camera view will immediately terminate and exit the assessment without warnings.
                 </li>
                 <li>
                   <strong style={{ color: '#142D2B' }}>Automatic Fullscreen Mode:</strong> Exiting fullscreen or navigating away will log a security violation.
