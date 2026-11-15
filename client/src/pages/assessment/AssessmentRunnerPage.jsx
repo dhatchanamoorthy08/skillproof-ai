@@ -14,7 +14,6 @@ import {
   VideoOff,
   Maximize2,
   RefreshCw,
-  Eye,
   AlertOctagon,
   ShieldCheck,
   ExternalLink,
@@ -62,7 +61,7 @@ export const AssessmentRunnerPage = () => {
   const canvasRef = useRef(null);
   const cocoModelRef = useRef(null);
   const [visionModelReady, setVisionModelReady] = useState(false);
-  const phoneDetectionCooldownRef = useRef(0);
+  const phoneConsecutiveFramesRef = useRef(0);
   const hasEnteredFullscreenRef = useRef(false);
 
   // Initialize TensorFlow.js COCO-SSD Computer Vision Model
@@ -388,73 +387,47 @@ export const AssessmentRunnerPage = () => {
         let isPhoneDetected = false;
         let detectionConfidence = 0;
 
-        // TENSORFLOW.JS COCO-SSD OBJECT DETECTION (CELL PHONE DETECTION ONLY)
+        // TENSORFLOW.JS COCO-SSD OBJECT DETECTION (STRICT VISIBLE CELL PHONE ONLY)
+        // Note: No eye contact, gaze tracking, or face monitoring is performed.
         if (cocoModelRef.current && video.readyState >= 2) {
           try {
             const predictions = await cocoModelRef.current.detect(video);
-            // Strict check for visible mobile phone
+            // Strict match: ONLY 'cell phone' with solid confidence (>= 0.65) to eliminate false positives
             const phonePred = predictions.find(
-              (p) => (p.class === 'cell phone' || p.class === 'remote') && p.score >= 0.50
+              (p) => p.class === 'cell phone' && p.score >= 0.65
             );
             if (phonePred) {
               isPhoneDetected = true;
               detectionConfidence = phonePred.score;
             }
           } catch (cvErr) {
-            // graceful fallback
+            // ML detection catch
           }
         }
 
-        // Secondary optical highlight check for illuminated handheld screen if ML is initializing
-        if (!isPhoneDetected && canvas) {
-          try {
-            const ctx = canvas.getContext('2d', { willReadFrequently: true });
-            const W = 96;
-            const H = 72;
-            canvas.width = W;
-            canvas.height = H;
-            ctx.drawImage(video, 0, 0, W, H);
-            const imgData = ctx.getImageData(0, 0, W, H).data;
-            let phoneGlowPixels = 0;
-
-            for (let y = Math.floor(H * 0.5); y < H; y++) {
-              for (let x = 0; x < W; x++) {
-                const idx = (y * W + x) * 4;
-                const r = imgData[idx];
-                const g = imgData[idx + 1];
-                const b = imgData[idx + 2];
-                const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-                if (lum > 225 && (b >= r - 10 || b > 210)) {
-                  phoneGlowPixels++;
-                }
-              }
-            }
-
-            if (phoneGlowPixels > 75) {
-              isPhoneDetected = true;
-              detectionConfidence = 0.80;
-            }
-          } catch {
-            // ignore canvas read errors
-          }
-        }
-
-        // ZERO TOLERANCE: IMMEDIATE TERMINATION & EXIT UPON PHONE DETECTION (NO WARNINGS)
+        // ZERO TOLERANCE WITH MULTI-FRAME VERIFICATION:
+        // Requires 2 consecutive cycles (or immediate if high confidence >= 0.85)
+        // to prevent false alarms from momentary reflections or low-confidence noise.
         if (isPhoneDetected) {
-          setPhoneDetectedInFrame(true);
-          reportViolation(
-            'phone_detected',
-            `Visible mobile phone detected in camera frame (${Math.round(detectionConfidence * 100)}% confidence). Session terminated under zero-tolerance policy.`,
-            'critical',
-            'session_terminated',
-            detectionConfidence
-          );
-          handleImmediateTermination(
-            'Assessment terminated due to a proctoring violation: Visible mobile phone detected.',
-            'phone_detected'
-          );
-          return;
+          phoneConsecutiveFramesRef.current += 1;
+
+          if (phoneConsecutiveFramesRef.current >= 2 || detectionConfidence >= 0.85) {
+            setPhoneDetectedInFrame(true);
+            reportViolation(
+              'phone_detected',
+              `Visible mobile phone verified in camera frame (${Math.round(detectionConfidence * 100)}% confidence). Session terminated under zero-tolerance policy.`,
+              'critical',
+              'session_terminated',
+              detectionConfidence
+            );
+            handleImmediateTermination(
+              'Assessment terminated due to a proctoring violation: Visible mobile phone detected.',
+              'phone_detected'
+            );
+            return;
+          }
         } else {
+          phoneConsecutiveFramesRef.current = 0;
           setPhoneDetectedInFrame(false);
         }
       }
@@ -834,6 +807,9 @@ export const AssessmentRunnerPage = () => {
               <ul style={{ paddingLeft: '1.2rem', color: '#4A5651', fontSize: '0.875rem', lineHeight: 1.6, margin: 0 }}>
                 <li>
                   <strong style={{ color: '#142D2B' }}>Zero-Tolerance Phone Policy:</strong> Mobile phones are strictly prohibited. Detecting a mobile phone in camera view will immediately terminate and exit the assessment without warnings.
+                </li>
+                <li>
+                  <strong style={{ color: '#142D2B' }}>Privacy-Friendly Proctoring:</strong> No eye tracking, gaze monitoring, facial recognition, or video recording. You are free to view your screen and workspace naturally.
                 </li>
                 <li>
                   <strong style={{ color: '#142D2B' }}>Automatic Fullscreen Mode:</strong> Exiting fullscreen or navigating away will log a security violation.
