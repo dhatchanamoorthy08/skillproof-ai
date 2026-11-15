@@ -29,12 +29,12 @@ export const AssessmentRunnerPage = () => {
   const [phase, setPhase] = useState('pre_check');
   const [terminationData, setTerminationData] = useState(null);
 
-  // Webcam & Permissions
+  // Webcam & Permissions (Privacy-friendly: Phone detection only, no face monitoring)
   const [cameraGranted, setCameraGranted] = useState(false);
   const [cameraError, setCameraError] = useState(null);
   const [cameraLoading, setCameraLoading] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
-  const [faceInFrame, setFaceInFrame] = useState(true);
+  const [phoneDetectedInFrame, setPhoneDetectedInFrame] = useState(false);
 
   // Exam Session
   const [attemptId, setAttemptId] = useState(null);
@@ -62,9 +62,7 @@ export const AssessmentRunnerPage = () => {
   const canvasRef = useRef(null);
   const cocoModelRef = useRef(null);
   const [visionModelReady, setVisionModelReady] = useState(false);
-  const faceMissingCounterRef = useRef(0);
-  const phoneDetectedCounterRef = useRef(0);
-  const multiFaceCounterRef = useRef(0);
+  const phoneDetectionCooldownRef = useRef(0);
   const hasEnteredFullscreenRef = useRef(false);
 
   // Initialize TensorFlow.js COCO-SSD Computer Vision Model
@@ -372,7 +370,7 @@ export const AssessmentRunnerPage = () => {
     }
   };
 
-  // 3. Periodic Camera, Face-Presence & Mobile Phone Detection Engine
+  // 3. Periodic Mobile Phone Detection Engine (Privacy-Friendly: Phone Detection Only)
   useEffect(() => {
     if (phase !== 'in_exam' || !liveVideoRef.current || !canvasRef.current) return;
 
@@ -387,166 +385,98 @@ export const AssessmentRunnerPage = () => {
       }
 
       if (video.videoWidth > 0 && video.videoHeight > 0) {
-        // --- STEP 1: TENSORFLOW.JS COCO-SSD OBJECT DETECTION (CELL PHONE DETECTION) ---
-        let detectedPhoneViaML = false;
-        let phoneMLConfidence = 0;
+        let isPhoneDetected = false;
+        let detectionConfidence = 0;
 
+        // TENSORFLOW.JS COCO-SSD OBJECT DETECTION (CELL PHONE DETECTION ONLY)
         if (cocoModelRef.current && video.readyState >= 2) {
           try {
             const predictions = await cocoModelRef.current.detect(video);
+            // Strict check for visible mobile phone
             const phonePred = predictions.find(
-              (p) => (p.class === 'cell phone' || p.class === 'remote') && p.score >= 0.52
+              (p) => (p.class === 'cell phone' || p.class === 'remote') && p.score >= 0.50
             );
             if (phonePred) {
-              detectedPhoneViaML = true;
-              phoneMLConfidence = phonePred.score;
+              isPhoneDetected = true;
+              detectionConfidence = phonePred.score;
             }
           } catch (cvErr) {
-            // graceful fallback to canvas pixel vision
+            // graceful fallback
           }
         }
 
-        const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        const W = 96;
-        const H = 72;
-        canvas.width = W;
-        canvas.height = H;
-        ctx.drawImage(video, 0, 0, W, H);
-
-        // --- STEP 2: CHROMIUM SHAPE DETECTION API (Native Face Detector if available) ---
-        let detectedFaceCount = -1;
-        if ('FaceDetector' in window) {
+        // Secondary optical highlight check for illuminated handheld screen if ML is initializing
+        if (!isPhoneDetected && canvas) {
           try {
-            const faceDetector = new window.FaceDetector({ fastMode: true, maxDetectedFaces: 5 });
-            const faces = await faceDetector.detect(video);
-            detectedFaceCount = faces.length;
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+            const W = 96;
+            const H = 72;
+            canvas.width = W;
+            canvas.height = H;
+            ctx.drawImage(video, 0, 0, W, H);
+            const imgData = ctx.getImageData(0, 0, W, H).data;
+            let phoneGlowPixels = 0;
+
+            for (let y = Math.floor(H * 0.5); y < H; y++) {
+              for (let x = 0; x < W; x++) {
+                const idx = (y * W + x) * 4;
+                const r = imgData[idx];
+                const g = imgData[idx + 1];
+                const b = imgData[idx + 2];
+                const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+                if (lum > 225 && (b >= r - 10 || b > 210)) {
+                  phoneGlowPixels++;
+                }
+              }
+            }
+
+            if (phoneGlowPixels > 75) {
+              isPhoneDetected = true;
+              detectionConfidence = 0.80;
+            }
           } catch {
-            detectedFaceCount = -1;
+            // ignore canvas read errors
           }
         }
 
-        // --- STEP 3: PIXEL-LEVEL LUMINANCE & COMPUTER VISION ANALYSIS ---
-        try {
-          const imgData = ctx.getImageData(0, 0, W, H).data;
-          let totalLuminance = 0;
-          let pixelCount = imgData.length / 4;
-          let skinPixelsTotal = 0;
-          let skinLeft = 0;
-          let skinRight = 0;
-          let phoneGlowPixels = 0;
+        // Apply Warning & Policy when Phone is Detected
+        if (isPhoneDetected) {
+          setPhoneDetectedInFrame(true);
+          const now = Date.now();
 
-          for (let y = 0; y < H; y++) {
-            for (let x = 0; x < W; x++) {
-              const idx = (y * W + x) * 4;
-              const r = imgData[idx];
-              const g = imgData[idx + 1];
-              const b = imgData[idx + 2];
+          // Display required warning message
+          setWarningMessage('Mobile phone detected. Please remove your phone.');
 
-              const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-              totalLuminance += lum;
+          // Cooldown between repeated violation count increments (4 seconds)
+          if (now - phoneDetectionCooldownRef.current > 4000) {
+            phoneDetectionCooldownRef.current = now;
+            const nextViolations = violationsCount + 1;
+            setViolationsCount(nextViolations);
 
-              // Peer-reviewed RGB Skin Color Segmentation (Kovac / Chai)
-              const isSkin =
-                r > 95 &&
-                g > 40 &&
-                b > 20 &&
-                Math.max(r, g, b) - Math.min(r, g, b) > 15 &&
-                Math.abs(r - g) > 15 &&
-                r > g &&
-                r > b;
-
-              if (isSkin) {
-                skinPixelsTotal++;
-                if (x < W / 2) skinLeft++;
-                else skinRight++;
-              }
-
-              // Mobile phone screen detection: bright specular highlight in lower half
-              if (y > H * 0.55 && lum > 215 && (b >= r - 10 || b > 200)) {
-                phoneGlowPixels++;
-              }
-            }
-          }
-
-          const avgLuminance = totalLuminance / pixelCount;
-          const skinRatio = skinPixelsTotal / pixelCount;
-
-          // Lens covered or completely dark
-          if (avgLuminance < 6 || avgLuminance > 252) {
-            faceMissingCounterRef.current += 1;
-          } else {
-            // FACE ABSENCE / CANDIDATE LEAVING CAMERA VIEW
-            if (detectedFaceCount === 0 || (detectedFaceCount === -1 && skinRatio < 0.025)) {
-              faceMissingCounterRef.current += 1;
-            } else {
-              faceMissingCounterRef.current = 0;
-              setFaceInFrame(true);
-            }
-
-            // MULTIPLE FACES DETECTION
-            if (
-              detectedFaceCount > 1 ||
-              (detectedFaceCount === -1 && skinLeft > pixelCount * 0.08 && skinRight > pixelCount * 0.08)
-            ) {
-              multiFaceCounterRef.current += 1;
-            } else {
-              multiFaceCounterRef.current = 0;
-            }
-
-            // MOBILE PHONE USAGE DETECTION (ML Vision + Screen Glow Heuristic)
-            if (detectedPhoneViaML || phoneGlowPixels > 65) {
-              phoneDetectedCounterRef.current += 1;
-              const conf = detectedPhoneViaML ? phoneMLConfidence : 0.82;
-              setWarningMessage(
-                `Proctor Alert: Mobile device visible in camera frame (${Math.round(conf * 100)}% confidence). Please remove external devices.`
-              );
-              reportViolation(
-                'phone_detected',
-                `Visible mobile device detected in camera frame (${Math.round(conf * 100)}% confidence).`,
-                'critical',
-                'warning_displayed',
-                conf
-              );
-            } else {
-              if (phoneDetectedCounterRef.current > 0) {
-                phoneDetectedCounterRef.current -= 1;
-              }
-            }
-          }
-
-          // Violation Trigger 1: Candidate leaves camera view
-          if (faceMissingCounterRef.current >= 3) {
-            setFaceInFrame(false);
-            setWarningMessage('Security Warning: Candidate face not in camera view. Return to frame immediately.');
-            reportViolation('face_missing', 'Candidate face out of camera view.', 'medium', 'warning_displayed');
-            setTimeout(() => setWarningMessage(null), 5000);
-            faceMissingCounterRef.current = 0;
-          }
-
-          // Violation Trigger 2: Multiple faces detected
-          if (multiFaceCounterRef.current >= 2) {
-            setWarningMessage('Security Violation: Multiple individuals detected in proctored camera view.');
-            reportViolation('multiple_faces', 'Multiple faces detected in proctored camera view.', 'high', 'warning_displayed');
-            setTimeout(() => setWarningMessage(null), 5000);
-            multiFaceCounterRef.current = 0;
-          }
-
-          // Violation Trigger 3: Mobile phone detected -> AUTOMATIC IMMEDIATE TERMINATION
-          if (phoneDetectedCounterRef.current >= 2) {
-            phoneDetectedCounterRef.current = 0;
-            handleImmediateTermination(
-              'Assessment terminated due to a proctoring violation: Visible mobile device detected during examination.',
-              'phone_usage'
+            reportViolation(
+              'phone_detected',
+              'Visible mobile phone detected in webcam frame.',
+              'high',
+              'warning_displayed',
+              detectionConfidence
             );
+
+            // Terminate the assessment ONLY when the configured violation limit is reached
+            if (nextViolations >= warningLimit) {
+              handleImmediateTermination(
+                'Assessment terminated due to reaching the maximum permitted proctoring violation limit.',
+                'violation_limit_exceeded'
+              );
+            }
           }
-        } catch {
-          // Canvas read error bypass
+        } else {
+          setPhoneDetectedInFrame(false);
         }
       }
-    }, 2200);
+    }, 2000);
 
     return () => clearInterval(interval);
-  }, [phase, attemptId]);
+  }, [phase, attemptId, violationsCount, warningLimit]);
 
   // 4. Strict Browser Security Event Listeners (Zero Tolerance)
   useEffect(() => {
@@ -765,7 +695,7 @@ export const AssessmentRunnerPage = () => {
   // Current Question
   const currentQ = assessment?.questions?.[currentQuestionIndex];
 
-  // Hidden Canvas for face heuristic
+  // Hidden Canvas for optical detection
   const hiddenCanvas = <canvas ref={canvasRef} style={{ display: 'none' }} />;
 
   // ==========================================
@@ -918,7 +848,7 @@ export const AssessmentRunnerPage = () => {
               </h4>
               <ul style={{ paddingLeft: '1.2rem', color: '#4A5651', fontSize: '0.875rem', lineHeight: 1.6, margin: 0 }}>
                 <li>
-                  <strong style={{ color: '#142D2B' }}>Mandatory Webcam Feed:</strong> Your camera must remain active and unobstructed throughout the examination.
+                  <strong style={{ color: '#142D2B' }}>Privacy-Friendly Camera:</strong> Your webcam is used exclusively for automated mobile phone detection. No facial recognition, eye tracking, or identity recording is performed.
                 </li>
                 <li>
                   <strong style={{ color: '#142D2B' }}>Automatic Fullscreen Mode:</strong> Exiting fullscreen or navigating away will log a security violation.
@@ -930,7 +860,7 @@ export const AssessmentRunnerPage = () => {
                   <strong style={{ color: '#142D2B' }}>Randomized Questions:</strong> Question order and answer choices are dynamically shuffled per account.
                 </li>
                 <li>
-                  <strong style={{ color: '#142D2B' }}>Violation Limit:</strong> Exceeding 5 warnings will pause or auto-submit your exam for administrative review.
+                  <strong style={{ color: '#142D2B' }}>Violation Limit:</strong> Exceeding 5 warnings will terminate or auto-submit your exam for administrative review.
                 </li>
               </ul>
 
@@ -957,7 +887,7 @@ export const AssessmentRunnerPage = () => {
                   style={{ marginTop: '3px', cursor: 'pointer' }}
                 />
                 <span>
-                  I consent to continuous webcam monitoring and browser security logging during this assessment. I understand that violations will be recorded in my candidate audit log.
+                  I consent to automated mobile phone detection and browser security logging during this assessment. I understand that no video recordings or personal photos are stored.
                 </span>
               </label>
             </div>
@@ -1281,7 +1211,7 @@ export const AssessmentRunnerPage = () => {
           borderRadius: '10px',
           overflow: 'hidden',
           boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
-          border: faceInFrame ? '2px solid #247A48' : '2px solid #E8A23A',
+          border: phoneDetectedInFrame ? '2px solid #EF4444' : '2px solid #247A48',
           zIndex: 100,
           transition: 'all 0.2s ease',
         }}
@@ -1324,14 +1254,14 @@ export const AssessmentRunnerPage = () => {
             {phase === 'in_exam' ? 'Camera Live' : 'Camera Paused'}
           </div>
 
-          {!faceInFrame && (
+          {phoneDetectedInFrame && (
             <div
               style={{
                 position: 'absolute',
                 bottom: 0,
                 left: 0,
                 right: 0,
-                background: 'rgba(217, 119, 6, 0.95)',
+                background: 'rgba(239, 68, 68, 0.95)',
                 color: '#FFFFFF',
                 fontSize: '0.65rem',
                 fontWeight: 700,
@@ -1339,7 +1269,7 @@ export const AssessmentRunnerPage = () => {
                 textAlign: 'center',
               }}
             >
-              Align Face in Camera
+              ⚠️ Phone Detected
             </div>
           )}
         </div>
