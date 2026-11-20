@@ -21,8 +21,6 @@ import {
   FileCheck2,
   Check,
   ChevronRight,
-  Menu,
-  X,
   Clock,
   Layers,
   Cpu,
@@ -31,7 +29,6 @@ import {
 } from 'lucide-react';
 
 export const LandingPage = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#F5F1E9', color: '#252525', overflowX: 'hidden' }}>
@@ -47,7 +44,7 @@ export const LandingPage = () => {
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           borderBottom: '1px solid rgba(232, 225, 215, 0.12)',
-          padding: '0.9rem 2rem',
+          padding: '0.85rem 1.5rem',
         }}
       >
         <div
@@ -57,145 +54,73 @@ export const LandingPage = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            gap: '1rem',
           }}
         >
-          {/* Brand Logo */}
+          {/* Brand Logo (Top-Left) */}
           <Link
             to="/"
             style={{
               textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
             }}
           >
             <SkillProofLogo size={38} theme="dark" subtitle="Enterprise Skill Standard" />
           </Link>
 
-          {/* Desktop Nav Links */}
-          <nav
-            style={{
-              display: 'none',
-              gap: '2rem',
-              alignItems: 'center',
-            }}
-            className="desktop-nav-links"
-          >
-            <a href="#solutions" style={{ color: '#D9D0C3', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
-              Solutions
-            </a>
-            <a href="#flywheel" style={{ color: '#D9D0C3', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
-              Verification Flywheel
-            </a>
-            <a href="#security" style={{ color: '#D9D0C3', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
-              Proctoring Security
-            </a>
-            <a href="#governance" style={{ color: '#D9D0C3', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
-              Governance
-            </a>
-          </nav>
-
-          {/* Desktop Action Buttons */}
+          {/* Top-Right Action Buttons */}
           <div
             style={{
-              display: 'none',
-              gap: '1rem',
+              display: 'flex',
+              gap: '0.75rem',
               alignItems: 'center',
             }}
-            className="desktop-auth-actions"
           >
             <Link
               to="/login"
               style={{
                 color: '#F5F1E9',
+                backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                border: '1px solid rgba(232, 225, 215, 0.22)',
                 fontSize: '0.875rem',
                 fontWeight: 600,
                 textDecoration: 'none',
-                padding: '0.5rem 1rem',
+                padding: '0.5rem 1.15rem',
                 borderRadius: '8px',
                 transition: 'all 0.15s ease',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                whiteSpace: 'nowrap',
               }}
             >
               Sign In
             </Link>
             <Link
               to="/register"
-              className="btn btn-terracotta-glow"
               style={{
-                padding: '0.6rem 1.35rem',
+                color: '#FFFFFF',
+                backgroundColor: '#C46A45',
+                border: 'none',
                 fontSize: '0.875rem',
+                fontWeight: 700,
+                textDecoration: 'none',
+                padding: '0.55rem 1.25rem',
                 borderRadius: '8px',
+                boxShadow: '0 4px 14px rgba(196, 106, 69, 0.35)',
+                transition: 'all 0.15s ease',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                whiteSpace: 'nowrap',
               }}
             >
               Get Started <ArrowRight size={15} />
             </Link>
           </div>
-
-          {/* Mobile Hamburger Button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{
-              display: 'block',
-              background: 'transparent',
-              border: 'none',
-              color: '#FFFFFF',
-              cursor: 'pointer',
-              padding: '6px',
-            }}
-            className="mobile-hamburger-btn"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
-
-        {/* Mobile Navigation Dropdown */}
-        {mobileMenuOpen && (
-          <div
-            style={{
-              marginTop: '1rem',
-              padding: '1.25rem 0',
-              borderTop: '1px solid rgba(232, 225, 215, 0.15)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem',
-            }}
-          >
-            <a
-              href="#solutions"
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ color: '#F5F1E9', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none' }}
-            >
-              Solutions
-            </a>
-            <a
-              href="#flywheel"
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ color: '#F5F1E9', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none' }}
-            >
-              Verification Flywheel
-            </a>
-            <a
-              href="#security"
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ color: '#F5F1E9', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none' }}
-            >
-              Proctoring Security
-            </a>
-            <a
-              href="#governance"
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ color: '#F5F1E9', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none' }}
-            >
-              Governance
-            </a>
-            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
-              <Link to="/login" className="btn btn-secondary" style={{ flex: 1, justifyContent: 'center' }}>
-                Sign In
-              </Link>
-              <Link to="/register" className="btn btn-primary" style={{ flex: 1, justifyContent: 'center' }}>
-                Get Started
-              </Link>
-            </div>
-          </div>
-        )}
       </header>
 
       {/* =========================================================================
