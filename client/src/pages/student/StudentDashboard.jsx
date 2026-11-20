@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Sparkles,
   ShieldCheck,
-  Award,
-  Briefcase,
-  FileCode2,
-  ArrowRight,
   TrendingUp,
   CheckCircle2,
-  Clock,
-  Compass,
-  Play,
+  FileCode2,
+  Award,
+  Briefcase,
+  ArrowRight,
+  ExternalLink,
+  Info,
+  XCircle,
+  Sparkles,
 } from 'lucide-react';
 import api from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
-import { MetricCard } from '../../components/MetricCard';
-import { ReadinessTierBadge, SkillBadge } from '../../components/Badge';
+import { ReadinessTierBadge } from '../../components/Badge';
 
 export const StudentDashboard = () => {
   const { user, profile } = useAuth();
@@ -24,6 +23,7 @@ export const StudentDashboard = () => {
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showBreakdownModal, setShowBreakdownModal] = useState(false);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -47,311 +47,836 @@ export const StudentDashboard = () => {
     fetchDashboardData();
   }, []);
 
-  const demonstratedCount = passport?.skills.filter(
-    (s) => s.status === 'demonstrated' || s.status === 'verified'
-  ).length || 0;
-  const verifiedCount = passport?.skills.filter((s) => s.status === 'verified').length || 0;
+  // Compute actual backend values
+  const demonstratedCount = useMemo(() => {
+    return (
+      passport?.skills?.filter(
+        (s) => s.status === 'demonstrated' || s.status === 'verified'
+      ).length || 0
+    );
+  }, [passport]);
+
+  const verifiedCount = useMemo(() => {
+    return passport?.skills?.filter((s) => s.status === 'verified').length || 0;
+  }, [passport]);
+
+  const profileCompleteness = useMemo(() => {
+    if (typeof profile?.profileCompletion === 'number') return profile.profileCompletion;
+    if (passport?.readinessBreakdown?.profileCompletenessScore) {
+      return Math.round((passport.readinessBreakdown.profileCompletenessScore / 15) * 100);
+    }
+    return 65;
+  }, [profile, passport]);
+
+  const topMatchScore = useMemo(() => {
+    if (!jobs || jobs.length === 0) return 0;
+    return Math.max(...jobs.map((j) => j.matchScore || 0));
+  }, [jobs]);
 
   return (
-    <div>
-      {/* Welcome Banner */}
-      <div
-        className="card"
+    <div
+      className="student-home-screen"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.85rem',
+        maxWidth: '1440px',
+        margin: '0 auto',
+        width: '100%',
+        boxSizing: 'border-box',
+      }}
+    >
+      {/* ========================================================= */}
+      {/* 1. WELCOME SECTION (WITH 4 INTEGRATED KEY STATISTICS) */}
+      {/* ========================================================= */}
+      <section
+        className="student-welcome-section"
         style={{
-          background: '#252525',
-          color: '#ffffff',
-          marginBottom: '2rem',
-          padding: '2.25rem',
-          display: 'flex',
+          backgroundColor: '#252525',
+          color: '#FAF6EF',
+          borderRadius: '14px',
+          border: '1px solid rgba(232, 225, 215, 0.16)',
+          boxShadow: '0 8px 24px rgba(37, 37, 37, 0.08)',
+          padding: '1.25rem 1.5rem',
+          display: 'grid',
+          gridTemplateColumns: 'minmax(280px, 1fr) minmax(380px, 1.35fr)',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
           gap: '1.5rem',
-          boxShadow: 'var(--shadow-md)',
-          border: '1px solid rgba(232, 225, 215, 0.15)',
         }}
       >
-        <div>
+        {/* Left: Greeting & Candidate Identity */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                color: '#B89B6A',
+                backgroundColor: 'rgba(184, 155, 106, 0.14)',
+                border: '1px solid rgba(184, 155, 106, 0.28)',
+                padding: '2px 8px',
+                borderRadius: '999px',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+              }}
+            >
+              <ShieldCheck size={13} color="#B89B6A" /> Verified Candidate Profile
+            </span>
+            <ReadinessTierBadge tier={passport?.readinessTier} />
+          </div>
+
+          <h2
+            style={{
+              fontSize: '1.45rem',
+              fontWeight: 800,
+              color: '#F5F1E9',
+              margin: '0.15rem 0',
+              letterSpacing: '-0.02em',
+              lineHeight: 1.2,
+            }}
+          >
+            Welcome back, {user?.fullName || 'Student'}!
+          </h2>
+
+          <p
+            style={{
+              color: '#D9D0C3',
+              fontSize: '0.85rem',
+              margin: 0,
+              lineHeight: 1.4,
+            }}
+          >
+            {profile?.department || 'Computer Science & Engineering'} &bull; Target Role:{' '}
+            <strong style={{ color: '#FFFFFF' }}>
+              {profile?.targetRole || 'Full Stack Developer'}
+            </strong>
+          </p>
+
+          <div style={{ marginTop: '0.35rem' }}>
+            <button
+              type="button"
+              onClick={() => setShowBreakdownModal(true)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: '#C46A45',
+                fontSize: '0.78rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+                padding: 0,
+              }}
+            >
+              <Info size={13} />
+              <span>Inspect Mathematical JRI Weight Breakdown &rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Right: 4 Important Statistics (2x2 Grid utilizing blank space) */}
+        <div
+          className="welcome-stats-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '0.65rem',
+          }}
+        >
+          {/* 1. Job Readiness Index */}
           <div
             style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(232, 225, 215, 0.12)',
+              borderRadius: '10px',
+              padding: '0.65rem 0.85rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              minHeight: '74px',
+              boxSizing: 'border-box',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  color: '#D9D0C3',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                Job Readiness Index
+              </span>
+              <TrendingUp size={15} color="#C46A45" />
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginTop: '0.2rem' }}>
+              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FAF6EF', lineHeight: 1 }}>
+                {passport?.jobReadinessIndex ?? 50}%
+              </span>
+              <span style={{ fontSize: '0.72rem', color: '#C46A45', fontWeight: 600 }}>
+                {passport?.readinessTier ? passport.readinessTier.replace(/_/g, ' ') : 'Job Ready'}
+              </span>
+            </div>
+
+            {/* Visual mini progress bar */}
+            <div
+              style={{
+                width: '100%',
+                height: '4px',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '2px',
+                overflow: 'hidden',
+                marginTop: '0.35rem',
+              }}
+            >
+              <div
+                style={{
+                  width: `${Math.min(passport?.jobReadinessIndex ?? 50, 100)}%`,
+                  height: '100%',
+                  backgroundColor: '#C46A45',
+                  borderRadius: '2px',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* 2. Profile Completeness */}
+          <div
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(232, 225, 215, 0.12)',
+              borderRadius: '10px',
+              padding: '0.65rem 0.85rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              minHeight: '74px',
+              boxSizing: 'border-box',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  color: '#D9D0C3',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                Profile Completeness
+              </span>
+              <CheckCircle2 size={15} color="#B89B6A" />
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginTop: '0.2rem' }}>
+              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FAF6EF', lineHeight: 1 }}>
+                {profileCompleteness}%
+              </span>
+              <span style={{ fontSize: '0.72rem', color: '#B89B6A', fontWeight: 600 }}>
+                Bio &amp; Portfolio
+              </span>
+            </div>
+
+            {/* Visual mini progress bar */}
+            <div
+              style={{
+                width: '100%',
+                height: '4px',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '2px',
+                overflow: 'hidden',
+                marginTop: '0.35rem',
+              }}
+            >
+              <div
+                style={{
+                  width: `${Math.min(profileCompleteness, 100)}%`,
+                  height: '100%',
+                  backgroundColor: '#B89B6A',
+                  borderRadius: '2px',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* 3. Demonstrated Skills */}
+          <div
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(232, 225, 215, 0.12)',
+              borderRadius: '10px',
+              padding: '0.65rem 0.85rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              minHeight: '74px',
+              boxSizing: 'border-box',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  color: '#D9D0C3',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                Demonstrated Skills
+              </span>
+              <FileCode2 size={15} color="#FAF6EF" />
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginTop: '0.2rem' }}>
+              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FAF6EF', lineHeight: 1 }}>
+                {demonstratedCount}
+              </span>
+              <span style={{ fontSize: '0.72rem', color: '#D9D0C3', fontWeight: 500 }}>
+                Code &amp; Repo backed
+              </span>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '0.35rem' }}>
+              <span
+                style={{
+                  fontSize: '0.66rem',
+                  fontWeight: 700,
+                  color: '#FAF6EF',
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  padding: '1px 6px',
+                  borderRadius: '4px',
+                }}
+              >
+                Git / Assessment Proof
+              </span>
+            </div>
+          </div>
+
+          {/* 4. Verified Evidence */}
+          <div
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(232, 225, 215, 0.12)',
+              borderRadius: '10px',
+              padding: '0.65rem 0.85rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              minHeight: '74px',
+              boxSizing: 'border-box',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  color: '#D9D0C3',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                Verified Evidence
+              </span>
+              <Award size={15} color="#C46A45" />
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginTop: '0.2rem' }}>
+              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FAF6EF', lineHeight: 1 }}>
+                {verifiedCount}
+              </span>
+              <span style={{ fontSize: '0.72rem', color: '#D9D0C3', fontWeight: 500 }}>
+                Audited credentials
+              </span>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '0.35rem' }}>
+              <span
+                style={{
+                  fontSize: '0.66rem',
+                  fontWeight: 700,
+                  color: '#C46A45',
+                  backgroundColor: 'rgba(196, 106, 69, 0.16)',
+                  padding: '1px 6px',
+                  borderRadius: '4px',
+                }}
+              >
+                Institutional Audit Approved
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 2. JOB MATCHING SECTION (DIRECTLY BELOW WELCOME SECTION) */}
+      {/* ========================================================= */}
+      <section
+        className="student-job-matching-section"
+        style={{
+          backgroundColor: '#FFFFFF',
+          borderRadius: '14px',
+          border: '1px solid #E8E1D7',
+          boxShadow: '0 2px 8px rgba(37, 37, 37, 0.03)',
+          padding: '1.15rem 1.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.85rem',
+        }}
+      >
+        {/* Section Header */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
+            borderBottom: '1px solid #F0EAE1',
+            paddingBottom: '0.75rem',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <div
+              style={{
+                width: '34px',
+                height: '34px',
+                borderRadius: '8px',
+                backgroundColor: '#FAF6EF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '1px solid #E8E1D7',
+              }}
+            >
+              <Briefcase size={18} color="#C46A45" />
+            </div>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <h3
+                  style={{
+                    fontSize: '1.05rem',
+                    fontWeight: 800,
+                    color: '#252525',
+                    margin: 0,
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  Job Matching &amp; Recommendations
+                </h3>
+                {topMatchScore > 0 && (
+                  <span
+                    style={{
+                      fontSize: '0.7rem',
+                      fontWeight: 800,
+                      color: '#065F46',
+                      backgroundColor: '#ECFDF5',
+                      border: '1px solid #A7F3D0',
+                      padding: '2px 8px',
+                      borderRadius: '999px',
+                    }}
+                  >
+                    Top Match: {topMatchScore}%
+                  </span>
+                )}
+              </div>
+              <p style={{ fontSize: '0.78rem', color: '#77736D', margin: 0, marginTop: '2px' }}>
+                Recommended opportunities prioritized by your verified evidence, proctored assessments, and demonstrated skills.
+              </p>
+            </div>
+          </div>
+
+          <Link
+            to="/student/jobs"
+            style={{
+              fontSize: '0.8rem',
+              fontWeight: 700,
+              color: '#C46A45',
+              backgroundColor: '#FAF6EF',
+              border: '1px solid #E8E1D7',
+              padding: '6px 14px',
+              borderRadius: '8px',
+              textDecoration: 'none',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              color: '#B89B6A',
-              backgroundColor: 'rgba(184, 155, 106, 0.15)',
-              border: '1px solid rgba(184, 155, 106, 0.3)',
-              padding: '3px 10px',
-              borderRadius: '999px',
-              fontSize: '0.78rem',
-              fontWeight: 700,
-              marginBottom: '0.65rem',
-              textTransform: 'uppercase',
-              letterSpacing: '0.04em',
+              transition: 'background-color 0.15s ease',
             }}
           >
-            <ShieldCheck size={14} /> Evidence-Backed Candidate Profile
-          </div>
-          <h2 style={{ fontSize: '1.85rem', color: '#F5F1E9', marginBottom: '0.4rem', fontWeight: 800 }}>
-            Welcome back, {user?.fullName || 'Student'}!
-          </h2>
-          <p style={{ color: '#D9D0C3', fontSize: '0.95rem', maxWidth: '600px' }}>
-            {profile?.department || 'Computer Science'} &bull; Target Role:{' '}
-            <strong style={{ color: '#FFFFFF' }}>{profile?.targetRole || 'Full Stack Developer'}</strong>
-          </p>
-        </div>
-
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-          <Link
-            to="/student/evidence"
-            className="btn btn-accent"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700 }}
-          >
-            <FileCode2 size={18} />
-            <span>Submit Certificates</span>
-          </Link>
-          <Link
-            to="/assessments"
-            className="btn btn-primary"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700 }}
-          >
-            <Play size={18} />
-            <span>Start Assessment</span>
-          </Link>
-          <Link
-            to="/student/passport"
-            className="btn btn-secondary"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}
-          >
-            <ShieldCheck size={18} />
-            <span>View Skill Passport</span>
+            <span>View All Jobs</span>
+            <ArrowRight size={14} />
           </Link>
         </div>
-      </div>
 
-      {/* Metric Cards Grid */}
-      <div className="stat-grid">
-        <MetricCard
-          title="Job Readiness Index"
-          value={`${passport?.jobReadinessIndex || 50}%`}
-          subtitle={<ReadinessTierBadge tier={passport?.readinessTier} />}
-          icon={<TrendingUp size={22} />}
-          iconBg="#FBF4F0"
-          iconColor="#C46A45"
-        />
-
-        <MetricCard
-          title="Profile Completeness"
-          value={`${profile?.profileCompletion || 65}%`}
-          subtitle="Add links and resume"
-          icon={<CheckCircle2 size={22} />}
-          iconBg="#FAF6EF"
-          iconColor="#B89B6A"
-        />
-
-        <MetricCard
-          title="Demonstrated Skills"
-          value={demonstratedCount}
-          subtitle="Backed by code/projects"
-          icon={<FileCode2 size={22} />}
-          iconBg="#F5F1E9"
-          iconColor="#252525"
-        />
-
-        <MetricCard
-          title="Verified Evidence"
-          value={verifiedCount}
-          subtitle="Audited by placement"
-          icon={<ShieldCheck size={22} />}
-          iconBg="#FBF4F0"
-          iconColor="#C46A45"
-        />
-      </div>
-
-      {/* Main Content Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '2rem' }}>
-        {/* Readiness Breakdown & Suggestions */}
-        <div className="card">
-          <div className="card-header">
-            <div>
-              <h3 className="card-title">Job Readiness Breakdown</h3>
-              <p className="card-subtitle">Transparent mathematical weights calculated by SkillProof AI</p>
+        {/* Recommended Job Opportunities List */}
+        <div>
+          {jobs.length === 0 ? (
+            <div
+              style={{
+                textAlign: 'center',
+                padding: '1.5rem',
+                color: '#77736D',
+                fontSize: '0.85rem',
+                backgroundColor: '#FAF6EF',
+                borderRadius: '8px',
+                border: '1px dashed #E8E1D7',
+              }}
+            >
+              No active job matches found for your current skill passport. Browse open campus drives and requisitions in the Jobs catalog.
             </div>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.75rem' }}>
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem' }}>
-                <span style={{ fontWeight: 600 }}>Assessed Knowledge (Weight 35%)</span>
-                <span>{passport?.readinessBreakdown?.assessedScore || 0} / 35</span>
-              </div>
-              <div style={{ height: '8px', backgroundColor: 'var(--bg-card-subtle)', borderRadius: '4px', overflow: 'hidden' }}>
-                <div
-                  style={{
-                    width: `${((passport?.readinessBreakdown?.assessedScore || 0) / 35) * 100}%`,
-                    height: '100%',
-                    backgroundColor: '#C46A45',
-                    borderRadius: '4px',
-                  }}
-                />
-              </div>
-            </div>
-
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem' }}>
-                <span style={{ fontWeight: 600 }}>Demonstrated Projects (Weight 25%)</span>
-                <span>{passport?.readinessBreakdown?.demonstratedScore || 0} / 25</span>
-              </div>
-              <div style={{ height: '8px', backgroundColor: 'var(--bg-card-subtle)', borderRadius: '4px', overflow: 'hidden' }}>
-                <div
-                  style={{
-                    width: `${((passport?.readinessBreakdown?.demonstratedScore || 0) / 25) * 100}%`,
-                    height: '100%',
-                    backgroundColor: '#252525',
-                    borderRadius: '4px',
-                  }}
-                />
-              </div>
-            </div>
-
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem' }}>
-                <span style={{ fontWeight: 600 }}>Verified Evidence (Weight 25%)</span>
-                <span>{passport?.readinessBreakdown?.verifiedScore || 0} / 25</span>
-              </div>
-              <div style={{ height: '8px', backgroundColor: 'var(--bg-card-subtle)', borderRadius: '4px', overflow: 'hidden' }}>
-                <div
-                  style={{
-                    width: `${((passport?.readinessBreakdown?.verifiedScore || 0) / 25) * 100}%`,
-                    height: '100%',
-                    backgroundColor: '#B89B6A',
-                    borderRadius: '4px',
-                  }}
-                />
-              </div>
-            </div>
-
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem' }}>
-                <span style={{ fontWeight: 600 }}>Profile Completeness (Weight 15%)</span>
-                <span>{passport?.readinessBreakdown?.profileCompletenessScore || 0} / 15</span>
-              </div>
-              <div style={{ height: '8px', backgroundColor: 'var(--bg-card-subtle)', borderRadius: '4px', overflow: 'hidden' }}>
-                <div
-                  style={{
-                    width: `${((passport?.readinessBreakdown?.profileCompletenessScore || 0) / 15) * 100}%`,
-                    height: '100%',
-                    backgroundColor: '#D9D0C3',
-                    borderRadius: '4px',
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-
-          <h4 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--text-main)' }}>
-            Personalized Improvement Actions
-          </h4>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-            {passport?.actionableSuggestions?.map((sug, idx) => (
-              <div
-                key={idx}
-                style={{
-                  padding: '0.85rem 1rem',
-                  borderRadius: 'var(--radius-md)',
-                  backgroundColor: 'var(--bg-card-subtle)',
-                  borderLeft: '4px solid var(--primary)',
-                  fontSize: '0.875rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <span>{sug.text}</span>
-                <Link
-                  to={sug.actionType === 'assessment' ? '/assessments' : '/student/passport'}
-                  style={{ fontWeight: 600, fontSize: '0.8rem', whiteSpace: 'nowrap', marginLeft: '0.5rem' }}
-                >
-                  {sug.actionType === 'assessment' ? 'Start Assessment →' : 'Take Action →'}
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Recommended Jobs */}
-        <div className="card">
-          <div className="card-header">
-            <div>
-              <h3 className="card-title">Top Matching Jobs</h3>
-              <p className="card-subtitle">Prioritized by verified evidence & assessment performance</p>
-            </div>
-            <Link to="/student/jobs" className="btn btn-secondary btn-sm">
-              View All
-            </Link>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {jobs.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>
-                No active jobs currently posted. Check back soon.
-              </div>
-            ) : (
-              jobs.map(({ job, matchScore, matchBreakdown }) => (
+          ) : (
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '0.85rem',
+              }}
+            >
+              {jobs.map(({ job, matchScore, matchBreakdown }) => (
                 <div
                   key={job._id}
                   style={{
-                    padding: '1.25rem',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid var(--border-light)',
+                    backgroundColor: '#FAF6EF',
+                    border: '1px solid #E8E1D7',
+                    borderRadius: '10px',
+                    padding: '0.95rem 1.1rem',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '0.65rem',
+                    justifyContent: 'space-between',
+                    gap: '0.55rem',
+                    transition: 'transform 0.15s ease, box-shadow 0.15s ease',
                   }}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <div>
-                      <h4 style={{ fontSize: '1.05rem', fontWeight: 700 }}>{job.title}</h4>
-                      <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                        {job.companyName} &bull; {job.location} ({job.workMode})
-                      </p>
+                  {/* Job Header */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+                      <h4
+                        style={{
+                          fontSize: '0.95rem',
+                          fontWeight: 800,
+                          color: '#252525',
+                          margin: 0,
+                          lineHeight: 1.25,
+                        }}
+                      >
+                        {job.title}
+                      </h4>
+                      <span
+                        style={{
+                          padding: '2px 7px',
+                          borderRadius: '6px',
+                          backgroundColor: matchScore >= 75 ? 'rgba(196, 106, 69, 0.12)' : 'rgba(184, 155, 106, 0.12)',
+                          color: matchScore >= 75 ? '#C46A45' : '#B89B6A',
+                          border: `1px solid ${matchScore >= 75 ? 'rgba(196, 106, 69, 0.3)' : 'rgba(184, 155, 106, 0.3)'}`,
+                          fontWeight: 800,
+                          fontSize: '0.75rem',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {matchScore}% Match
+                      </span>
                     </div>
-                    <div
-                      style={{
-                        padding: '0.3rem 0.65rem',
-                        borderRadius: 'var(--radius-md)',
-                        backgroundColor: matchScore >= 75 ? '#FAF6EF' : '#FBF4F0',
-                        color: matchScore >= 75 ? '#B89B6A' : '#C46A45',
-                        border: matchScore >= 75 ? '1px solid #E2D3B8' : '1px solid #E8C2B2',
-                        fontWeight: 700,
-                        fontSize: '0.875rem',
-                      }}
-                    >
-                      {matchScore}% Match
-                    </div>
+
+                    <p style={{ fontSize: '0.78rem', color: '#77736D', margin: '4px 0 0 0' }}>
+                      <strong style={{ color: '#252525' }}>{job.companyName}</strong> &bull; {job.location} ({job.workMode})
+                    </p>
                   </div>
 
-                  <p style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-                    {matchBreakdown?.explanation}
+                  {/* Matching Explanation */}
+                  <p
+                    style={{
+                      fontSize: '0.75rem',
+                      color: '#77736D',
+                      margin: 0,
+                      lineHeight: 1.35,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {matchBreakdown?.explanation || 'Aligned with your demonstrated technical skills and verified project evidence.'}
                   </p>
 
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.35rem' }}>
-                    <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                  {/* Skills & Action */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginTop: '0.2rem',
+                      borderTop: '1px solid rgba(232, 225, 215, 0.6)',
+                      paddingTop: '0.45rem',
+                    }}
+                  >
+                    <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
                       {job.requiredSkills.slice(0, 3).map((sk) => (
-                        <span key={sk} className="badge badge-claimed" style={{ fontSize: '0.7rem' }}>
+                        <span
+                          key={sk}
+                          style={{
+                            fontSize: '0.68rem',
+                            fontWeight: 600,
+                            backgroundColor: '#FFFFFF',
+                            color: '#252525',
+                            border: '1px solid #E8E1D7',
+                            padding: '1px 6px',
+                            borderRadius: '4px',
+                          }}
+                        >
                           {sk}
                         </span>
                       ))}
                     </div>
-                    <Link to="/student/jobs" className="btn btn-primary btn-sm">
-                      Apply Now
+
+                    <Link
+                      to="/student/jobs"
+                      style={{
+                        fontSize: '0.74rem',
+                        fontWeight: 700,
+                        backgroundColor: '#C46A45',
+                        color: '#FFFFFF',
+                        border: 'none',
+                        padding: '4px 10px',
+                        borderRadius: '6px',
+                        textDecoration: 'none',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '2px',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Apply Now &rarr;
                     </Link>
                   </div>
                 </div>
-              ))
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 3. TRANSPARENT MATHEMATICAL JRI WEIGHT BREAKDOWN MODAL */}
+      {/* ========================================================= */}
+      {showBreakdownModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(37, 37, 37, 0.65)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 999,
+            padding: '16px',
+          }}
+          onClick={() => setShowBreakdownModal(false)}
+        >
+          <div
+            style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: '14px',
+              maxWidth: '560px',
+              width: '100%',
+              padding: '24px',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, color: '#252525' }}>
+                  Job Readiness Index Breakdown
+                </h3>
+                <p style={{ margin: '2px 0 0 0', fontSize: '0.78rem', color: '#77736D' }}>
+                  Transparent mathematical formula calculated by SkillProof AI
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowBreakdownModal(false)}
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+              >
+                <XCircle size={20} color="#77736D" />
+              </button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem', marginBottom: '1.25rem' }}>
+              {/* Assessed Knowledge (Weight 35%) */}
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
+                  <span style={{ fontWeight: 700, color: '#252525' }}>Assessed Knowledge (Weight 35%)</span>
+                  <span style={{ fontWeight: 800, color: '#C46A45' }}>
+                    {passport?.readinessBreakdown?.assessedScore || 0} / 35
+                  </span>
+                </div>
+                <div style={{ height: '6px', backgroundColor: '#FAF6EF', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div
+                    style={{
+                      width: `${((passport?.readinessBreakdown?.assessedScore || 0) / 35) * 100}%`,
+                      height: '100%',
+                      backgroundColor: '#C46A45',
+                      borderRadius: '3px',
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Demonstrated Projects (Weight 25%) */}
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
+                  <span style={{ fontWeight: 700, color: '#252525' }}>Demonstrated Projects (Weight 25%)</span>
+                  <span style={{ fontWeight: 800, color: '#252525' }}>
+                    {passport?.readinessBreakdown?.demonstratedScore || 0} / 25
+                  </span>
+                </div>
+                <div style={{ height: '6px', backgroundColor: '#FAF6EF', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div
+                    style={{
+                      width: `${((passport?.readinessBreakdown?.demonstratedScore || 0) / 25) * 100}%`,
+                      height: '100%',
+                      backgroundColor: '#252525',
+                      borderRadius: '3px',
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Verified Evidence (Weight 25%) */}
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
+                  <span style={{ fontWeight: 700, color: '#252525' }}>Verified Evidence (Weight 25%)</span>
+                  <span style={{ fontWeight: 800, color: '#B89B6A' }}>
+                    {passport?.readinessBreakdown?.verifiedScore || 0} / 25
+                  </span>
+                </div>
+                <div style={{ height: '6px', backgroundColor: '#FAF6EF', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div
+                    style={{
+                      width: `${((passport?.readinessBreakdown?.verifiedScore || 0) / 25) * 100}%`,
+                      height: '100%',
+                      backgroundColor: '#B89B6A',
+                      borderRadius: '3px',
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Profile Completeness (Weight 15%) */}
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
+                  <span style={{ fontWeight: 700, color: '#252525' }}>Profile Completeness (Weight 15%)</span>
+                  <span style={{ fontWeight: 800, color: '#77736D' }}>
+                    {passport?.readinessBreakdown?.profileCompletenessScore || 0} / 15
+                  </span>
+                </div>
+                <div style={{ height: '6px', backgroundColor: '#FAF6EF', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div
+                    style={{
+                      width: `${((passport?.readinessBreakdown?.profileCompletenessScore || 0) / 15) * 100}%`,
+                      height: '100%',
+                      backgroundColor: '#A89F91',
+                      borderRadius: '3px',
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Suggestions */}
+            {passport?.actionableSuggestions?.length > 0 && (
+              <div style={{ marginBottom: '1.25rem' }}>
+                <h4 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#252525', marginBottom: '0.5rem' }}>
+                  Actionable Next Steps
+                </h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+                  {passport.actionableSuggestions.map((sug, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        padding: '0.55rem 0.8rem',
+                        borderRadius: '6px',
+                        backgroundColor: '#FAF6EF',
+                        borderLeft: '3px solid #C46A45',
+                        fontSize: '0.78rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <span style={{ color: '#252525' }}>{sug.text}</span>
+                      <Link
+                        to={sug.actionType === 'assessment' ? '/assessments' : '/student/passport'}
+                        onClick={() => setShowBreakdownModal(false)}
+                        style={{ color: '#C46A45', fontWeight: 700, fontSize: '0.75rem', textDecoration: 'none', whiteSpace: 'nowrap', marginLeft: '8px' }}
+                      >
+                        {sug.actionType === 'assessment' ? 'Start Assessment →' : 'Take Action →'}
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
+
+            <div style={{ textAlign: 'right' }}>
+              <button
+                type="button"
+                onClick={() => setShowBreakdownModal(false)}
+                style={{
+                  backgroundColor: '#252525',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  borderRadius: '6px',
+                  padding: '6px 16px',
+                  fontSize: '0.8rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
+
+export default StudentDashboard;

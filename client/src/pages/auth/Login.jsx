@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { SkillProofLogo } from '../../components/SkillProofLogo';
 import {
   Sparkles,
   Eye,
@@ -108,24 +109,11 @@ export const Login = () => {
         }}
       >
         {/* Brand Header */}
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div
-            style={{
-              width: '50px',
-              height: '50px',
-              background: 'linear-gradient(135deg, #C46A45 0%, #B15B38 100%)',
-              borderRadius: '12px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#ffffff',
-              marginBottom: '1rem',
-              boxShadow: '0 4px 14px rgba(196, 106, 69, 0.35)',
-            }}
-          >
-            <Sparkles size={24} />
+        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+          <div style={{ display: 'inline-flex', marginBottom: '1rem' }}>
+            <SkillProofLogo size={46} theme="light" />
           </div>
-          <h2 style={{ fontSize: '1.85rem', fontWeight: 800, margin: '0 0 0.35rem', letterSpacing: '-0.025em', color: '#252525' }}>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.35rem', letterSpacing: '-0.025em', color: '#252525' }}>
             Welcome Back
           </h2>
           <p style={{ color: '#77736D', fontSize: '0.9rem', margin: 0 }}>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ShieldCheck, Lock, Mail, ArrowRight, AlertCircle, Key, CheckCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { SkillProofLogo } from '../../components/SkillProofLogo';
 
 export const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -58,20 +59,8 @@ export const AdminLogin = () => {
       >
         {/* Branding & Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '52px',
-              height: '52px',
-              borderRadius: '12px',
-              backgroundColor: '#252525',
-              color: '#FAF6EF',
-              marginBottom: '16px',
-            }}
-          >
-            <ShieldCheck size={28} color="#C46A45" />
+          <div style={{ display: 'inline-flex', marginBottom: '16px' }}>
+            <SkillProofLogo size={48} theme="light" />
           </div>
           <div
             style={{

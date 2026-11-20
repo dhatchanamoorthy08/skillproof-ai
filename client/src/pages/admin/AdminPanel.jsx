@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SkillProofLogo } from '../../components/SkillProofLogo';
 import {
   LayoutDashboard,
   Users,
@@ -672,28 +673,7 @@ export const AdminPanel = () => {
       {/* SIDEBAR NAVIGATION */}
       <aside style={styles.sidebar}>
         <div style={styles.sidebarHeader}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div
-              style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '8px',
-                backgroundColor: '#FAF6EF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#252525',
-              }}
-            >
-              <Shield size={20} color="#C46A45" />
-            </div>
-            <div>
-              <div style={{ fontSize: '15px', fontWeight: 800, color: '#FAF6EF' }}>SkillProof AI</div>
-              <div style={{ fontSize: '10px', color: '#B89B6A', fontWeight: 700, letterSpacing: '0.08em' }}>
-                ADMIN CONTROL PANEL
-              </div>
-            </div>
-          </div>
+          <SkillProofLogo size={34} theme="dark" subtitle="ADMIN CONTROL PANEL" />
         </div>
 
         <nav style={{ padding: '14px 0', flex: 1, overflowY: 'auto' }}>

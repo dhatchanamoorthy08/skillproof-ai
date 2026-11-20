@@ -231,6 +231,24 @@ button {
   }
 }
 
+/* Student Home Single-Screen Viewport Optimization */
+.page-wrapper:has(.student-home-screen) {
+  padding: 1rem 1.75rem;
+}
+
+@media (max-width: 960px) {
+  .student-welcome-section {
+    grid-template-columns: 1fr !important;
+    gap: 1.15rem !important;
+  }
+}
+
+@media (max-width: 580px) {
+  .welcome-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* ==========================================================================
    Header & Topbar
    ========================================================================== */

@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { SkillProofLogo } from './SkillProofLogo';
 import {
   Sparkles,
   LayoutDashboard,
@@ -116,36 +117,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
     <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       {/* Brand Header */}
       <div className="sidebar-header" style={{ justifyContent: 'space-between' }}>
-        <div className="brand-logo">
-          <div
-            className="brand-icon"
-            style={{
-              background: 'linear-gradient(135deg, #C46A45 0%, #B15B38 100%)',
-              color: '#FFFFFF',
-              borderRadius: '10px',
-              boxShadow: '0 0 14px rgba(196, 106, 69, 0.45)',
-            }}
-          >
-            <Sparkles size={20} />
-          </div>
-          <div>
-            <div style={{ lineHeight: 1.15, fontSize: '1.2rem', color: '#FFFFFF', fontWeight: 800, letterSpacing: '-0.02em' }}>
-              SkillProof <span style={{ color: '#C46A45' }}>AI</span>
-            </div>
-            <div
-              style={{
-                fontSize: '0.65rem',
-                color: '#B89B6A',
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                fontWeight: 700,
-                marginTop: '2px',
-              }}
-            >
-              {roleTitle}
-            </div>
-          </div>
-        </div>
+        <SkillProofLogo size={36} theme="dark" subtitle={roleTitle} />
 
         {/* Mobile Close Button */}
         {onClose && (

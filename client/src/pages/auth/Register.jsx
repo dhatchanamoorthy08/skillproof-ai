@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { SkillProofLogo } from '../../components/SkillProofLogo';
 import {
   Sparkles,
   AlertCircle,
@@ -529,24 +530,11 @@ export const Register = () => {
         }}
       >
         {/* Brand Header */}
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div
-            style={{
-              width: '50px',
-              height: '50px',
-              background: 'linear-gradient(135deg, #C46A45 0%, #B15B38 100%)',
-              borderRadius: '12px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#ffffff',
-              marginBottom: '1rem',
-              boxShadow: '0 4px 14px rgba(196, 106, 69, 0.35)',
-            }}
-          >
-            <Sparkles size={24} />
+        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+          <div style={{ display: 'inline-flex', marginBottom: '1rem' }}>
+            <SkillProofLogo size={46} theme="light" />
           </div>
-          <h1 style={{ fontSize: '1.85rem', fontWeight: 800, margin: '0 0 0.5rem', letterSpacing: '-0.025em', color: '#252525' }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem', letterSpacing: '-0.025em', color: '#252525' }}>
             Create Your Account
           </h1>
           <p style={{ color: '#77736D', margin: 0, fontSize: '0.95rem' }}>

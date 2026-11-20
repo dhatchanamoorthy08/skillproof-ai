@@ -1,0 +1,27 @@
+<svg width="64" height="64" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sp_terracotta" x1="15%" y1="15%" x2="85%" y2="85%">
+      <stop offset="0%" stop-color="#D97A53" />
+      <stop offset="100%" stop-color="#A8522E" />
+    </linearGradient>
+    <linearGradient id="sp_gold" x1="15%" y1="85%" x2="85%" y2="15%">
+      <stop offset="0%" stop-color="#9C7E4A" />
+      <stop offset="50%" stop-color="#B89B6A" />
+      <stop offset="100%" stop-color="#D4BC91" />
+    </linearGradient>
+    <linearGradient id="sp_crest_border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C46A45" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#B89B6A" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#C46A45" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+
+  <rect x="3" y="3" width="94" height="94" rx="22" fill="#252525" stroke="#E8E1D7" stroke-width="1.5" stroke-opacity="0.2" />
+  <rect x="4" y="4" width="92" height="92" rx="21" stroke="url(#sp_crest_border)" stroke-width="1.5" />
+
+  <path d="M24 68 L24 42 C24 35.5 28.5 31 35 31 L44 31 L34 51 L47 51 L24 68 Z" fill="url(#sp_terracotta)" />
+  <path d="M76 32 L76 58 C76 64.5 71.5 69 65 69 L56 69 L66 49 L53 49 L76 32 Z" fill="url(#sp_gold)" />
+
+  <polygon points="50,22 64,39 50,56 36,39" fill="#FAF6EF" opacity="0.96" />
+  <path d="M43 39 L48 44 L57 33" stroke="#252525" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

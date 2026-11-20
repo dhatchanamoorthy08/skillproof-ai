@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { SkillProofLogo } from '../components/SkillProofLogo';
 import {
   Sparkles,
   ShieldCheck,
@@ -62,43 +63,10 @@ export const LandingPage = () => {
           <Link
             to="/"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.75rem',
               textDecoration: 'none',
             }}
           >
-            <div
-              style={{
-                width: '38px',
-                height: '38px',
-                background: 'linear-gradient(135deg, #C46A45 0%, #B15B38 100%)',
-                borderRadius: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#ffffff',
-                boxShadow: '0 0 16px rgba(196, 106, 69, 0.4)',
-              }}
-            >
-              <Sparkles size={20} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span
-                style={{
-                  fontSize: '1.35rem',
-                  fontWeight: 800,
-                  fontFamily: 'var(--font-heading)',
-                  letterSpacing: '-0.025em',
-                  color: '#FFFFFF',
-                }}
-              >
-                SkillProof <span style={{ color: '#C46A45' }}>AI</span>
-              </span>
-              <span style={{ fontSize: '0.65rem', color: '#B89B6A', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-                Enterprise Skill Standard
-              </span>
-            </div>
+            <SkillProofLogo size={38} theme="dark" subtitle="Enterprise Skill Standard" />
           </Link>
 
           {/* Desktop Nav Links */}
@@ -1019,13 +987,8 @@ export const LandingPage = () => {
           }}
         >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1rem' }}>
-              <div style={{ width: '30px', height: '30px', borderRadius: '8px', background: '#C46A45', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Sparkles size={16} />
-              </div>
-              <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF' }}>
-                SkillProof <span style={{ color: '#C46A45' }}>AI</span>
-              </span>
+            <div style={{ marginBottom: '1rem' }}>
+              <SkillProofLogo size={32} theme="dark" />
             </div>
             <p style={{ fontSize: '0.85rem', lineHeight: 1.6, color: '#9C9790' }}>
               Standardizing verified competencies with cryptographically auditable skill passports.
