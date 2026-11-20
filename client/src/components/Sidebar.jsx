@@ -101,6 +101,26 @@ export const Sidebar = ({ isOpen, onClose }) => {
     },
   ];
 
+  // Admin Nav Groups
+  const adminNavGroups = [
+    {
+      title: 'Platform Command',
+      items: [
+        { to: '/admin/dashboard', label: 'Master Command', icon: <LayoutDashboard size={18} /> },
+        { to: '/student/roadmap', label: 'Career Roadmaps', icon: <Compass size={18} /> },
+        { to: '/assessments', label: 'Assessments', icon: <Award size={18} /> },
+      ],
+    },
+    {
+      title: 'Institutional Audit',
+      items: [
+        { to: '/placement/students', label: 'Student Directory', icon: <Users size={18} /> },
+        { to: '/placement/proctoring', label: 'Proctoring Monitor', icon: <ShieldAlert size={18} /> },
+        { to: '/placement/evidence-review', label: 'Evidence Audit', icon: <FileCheck2 size={18} /> },
+      ],
+    },
+  ];
+
   let currentGroups = studentNavGroups;
   let roleTitle = 'Candidate Portal';
 
@@ -110,6 +130,9 @@ export const Sidebar = ({ isOpen, onClose }) => {
   } else if (role === 'placement_officer') {
     currentGroups = placementNavGroups;
     roleTitle = 'Placement Command';
+  } else if (role === 'admin') {
+    currentGroups = adminNavGroups;
+    roleTitle = 'System Admin';
   }
 
   return (

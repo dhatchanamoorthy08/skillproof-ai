@@ -11,6 +11,8 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
         return { label: 'Corporate Recruiter', bg: '#FAF6EF', color: '#B89B6A', border: '#E2D3B8' };
       case 'placement_officer':
         return { label: 'Placement Director', bg: '#F5F1E9', color: '#252525', border: '#E8E1D7' };
+      case 'admin':
+        return { label: 'Platform Admin', bg: '#252525', color: '#F5F1E9', border: '#C46A45' };
       case 'student':
       default:
         return { label: 'Candidate', bg: '#FBF4F0', color: '#C46A45', border: '#E8C2B2' };

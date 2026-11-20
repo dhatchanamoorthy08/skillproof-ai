@@ -230,7 +230,7 @@ export const Login = () => {
           >
             One-Click Demo Portals
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
             <button
               type="button"
               className="btn btn-secondary btn-sm"
@@ -257,6 +257,15 @@ export const Login = () => {
             >
               <Users size={14} color="#252525" />
               <span>Placement</span>
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={() => autofillDemo('admin@skillproof.ai', 'Password@123')}
+              style={{ fontSize: '0.78rem', gap: '0.3rem', padding: '0.45rem 0.5rem' }}
+            >
+              <ShieldCheck size={14} color="#C46A45" />
+              <span>Admin</span>
             </button>
           </div>
         </div>

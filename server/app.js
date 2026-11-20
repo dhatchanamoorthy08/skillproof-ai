@@ -11,6 +11,8 @@ const placementRoutes = require('./routes/placementRoutes');
 const assessmentRoutes = require('./routes/assessmentRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const resumeRoutes = require('./routes/resumeRoutes');
+const roadmapRoutes = require('./routes/roadmapRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const sanitizeInput = require('./middleware/sanitize');
 
@@ -164,6 +166,8 @@ app.use('/api/v1/placement', placementRoutes);
 app.use('/api/v1/assessments', assessmentRoutes);
 app.use('/api/v1/jobs', jobRoutes);
 app.use('/api/v1/resumes', resumeRoutes);
+app.use('/api/v1/roadmaps', roadmapRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 // Fallback 404 for undefined /api routes
 app.all('/api/*', (req, res) => {
