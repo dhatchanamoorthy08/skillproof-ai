@@ -19,10 +19,6 @@ import { ResumeAnalysisPage } from './pages/student/ResumeAnalysisPage';
 import { InterviewPrepPage } from './pages/student/InterviewPrepPage';
 import { IndustryTrendsPage } from './pages/student/IndustryTrendsPage';
 import { StudentSettingsPage } from './pages/student/StudentSettingsPage';
-import { TopicStudyPage } from './pages/student/TopicStudyPage';
-
-// Admin Pages
-import { AdminDashboard } from './pages/admin/AdminDashboard';
 
 // Assessment Pages
 import { AssessmentListPage } from './pages/assessment/AssessmentListPage';
@@ -76,7 +72,6 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     if (user.role === 'student') return <Navigate to="/student/home" replace />;
     if (user.role === 'recruiter') return <Navigate to="/recruiter/dashboard" replace />;
     if (user.role === 'placement_officer') return <Navigate to="/placement/dashboard" replace />;
-    if (user.role === 'admin') return <Navigate to="/admin/dashboard" replace />;
     return <Navigate to="/" replace />;
   }
 
@@ -106,7 +101,6 @@ export const App = () => {
             <Route path="passport" element={<SkillPassportPage />} />
             <Route path="evidence" element={<EvidenceSubmissionPage />} />
             <Route path="roadmap" element={<RoadmapPage />} />
-            <Route path="roadmap/:slug/topic/:topicId" element={<TopicStudyPage />} />
             <Route path="gaps" element={<SkillGapPage />} />
             <Route path="jobs" element={<JobsPage />} />
             <Route path="resume" element={<ResumeAnalysisPage />} />
@@ -119,7 +113,7 @@ export const App = () => {
           <Route
             path="/assessments"
             element={
-              <ProtectedRoute allowedRoles={['student', 'placement_officer', 'recruiter', 'admin']}>
+              <ProtectedRoute allowedRoles={['student', 'placement_officer', 'recruiter']}>
                 <DashboardLayout />
               </ProtectedRoute>
             }
@@ -131,7 +125,7 @@ export const App = () => {
           <Route
             path="/assessments/:id/run"
             element={
-              <ProtectedRoute allowedRoles={['student', 'placement_officer', 'recruiter', 'admin']}>
+              <ProtectedRoute allowedRoles={['student', 'placement_officer', 'recruiter']}>
                 <AssessmentRunnerPage />
               </ProtectedRoute>
             }
@@ -172,24 +166,6 @@ export const App = () => {
             <Route path="drives" element={<HiringDrivesPage />} />
             <Route path="reports" element={<PlacementReportsPage />} />
             <Route path="settings" element={<PlacementDashboard />} />
-          </Route>
-
-          {/* Master Admin Protected Routes */}
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <DashboardLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<Navigate to="/admin/dashboard" replace />} />
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="roadmaps" element={<AdminDashboard />} />
-            <Route path="students" element={<AdminDashboard />} />
-            <Route path="assessments" element={<AdminDashboard />} />
-            <Route path="evidence" element={<AdminDashboard />} />
-            <Route path="reports" element={<AdminDashboard />} />
           </Route>
 
           {/* Fallback */}

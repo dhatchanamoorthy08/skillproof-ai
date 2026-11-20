@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const roadmapsData = require('../data/roadmapsData');
 
 const dataDir = path.join(__dirname, '../data');
 const dataFilePath = path.join(dataDir, 'fallbackStore.json');
@@ -72,14 +71,6 @@ const defaultUsers = [
     password: '$2a$10$nrJU7vDX74dmLpkIS.sEV.I.Fv3i4fl2jgSdZNNFVRvgsNamBqlb6',
     fullName: 'dharani',
     role: 'recruiter',
-    status: 'active',
-  },
-  {
-    _id: '660000000000000000000007',
-    email: 'admin@skillproof.ai',
-    password: BCRYPT_DEFAULT_HASH,
-    fullName: 'System Administrator',
-    role: 'admin',
     status: 'active',
   },
 ];
@@ -581,8 +572,6 @@ let store = {
   assessmentAttempts: defaultAssessmentAttempts,
   drives: defaultDrives,
   skills: defaultSkills,
-  roadmaps: roadmapsData,
-  studentRoadmapProgress: {},
 };
 
 function ensureDirExists(dirPath) {
@@ -639,13 +628,6 @@ function loadStore() {
         // Ensure assessmentAttempts array is initialized
         if (!Array.isArray(store.assessmentAttempts)) {
           store.assessmentAttempts = defaultAssessmentAttempts;
-        }
-        // Ensure all 10 roadmaps and student progress are initialized
-        if (!Array.isArray(store.roadmaps) || store.roadmaps.length < roadmapsData.length) {
-          store.roadmaps = roadmapsData;
-        }
-        if (!store.studentRoadmapProgress) {
-          store.studentRoadmapProgress = {};
         }
         saveStore();
         return;
@@ -719,18 +701,6 @@ module.exports = {
   },
   get fallbackSkills() {
     return store.skills;
-  },
-  get fallbackRoadmaps() {
-    if (!Array.isArray(store.roadmaps) || store.roadmaps.length < roadmapsData.length) {
-      store.roadmaps = roadmapsData;
-    }
-    return store.roadmaps;
-  },
-  get fallbackStudentRoadmapProgress() {
-    if (!store.studentRoadmapProgress) {
-      store.studentRoadmapProgress = {};
-    }
-    return store.studentRoadmapProgress;
   },
   saveStore,
 };

@@ -12,8 +12,6 @@ const Job = require('../models/Job');
 const Application = require('../models/Application');
 const HiringDrive = require('../models/HiringDrive');
 const CompanyVerification = require('../models/CompanyVerification');
-const Roadmap = require('../models/Roadmap');
-const roadmapsData = require('../data/roadmapsData');
 
 const seedData = async () => {
   if (process.env.NODE_ENV === 'production' && !process.env.ALLOW_PROD_SEED) {
@@ -40,23 +38,8 @@ const seedData = async () => {
     await Application.deleteMany({});
     await HiringDrive.deleteMany({});
     await CompanyVerification.deleteMany({});
-    await Roadmap.deleteMany({});
 
     console.log('[Seeder] Cleaned existing collections.');
-
-    // 0. Create Administrator
-    const adminUser = await User.create({
-      email: 'admin@skillproof.ai',
-      password: 'Password@123',
-      fullName: 'System Administrator',
-      role: 'admin',
-      isEmailVerified: true,
-      status: 'active',
-    });
-
-    // Seed all 10 Career Roadmaps
-    await Roadmap.insertMany(roadmapsData);
-    console.log('[Seeder] Seeded 10 comprehensive Career Roadmaps.');
 
     // 1. Create Placement Officer
     const officerUser = await User.create({
