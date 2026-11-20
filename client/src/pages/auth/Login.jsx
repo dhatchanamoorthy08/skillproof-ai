@@ -51,7 +51,9 @@ export const Login = () => {
     try {
       const data = await login(email, password);
       const role = data.user.role;
-      if (role === 'student') {
+      if (role === 'admin') {
+        navigate('/admin');
+      } else if (role === 'student') {
         navigate('/student/home');
       } else if (role === 'recruiter') {
         navigate('/recruiter/dashboard');

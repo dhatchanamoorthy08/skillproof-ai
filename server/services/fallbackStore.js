@@ -73,6 +73,14 @@ const defaultUsers = [
     role: 'recruiter',
     status: 'active',
   },
+  {
+    _id: '660000000000000000000007',
+    email: 'admin@skillproof.ai',
+    password: BCRYPT_DEFAULT_HASH,
+    fullName: 'Website Owner / Freelancer Admin',
+    role: 'admin',
+    status: 'active',
+  },
 ];
 
 const dhatchanaStudentProfile = {
@@ -550,6 +558,159 @@ const defaultDrives = [
   },
 ];
 
+const defaultRoadmaps = [
+  {
+    _id: 'rm_fullstack_01',
+    title: 'Full Stack Web Developer',
+    slug: 'full-stack-web-developer',
+    description: 'Master full-stack engineering with React, Node.js, Express, MongoDB, RESTful APIs, and cloud architecture.',
+    category: 'Web Development',
+    estimatedDuration: '6 Months',
+    status: 'published',
+    requiredSkills: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Node.js', 'MongoDB', 'REST APIs', 'Git'],
+    modules: [
+      {
+        moduleId: 'fsw-m1',
+        title: 'Core Frontend Foundations',
+        description: 'Semantic HTML5, CSS Flexbox & Grid, responsive layout design.',
+        topics: [
+          {
+            topicId: 'fsw-t1',
+            title: 'Semantic HTML & Web Accessibility (WCAG)',
+            summary: 'Structure accessible web pages using semantic HTML tags and ARIA attributes.',
+            materials: [
+              {
+                title: 'Semantic HTML5 & Accessibility Architecture Guide',
+                type: 'notes',
+                content: 'Semantic HTML elements introduce meaning to the web page rather than just presentation. Screen readers, search engines, and browsers rely on semantic tags (<header>, <nav>, <main>, <article>, <aside>, <footer>) for document hierarchy.',
+                url: '',
+              },
+              {
+                title: 'MDN Web Accessibility Overview',
+                type: 'link',
+                url: 'https://developer.mozilla.org/en-US/docs/Learn/Accessibility',
+              },
+            ],
+            freeCourses: [
+              {
+                title: 'Responsive Web Design Certification',
+                provider: 'freeCodeCamp',
+                url: 'https://www.freecodecamp.org/learn/2022/responsive-web-design/',
+                level: 'Beginner',
+                duration: '300 Hours',
+                isFree: true,
+                status: 'active',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    _id: 'rm_backend_02',
+    title: 'Backend Systems & API Engineering',
+    slug: 'backend-developer',
+    description: 'Design resilient microservices, relational databases, caching, and distributed message queues.',
+    category: 'Backend & Systems',
+    estimatedDuration: '6 Months',
+    status: 'published',
+    requiredSkills: ['Node.js', 'Express.js', 'PostgreSQL', 'Redis', 'Docker', 'REST APIs'],
+    modules: [
+      {
+        moduleId: 'bed-m1',
+        title: 'Server Runtimes & Database Architecture',
+        description: 'ACID transactions, relational normalization, and Redis in-memory caching.',
+        topics: [
+          {
+            topicId: 'bed-t1',
+            title: 'ACID Transactions & Database Performance',
+            summary: 'Atomicity, Consistency, Isolation, Durability, and compound indexing strategies.',
+            materials: [
+              {
+                title: 'PostgreSQL ACID Transactions & Index Optimization Guide',
+                type: 'notes',
+                content: 'Relational databases enforce ACID guarantees to prevent inconsistent state during concurrent operations. Compound indexes following the Equality-Sort-Range (ESR) rule prevent slow table scans.',
+                url: '',
+              },
+            ],
+            freeCourses: [
+              {
+                title: 'Node.js Official Documentation & Learn Guides',
+                provider: 'Node.js Foundation',
+                url: 'https://nodejs.org/en/learn',
+                level: 'Intermediate',
+                duration: '20 Hours',
+                isFree: true,
+                status: 'active',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const defaultCourses = [
+  {
+    _id: 'crs_01',
+    title: 'Responsive Web Design Certification',
+    provider: 'freeCodeCamp',
+    url: 'https://www.freecodecamp.org/learn/2022/responsive-web-design/',
+    skillLevel: 'Beginner',
+    duration: '300 Hours',
+    isFree: true,
+    hasCertificate: true,
+    status: 'active',
+    category: 'Frontend Development',
+    assignedRoadmapSlug: 'full-stack-web-developer',
+    assignedTopicId: 'fsw-t1',
+  },
+  {
+    _id: 'crs_02',
+    title: 'JavaScript Algorithms and Data Structures',
+    provider: 'freeCodeCamp',
+    url: 'https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/',
+    skillLevel: 'Beginner',
+    duration: '300 Hours',
+    isFree: true,
+    hasCertificate: true,
+    status: 'active',
+    category: 'Computer Science',
+    assignedRoadmapSlug: 'full-stack-web-developer',
+    assignedTopicId: '',
+  },
+  {
+    _id: 'crs_03',
+    title: 'Node.js Official Documentation & Learn Guides',
+    provider: 'Node.js Foundation',
+    url: 'https://nodejs.org/en/learn',
+    skillLevel: 'Intermediate',
+    duration: '20 Hours',
+    isFree: true,
+    hasCertificate: false,
+    status: 'active',
+    category: 'Backend Development',
+    assignedRoadmapSlug: 'backend-developer',
+    assignedTopicId: 'bed-t1',
+  },
+  {
+    _id: 'crs_04',
+    title: 'Learn React Official Guide',
+    provider: 'React Official Docs',
+    url: 'https://react.dev/learn',
+    skillLevel: 'Intermediate',
+    duration: '25 Hours',
+    isFree: true,
+    hasCertificate: false,
+    status: 'active',
+    category: 'Frontend Development',
+    assignedRoadmapSlug: 'full-stack-web-developer',
+    assignedTopicId: '',
+  },
+];
+
 // Load persisted state or initialize with defaults
 let store = {
   users: defaultUsers,
@@ -572,6 +733,8 @@ let store = {
   assessmentAttempts: defaultAssessmentAttempts,
   drives: defaultDrives,
   skills: defaultSkills,
+  roadmaps: defaultRoadmaps,
+  courses: defaultCourses,
 };
 
 function ensureDirExists(dirPath) {
@@ -628,6 +791,12 @@ function loadStore() {
         // Ensure assessmentAttempts array is initialized
         if (!Array.isArray(store.assessmentAttempts)) {
           store.assessmentAttempts = defaultAssessmentAttempts;
+        }
+        if (!Array.isArray(store.roadmaps)) {
+          store.roadmaps = defaultRoadmaps;
+        }
+        if (!Array.isArray(store.courses)) {
+          store.courses = defaultCourses;
         }
         saveStore();
         return;
@@ -701,6 +870,18 @@ module.exports = {
   },
   get fallbackSkills() {
     return store.skills;
+  },
+  get fallbackRoadmaps() {
+    if (!Array.isArray(store.roadmaps)) {
+      store.roadmaps = defaultRoadmaps;
+    }
+    return store.roadmaps;
+  },
+  get fallbackCourses() {
+    if (!Array.isArray(store.courses)) {
+      store.courses = defaultCourses;
+    }
+    return store.courses;
   },
   saveStore,
 };

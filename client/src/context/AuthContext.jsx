@@ -109,6 +109,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const adminLogin = async (email, password) => {
+    const res = await api.post('/admin/auth/login', { email, password });
+    if (res.data.success) {
+      localStorage.setItem('token', res.data.token);
+      setToken(res.data.token);
+      setUser(res.data.user);
+      return res.data;
+    } else {
+      const err = new Error(res.data.message || 'Admin authentication failed.');
+      err.response = { data: { message: res.data.message || 'Admin authentication failed.' } };
+      throw err;
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     setToken(null);
@@ -140,6 +154,7 @@ export const AuthProvider = ({ children }) => {
         isRestricted,
         restrictionMessage: RESTRICTION_MESSAGE,
         login,
+        adminLogin,
         register,
         logout,
         refreshProfile,

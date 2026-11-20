@@ -41,6 +41,10 @@ import { RecruiterApprovalsPage } from './pages/placement/RecruiterApprovalsPage
 import { HiringDrivesPage } from './pages/placement/HiringDrivesPage';
 import { PlacementReportsPage } from './pages/placement/PlacementReportsPage';
 
+// Admin Pages
+import { AdminLogin } from './pages/admin/AdminLogin';
+import { AdminPanel } from './pages/admin/AdminPanel';
+
 // Protected Route Component with Temporary Dashboard Access Restriction
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, loading, isRestricted, restrictionMessage } = useAuth();
@@ -53,8 +57,8 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     );
   }
 
-  // Enforce temporary dashboard restriction: redirect any direct URL entry to login page
-  if (isRestricted) {
+  // Enforce temporary dashboard restriction: redirect any direct URL entry to login page (admins bypass)
+  if (isRestricted && (!user || user.role !== 'admin')) {
     return (
       <Navigate
         to="/login?restricted=true"
@@ -69,6 +73,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
+    if (user.role === 'admin') return <Navigate to="/admin" replace />;
     if (user.role === 'student') return <Navigate to="/student/home" replace />;
     if (user.role === 'recruiter') return <Navigate to="/recruiter/dashboard" replace />;
     if (user.role === 'placement_officer') return <Navigate to="/placement/dashboard" replace />;
@@ -167,6 +172,25 @@ export const App = () => {
             <Route path="reports" element={<PlacementReportsPage />} />
             <Route path="settings" element={<PlacementDashboard />} />
           </Route>
+
+          {/* Dedicated Owner / Freelancer Admin Portal */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminPanel />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/*"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminPanel />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
