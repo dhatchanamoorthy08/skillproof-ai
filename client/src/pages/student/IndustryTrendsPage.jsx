@@ -66,7 +66,7 @@ export const IndustryTrendsPage = () => {
                     padding: '0.25rem 0.65rem',
                     borderRadius: 'var(--radius-full)',
                     backgroundColor: '#ecfdf5',
-                    color: '#059669',
+                    color: '#C46A45',
                     fontSize: '0.8rem',
                     fontWeight: 700,
                   }}

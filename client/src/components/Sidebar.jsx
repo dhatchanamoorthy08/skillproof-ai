@@ -103,16 +103,13 @@ export const Sidebar = ({ isOpen, onClose }) => {
 
   let currentGroups = studentNavGroups;
   let roleTitle = 'Candidate Portal';
-  let roleSubtitle = 'Evidence Engine';
 
   if (role === 'recruiter') {
     currentGroups = recruiterNavGroups;
     roleTitle = 'Corporate Talent';
-    roleSubtitle = 'Recruiter Suite';
   } else if (role === 'placement_officer') {
     currentGroups = placementNavGroups;
     roleTitle = 'Placement Command';
-    roleSubtitle = 'Institutional Console';
   }
 
   return (
@@ -120,17 +117,25 @@ export const Sidebar = ({ isOpen, onClose }) => {
       {/* Brand Header */}
       <div className="sidebar-header" style={{ justifyContent: 'space-between' }}>
         <div className="brand-logo">
-          <div className="brand-icon" style={{ background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', color: '#FFFFFF', borderRadius: '10px', boxShadow: '0 0 14px rgba(16, 185, 129, 0.45)' }}>
+          <div
+            className="brand-icon"
+            style={{
+              background: 'linear-gradient(135deg, #C46A45 0%, #B15B38 100%)',
+              color: '#FFFFFF',
+              borderRadius: '10px',
+              boxShadow: '0 0 14px rgba(196, 106, 69, 0.45)',
+            }}
+          >
             <Sparkles size={20} />
           </div>
           <div>
             <div style={{ lineHeight: 1.15, fontSize: '1.2rem', color: '#FFFFFF', fontWeight: 800, letterSpacing: '-0.02em' }}>
-              SkillProof <span style={{ color: '#10B981' }}>AI</span>
+              SkillProof <span style={{ color: '#C46A45' }}>AI</span>
             </div>
             <div
               style={{
                 fontSize: '0.65rem',
-                color: '#94A3B8',
+                color: '#B89B6A',
                 textTransform: 'uppercase',
                 letterSpacing: '0.08em',
                 fontWeight: 700,
@@ -150,7 +155,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
             style={{
               background: 'transparent',
               border: 'none',
-              color: '#A3B8B2',
+              color: '#D9D0C3',
               cursor: 'pointer',
               padding: '4px',
               display: 'none',
@@ -194,10 +199,10 @@ export const Sidebar = ({ isOpen, onClose }) => {
             border: 'none',
             cursor: 'pointer',
             textAlign: 'left',
-            color: '#f87171',
+            color: '#C44545',
             borderRadius: 'var(--radius-md)',
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.12)')}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(196, 69, 69, 0.12)')}
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
         >
           <LogOut size={18} />
@@ -207,3 +212,5 @@ export const Sidebar = ({ isOpen, onClose }) => {
     </aside>
   );
 };
+
+export default Sidebar;

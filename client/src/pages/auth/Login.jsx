@@ -41,8 +41,6 @@ export const Login = () => {
     e.preventDefault();
     setError('');
 
-    // Requirement: Block dashboard access & prevent login navigation
-    // Even if valid credentials are entered, display restriction message and block navigation
     if (isRestricted) {
       setError(RESTRICTION_MESSAGE);
       return;
@@ -92,7 +90,7 @@ export const Login = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#F8FAF9',
+        backgroundColor: '#F5F1E9',
         padding: '2rem 1rem',
       }}
     >
@@ -101,10 +99,10 @@ export const Login = () => {
           maxWidth: '460px',
           width: '100%',
           padding: '2.75rem 2.5rem',
-          boxShadow: '0 20px 40px -15px rgba(20, 45, 43, 0.08), 0 0 1px 1px rgba(7, 134, 106, 0.1)',
+          boxShadow: '0 20px 40px -15px rgba(37, 37, 37, 0.08)',
           borderRadius: '16px',
           backgroundColor: '#FFFFFF',
-          border: '1px solid #DFE8E1',
+          border: '1px solid #E8E1D7',
         }}
       >
         {/* Brand Header */}
@@ -113,22 +111,22 @@ export const Login = () => {
             style={{
               width: '50px',
               height: '50px',
-              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+              background: 'linear-gradient(135deg, #C46A45 0%, #B15B38 100%)',
               borderRadius: '12px',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#ffffff',
               marginBottom: '1rem',
-              boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
+              boxShadow: '0 4px 14px rgba(196, 106, 69, 0.35)',
             }}
           >
             <Sparkles size={24} />
           </div>
-          <h2 style={{ fontSize: '1.85rem', fontWeight: 800, margin: '0 0 0.35rem', letterSpacing: '-0.025em', color: '#142D2B' }}>
+          <h2 style={{ fontSize: '1.85rem', fontWeight: 800, margin: '0 0 0.35rem', letterSpacing: '-0.025em', color: '#252525' }}>
             Welcome Back
           </h2>
-          <p style={{ color: '#68756F', fontSize: '0.9rem', margin: 0 }}>
+          <p style={{ color: '#77736D', fontSize: '0.9rem', margin: 0 }}>
             Sign in to access your SkillProof AI platform
           </p>
         </div>
@@ -239,7 +237,7 @@ export const Login = () => {
               onClick={() => autofillDemo('student@skillproof.ai', 'Password@123')}
               style={{ fontSize: '0.78rem', gap: '0.3rem', padding: '0.45rem 0.5rem' }}
             >
-              <GraduationCap size={14} color="#07866A" />
+              <GraduationCap size={14} color="#C46A45" />
               <span>Student</span>
             </button>
             <button
@@ -248,7 +246,7 @@ export const Login = () => {
               onClick={() => autofillDemo('recruiter@skillproof.ai', 'Password@123')}
               style={{ fontSize: '0.78rem', gap: '0.3rem', padding: '0.45rem 0.5rem' }}
             >
-              <Building2 size={14} color="#E8A23A" />
+              <Building2 size={14} color="#B89B6A" />
               <span>Recruiter</span>
             </button>
             <button
@@ -257,7 +255,7 @@ export const Login = () => {
               onClick={() => autofillDemo('placement@skillproof.ai', 'Password@123')}
               style={{ fontSize: '0.78rem', gap: '0.3rem', padding: '0.45rem 0.5rem' }}
             >
-              <Users size={14} color="#142D2B" />
+              <Users size={14} color="#252525" />
               <span>Placement</span>
             </button>
           </div>
@@ -273,3 +271,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default Login;

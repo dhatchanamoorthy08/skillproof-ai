@@ -16,7 +16,6 @@ import {
   Lock,
   Camera,
   Smartphone,
-  Eye,
   Maximize2,
   FileCheck2,
   Check,
@@ -26,25 +25,27 @@ import {
   Clock,
   Layers,
   Cpu,
+  Globe2,
+  Compass,
 } from 'lucide-react';
 
 export const LandingPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#FAFAF5', color: '#142D2B', overflowX: 'hidden' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#F5F1E9', color: '#252525', overflowX: 'hidden' }}>
       {/* =========================================================================
-          1. PREMIUM TOP NAVIGATION BAR (Glassmorphism & Dark Navy)
+          1. PREMIUM TOP NAVIGATION BAR (Charcoal Glassmorphism)
           ========================================================================= */}
       <header
         style={{
           position: 'sticky',
           top: 0,
           zIndex: 100,
-          background: 'rgba(7, 13, 27, 0.88)',
+          background: 'rgba(37, 37, 37, 0.94)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          borderBottom: '1px solid rgba(232, 225, 215, 0.12)',
           padding: '0.9rem 2rem',
         }}
       >
@@ -71,13 +72,13 @@ export const LandingPage = () => {
               style={{
                 width: '38px',
                 height: '38px',
-                background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                background: 'linear-gradient(135deg, #C46A45 0%, #B15B38 100%)',
                 borderRadius: '10px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#ffffff',
-                boxShadow: '0 0 16px rgba(16, 185, 129, 0.45)',
+                boxShadow: '0 0 16px rgba(196, 106, 69, 0.4)',
               }}
             >
               <Sparkles size={20} />
@@ -92,10 +93,10 @@ export const LandingPage = () => {
                   color: '#FFFFFF',
                 }}
               >
-                SkillProof <span style={{ color: '#10B981' }}>AI</span>
+                SkillProof <span style={{ color: '#C46A45' }}>AI</span>
               </span>
-              <span style={{ fontSize: '0.65rem', color: '#94A3B8', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                Enterprise Skill Passport
+              <span style={{ fontSize: '0.65rem', color: '#B89B6A', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                Enterprise Skill Standard
               </span>
             </div>
           </Link>
@@ -109,30 +110,37 @@ export const LandingPage = () => {
             }}
             className="desktop-nav-links"
           >
-            <a href="#solutions" style={{ color: '#CBD5E1', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
+            <a href="#solutions" style={{ color: '#D9D0C3', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
               Solutions
             </a>
-            <a href="#flywheel" style={{ color: '#CBD5E1', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
+            <a href="#flywheel" style={{ color: '#D9D0C3', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
               Verification Flywheel
             </a>
-            <a href="#security" style={{ color: '#CBD5E1', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
-              Anti-Cheating Security
+            <a href="#security" style={{ color: '#D9D0C3', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
+              Proctoring Security
             </a>
-            <a href="#ecosystem" style={{ color: '#CBD5E1', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
-              Role Portals
+            <a href="#governance" style={{ color: '#D9D0C3', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none', transition: 'color 0.15s' }}>
+              Governance
             </a>
           </nav>
 
-          {/* Auth CTA Buttons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          {/* Desktop Action Buttons */}
+          <div
+            style={{
+              display: 'none',
+              gap: '1rem',
+              alignItems: 'center',
+            }}
+            className="desktop-auth-actions"
+          >
             <Link
               to="/login"
               style={{
-                color: '#E2E8F0',
-                padding: '0.45rem 1rem',
-                fontSize: '0.85rem',
+                color: '#F5F1E9',
+                fontSize: '0.875rem',
                 fontWeight: 600,
                 textDecoration: 'none',
+                padding: '0.5rem 1rem',
                 borderRadius: '8px',
                 transition: 'all 0.15s ease',
               }}
@@ -141,44 +149,42 @@ export const LandingPage = () => {
             </Link>
             <Link
               to="/register"
-              className="btn-emerald-glow"
+              className="btn btn-terracotta-glow"
               style={{
-                padding: '0.5rem 1.25rem',
+                padding: '0.6rem 1.35rem',
+                fontSize: '0.875rem',
                 borderRadius: '8px',
-                fontSize: '0.85rem',
-                textDecoration: 'none',
               }}
             >
-              <span>Get Started</span>
-              <ArrowRight size={15} />
+              Get Started <ArrowRight size={15} />
             </Link>
-
-            {/* Mobile Hamburger Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="mobile-hamburger"
-              style={{
-                display: 'none',
-                background: 'transparent',
-                border: 'none',
-                color: '#FFFFFF',
-                padding: '4px',
-                cursor: 'pointer',
-              }}
-              aria-label="Toggle Navigation"
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            style={{
+              display: 'block',
+              background: 'transparent',
+              border: 'none',
+              color: '#FFFFFF',
+              cursor: 'pointer',
+              padding: '6px',
+            }}
+            className="mobile-hamburger-btn"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Navigation Dropdown */}
         {mobileMenuOpen && (
           <div
             style={{
-              padding: '1.25rem 1rem',
-              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-              marginTop: '0.75rem',
+              marginTop: '1rem',
+              padding: '1.25rem 0',
+              borderTop: '1px solid rgba(232, 225, 215, 0.15)',
               display: 'flex',
               flexDirection: 'column',
               gap: '1rem',
@@ -187,282 +193,283 @@ export const LandingPage = () => {
             <a
               href="#solutions"
               onClick={() => setMobileMenuOpen(false)}
-              style={{ color: '#CBD5E1', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 600 }}
+              style={{ color: '#F5F1E9', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none' }}
             >
               Solutions
             </a>
             <a
               href="#flywheel"
               onClick={() => setMobileMenuOpen(false)}
-              style={{ color: '#CBD5E1', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 600 }}
+              style={{ color: '#F5F1E9', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none' }}
             >
               Verification Flywheel
             </a>
             <a
               href="#security"
               onClick={() => setMobileMenuOpen(false)}
-              style={{ color: '#CBD5E1', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 600 }}
+              style={{ color: '#F5F1E9', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none' }}
             >
-              Anti-Cheating Security
+              Proctoring Security
             </a>
             <a
-              href="#ecosystem"
+              href="#governance"
               onClick={() => setMobileMenuOpen(false)}
-              style={{ color: '#CBD5E1', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 600 }}
+              style={{ color: '#F5F1E9', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none' }}
             >
-              Role Portals
+              Governance
             </a>
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
+              <Link to="/login" className="btn btn-secondary" style={{ flex: 1, justifyContent: 'center' }}>
+                Sign In
+              </Link>
+              <Link to="/register" className="btn btn-primary" style={{ flex: 1, justifyContent: 'center' }}>
+                Get Started
+              </Link>
+            </div>
           </div>
         )}
       </header>
 
       {/* =========================================================================
-          2. HERO SECTION — PREMIUM DARK NAVY + TECHNOLOGY GRID + AURA GLOWS
+          2. CORPORATE HERO SECTION (Charcoal Black #252525 + Warm Highlights)
           ========================================================================= */}
       <section
-        className="bg-navy-hero bg-tech-grid-dark"
+        className="bg-charcoal-hero bg-tech-grid-dark"
         style={{
-          padding: '5rem 1.5rem 6.5rem 1.5rem',
+          padding: '5.5rem 1.5rem 6.5rem 1.5rem',
           position: 'relative',
           color: '#FFFFFF',
-          textAlign: 'center',
         }}
       >
-        {/* Ambient Glow Spheres */}
-        <div className="glow-ambient-emerald" style={{ top: '-10%', left: '15%' }} />
-        <div className="glow-ambient-cyan" style={{ top: '25%', right: '10%' }} />
+        <div className="glow-ambient-terracotta" style={{ top: '-100px', left: '15%' }} />
+        <div className="glow-ambient-gold" style={{ bottom: '-150px', right: '10%' }} />
 
-        <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
-          {/* Announcement Telemetry Pill */}
-          <div
-            className="telemetry-pill telemetry-pill-emerald"
-            style={{
-              marginBottom: '1.75rem',
-              boxShadow: '0 0 20px rgba(16, 185, 129, 0.2)',
-            }}
-          >
-            <span className="pulse-dot-emerald" />
-            <span>AI Proctoring Engine 2.0 &bull; Computer Vision Phone Detection Active</span>
-          </div>
-
-          {/* Main Hero Headline */}
-          <h1
-            style={{
-              fontSize: 'clamp(2.5rem, 5.5vw, 4.6rem)',
-              fontWeight: 900,
-              lineHeight: 1.1,
-              letterSpacing: '-0.035em',
-              color: '#FFFFFF',
-              margin: '0 auto 1.5rem auto',
-              maxWidth: '980px',
-            }}
-          >
-            Prove Verified Skills. <br />
-            <span className="text-emerald-gradient">
-              Eliminate Resume Inflation.
-            </span>
-          </h1>
-
-          {/* Hero Subtitle */}
-          <p
-            style={{
-              fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
-              color: '#94A3B8',
-              maxWidth: '780px',
-              margin: '0 auto 2.5rem auto',
-              lineHeight: 1.65,
-              fontWeight: 400,
-            }}
-          >
-            The world-class SaaS skill passport platform connecting engineering talent with campus
-            recruiters through proctored evaluations, code audit trails, and transparent Job Readiness Indexing.
-          </p>
-
-          {/* Hero Action CTAs */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '1rem',
-              flexWrap: 'wrap',
-              marginBottom: '4rem',
-            }}
-          >
-            <Link
-              to="/register"
-              className="btn-emerald-glow"
+        <div style={{ maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+          {/* Top Pill Announcement */}
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <div
+              className="telemetry-pill telemetry-pill-terracotta"
               style={{
-                padding: '0.85rem 2rem',
-                fontSize: '1.05rem',
-                borderRadius: '10px',
-                textDecoration: 'none',
+                boxShadow: '0 4px 16px rgba(196, 106, 69, 0.25)',
+                padding: '0.45rem 1.15rem',
+                borderRadius: '9999px',
+                background: 'rgba(196, 106, 69, 0.15)',
+                border: '1px solid rgba(196, 106, 69, 0.35)',
               }}
             >
-              <span>Create Free Account</span>
-              <ArrowRight size={18} />
-            </Link>
-
-            <Link
-              to="/login"
-              className="btn-glass-navy"
-              style={{
-                padding: '0.85rem 1.85rem',
-                fontSize: '1.025rem',
-                borderRadius: '10px',
-                textDecoration: 'none',
-              }}
-            >
-              <span>Explore Demo Portals</span>
-              <ChevronRight size={18} />
-            </Link>
+              <span className="pulse-dot-terracotta" />
+              <span style={{ color: '#F5F1E9', fontSize: '0.85rem' }}>
+                SkillProof 3.0 Enterprise Architecture Live
+              </span>
+            </div>
           </div>
 
-          {/* =========================================================================
-              3. FLOATING INTERACTIVE SAAS UI MOCKUP SHOWCASE
-              ========================================================================= */}
+          {/* Hero Headline */}
+          <div style={{ textAlign: 'center', maxWidth: '980px', margin: '0 auto 3rem auto' }}>
+            <h1
+              style={{
+                fontSize: 'clamp(2.5rem, 5.5vw, 4.25rem)',
+                fontWeight: 800,
+                lineHeight: 1.12,
+                letterSpacing: '-0.035em',
+                marginBottom: '1.5rem',
+                color: '#FFFFFF',
+              }}
+            >
+              The Verified Skill Standard for the{' '}
+              <span className="text-terracotta-gradient">Modern Workforce</span>
+            </h1>
+            <p
+              style={{
+                fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+                lineHeight: 1.6,
+                color: '#D9D0C3',
+                maxWidth: '780px',
+                margin: '0 auto 2.5rem auto',
+                fontWeight: 400,
+              }}
+            >
+              Eliminate resume inflation. SkillProof AI combines automated 4-tier competency verification,
+              tamper-proof skill passports, and distraction-free proctored assessments into one unified platform.
+            </p>
+
+            {/* CTAs */}
+            <div
+              style={{
+                display: 'flex',
+                gap: '1.25rem',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}
+            >
+              <Link
+                to="/register"
+                className="btn btn-terracotta-glow btn-lg"
+                style={{
+                  padding: '0.95rem 2.25rem',
+                  fontSize: '1rem',
+                  borderRadius: '10px',
+                }}
+              >
+                <span>Deploy Skill Passport Free</span>
+                <ArrowRight size={18} />
+              </Link>
+              <Link
+                to="/login"
+                className="btn btn-glass-charcoal btn-lg"
+                style={{
+                  padding: '0.95rem 2rem',
+                  fontSize: '1rem',
+                  borderRadius: '10px',
+                }}
+              >
+                <span>Candidate Sign In</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* SaaS Telemetry Dashboard Mockup */}
           <div
             className="glass-panel-dark"
             style={{
-              maxWidth: '960px',
+              maxWidth: '1080px',
               margin: '0 auto',
-              borderRadius: '16px',
+              borderRadius: '18px',
               overflow: 'hidden',
-              boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(16, 185, 129, 0.15)',
-              textAlign: 'left',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
+              boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.75), 0 0 1px 1px rgba(232, 225, 215, 0.1)',
             }}
           >
-            {/* Mockup Browser Window Header */}
+            {/* Window Topbar */}
             <div
               style={{
-                padding: '0.75rem 1.25rem',
-                background: 'rgba(10, 19, 38, 0.85)',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                background: 'rgba(28, 28, 28, 0.95)',
+                padding: '0.85rem 1.5rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
+                borderBottom: '1px solid rgba(232, 225, 215, 0.1)',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#EF4444', display: 'inline-block' }} />
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#F59E0B', display: 'inline-block' }} />
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10B981', display: 'inline-block' }} />
+              <div style={{ display: 'flex', gap: '6px' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#C44545', display: 'inline-block' }} />
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#B89B6A', display: 'inline-block' }} />
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#C46A45', display: 'inline-block' }} />
               </div>
               <div
                 style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  padding: '3px 14px',
-                  borderRadius: '6px',
-                  fontSize: '0.725rem',
-                  color: '#94A3B8',
-                  fontFamily: 'monospace',
+                  fontSize: '0.75rem',
+                  color: '#B89B6A',
+                  fontWeight: 600,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
                 }}
               >
-                https://skillproof.ai/passport/verify/c89f2a41
+                <Lock size={12} />
+                <span>app.skillproof.ai/passport/candidate-sp-9082</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.725rem', color: '#10B981', fontWeight: 700 }}>
-                <ShieldCheck size={14} /> Cryptographically Verified
+              <div style={{ fontSize: '0.75rem', color: '#9C9790', fontWeight: 600 }}>
+                Status: Verified
               </div>
             </div>
 
-            {/* Mockup Content Dashboard Body */}
-            <div style={{ padding: '1.75rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-              {/* Left Column: Candidate & Job Readiness Index */}
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.25rem' }}>
-                  <div
-                    style={{
-                      width: '48px',
-                      height: '48px',
-                      borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #10B981, #047857)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontWeight: 800,
-                      fontSize: '1.15rem',
-                      color: '#ffffff',
-                    }}
-                  >
-                    AS
+            {/* Mockup Dashboard Content */}
+            <div style={{ padding: '2rem', backgroundColor: '#F5F1E9', color: '#252525' }}>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gap: '1.25rem',
+                  marginBottom: '1.5rem',
+                }}
+              >
+                {/* Metric Card 1 */}
+                <div style={{ background: '#FFFFFF', padding: '1.25rem', borderRadius: '12px', border: '1px solid #E8E1D7' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#77736D', textTransform: 'uppercase' }}>
+                      Overall Readiness Score
+                    </span>
+                    <span className="badge badge-verified" style={{ fontSize: '0.7rem' }}>
+                      <CheckCircle2 size={12} /> Certified Tier 1
+                    </span>
                   </div>
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: '1.1rem', color: '#FFFFFF' }}>Arjun Sharma</div>
-                    <div style={{ fontSize: '0.775rem', color: '#94A3B8' }}>B.Tech Computer Science &bull; Class of 2026</div>
+                  <div style={{ fontSize: '2.25rem', fontWeight: 800, color: '#252525', margin: '0.4rem 0 0.2rem 0' }}>
+                    94.8%
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: '#B89B6A', fontWeight: 600 }}>
+                    Top 2% in Algorithmic System Architecture
                   </div>
                 </div>
 
-                {/* Score Dial Box */}
-                <div
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: '12px',
-                    padding: '1.25rem',
-                    marginBottom: '1rem',
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <span style={{ fontSize: '0.8rem', color: '#94A3B8', fontWeight: 600, textTransform: 'uppercase' }}>
-                      Job Readiness Index (JRI)
+                {/* Metric Card 2 */}
+                <div style={{ background: '#FFFFFF', padding: '1.25rem', borderRadius: '12px', border: '1px solid #E8E1D7' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#77736D', textTransform: 'uppercase' }}>
+                      Proctored Assessments
                     </span>
-                    <span style={{ color: '#10B981', fontSize: '0.8rem', fontWeight: 700 }}>Top 4% Batch</span>
+                    <span className="badge badge-demonstrated" style={{ fontSize: '0.7rem' }}>
+                      Zero Violations
+                    </span>
                   </div>
-                  <div style={{ fontSize: '2.4rem', fontWeight: 900, color: '#10B981', lineHeight: 1 }}>
-                    92<span style={{ fontSize: '1.1rem', color: '#64748B' }}>/100</span>
+                  <div style={{ fontSize: '2.25rem', fontWeight: 800, color: '#252525', margin: '0.4rem 0 0.2rem 0' }}>
+                    12 / 12
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: '#94A3B8', marginTop: '0.4rem' }}>
-                    High-probability match for Tier-1 Systems & Backend engineering roles.
+                  <div style={{ fontSize: '0.8rem', color: '#77736D' }}>
+                    Proctored &bull; Strict Phone &amp; Fullscreen Monitored
+                  </div>
+                </div>
+
+                {/* Metric Card 3 */}
+                <div style={{ background: '#FFFFFF', padding: '1.25rem', borderRadius: '12px', border: '1px solid #E8E1D7' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#77736D', textTransform: 'uppercase' }}>
+                      Institution Accreditation
+                    </span>
+                    <span className="badge badge-ready" style={{ fontSize: '0.7rem' }}>
+                      Placement Authorized
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '1.45rem', fontWeight: 800, color: '#252525', margin: '0.6rem 0 0.2rem 0' }}>
+                    National Institute of Tech
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: '#C46A45', fontWeight: 600 }}>
+                    Official Signature Verified #SP-88319
                   </div>
                 </div>
               </div>
 
-              {/* Right Column: Proctored Competency Matrix & Proctoring Telemetry */}
-              <div>
-                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#CBD5E1', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
-                  Verified Skills Audit Trail
+              {/* Skills Verification Grid Sample */}
+              <div
+                style={{
+                  background: '#FFFFFF',
+                  borderRadius: '12px',
+                  border: '1px solid #E8E1D7',
+                  padding: '1.25rem 1.5rem',
+                }}
+              >
+                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#252525', marginBottom: '0.85rem' }}>
+                  Live Competency Breakdown (Cryptographically Verified)
                 </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                  <div style={{ background: 'rgba(255, 255, 255, 0.04)', padding: '0.65rem 0.85rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#FFFFFF' }}>Distributed Systems & Databases</div>
-                      <div style={{ fontSize: '0.7rem', color: '#94A3B8' }}>30/30 Questions &bull; Proctored 45 min</div>
-                    </div>
-                    <span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34D399', fontSize: '0.75rem', fontWeight: 800, padding: '2px 8px', borderRadius: '4px' }}>
-                      96% Verified
-                    </span>
-                  </div>
-
-                  <div style={{ background: 'rgba(255, 255, 255, 0.04)', padding: '0.65rem 0.85rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#FFFFFF' }}>React & High-Performance Web UI</div>
-                      <div style={{ fontSize: '0.7rem', color: '#94A3B8' }}>Project Audit &bull; Production Code Review</div>
-                    </div>
-                    <span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34D399', fontSize: '0.75rem', fontWeight: 800, padding: '2px 8px', borderRadius: '4px' }}>
-                      91% Verified
-                    </span>
-                  </div>
-
-                  {/* Proctor Telemetry Status */}
-                  <div
-                    style={{
-                      marginTop: '0.5rem',
-                      background: 'rgba(16, 185, 129, 0.08)',
-                      border: '1px solid rgba(16, 185, 129, 0.25)',
-                      borderRadius: '8px',
-                      padding: '0.75rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.65rem',
-                    }}
-                  >
-                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981', boxShadow: '0 0 6px #10B981' }} />
-                    <div style={{ fontSize: '0.75rem', color: '#CBD5E1' }}>
-                      <strong>AI Proctor Telemetry:</strong> 0 Violations &bull; Fullscreen Maintained &bull; No Device Detected
-                    </div>
-                  </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+                  <span className="badge badge-verified">
+                    <CheckCircle2 size={13} /> Distributed Systems (98%)
+                  </span>
+                  <span className="badge badge-verified">
+                    <CheckCircle2 size={13} /> React &amp; TypeScript (95%)
+                  </span>
+                  <span className="badge badge-demonstrated">
+                    <Code2 size={13} /> Microservices Architecture (91%)
+                  </span>
+                  <span className="badge badge-demonstrated">
+                    <Code2 size={13} /> PostgreSQL &amp; Query Optimization (89%)
+                  </span>
+                  <span className="badge badge-assessed">
+                    <Award size={13} /> Docker &amp; Kubernetes (87%)
+                  </span>
+                  <span className="badge badge-claimed">
+                    <Clock size={13} /> Cloud Native Security
+                  </span>
                 </div>
               </div>
             </div>
@@ -471,172 +478,197 @@ export const LandingPage = () => {
       </section>
 
       {/* =========================================================================
-          4. FOUR-STAGE VERIFICATION FLYWHEEL (Mint & Clean Palette)
+          3. STATS STRIP (Warm Ivory Background with Charcoal Text)
           ========================================================================= */}
-      <section
-        id="flywheel"
-        style={{
-          padding: '5rem 1.5rem',
-          maxWidth: '1240px',
-          margin: '0 auto',
-        }}
-      >
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <div className="telemetry-pill telemetry-pill-emerald" style={{ marginBottom: '0.75rem' }}>
-            <Award size={14} /> Cryptographic Proof Pipeline
-          </div>
-          <h2 style={{ fontSize: 'clamp(2rem, 3.8vw, 2.75rem)', fontWeight: 800, color: '#142D2B', letterSpacing: '-0.025em' }}>
-            How SkillProof AI Verifies Real Competency
-          </h2>
-          <p style={{ color: '#68756F', fontSize: '1.05rem', maxWidth: '640px', margin: '0.5rem auto 0 auto' }}>
-            A rigorous 4-step framework transitioning candidate claims into unassailable evidence.
-          </p>
-        </div>
-
-        {/* 4 Cards Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
-          {/* Step 1 */}
-          <div className="card-saas">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#F59E0B', background: '#FEF8ED', padding: '3px 8px', borderRadius: '4px' }}>
-                STAGE 01
-              </span>
-              <FileSearch size={22} color="#F59E0B" />
-            </div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.5rem' }}>
-              Claimed Skill
-            </h3>
-            <p style={{ fontSize: '0.875rem', color: '#68756F', lineHeight: 1.6 }}>
-              Student inputs claimed proficiencies and uploads institutional certificates or coursework artifacts.
-            </p>
-          </div>
-
-          {/* Step 2 */}
-          <div className="card-saas">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#142D2B', background: '#EDF3F1', padding: '3px 8px', borderRadius: '4px' }}>
-                STAGE 02
-              </span>
-              <Lock size={22} color="#07866A" />
-            </div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.5rem' }}>
-              Proctored Exam
-            </h3>
-            <p style={{ fontSize: '0.875rem', color: '#68756F', lineHeight: 1.6 }}>
-              Timed, randomized question pool in fullscreen mode with TensorFlow.js phone detection and tab lock.
-            </p>
-          </div>
-
-          {/* Step 3 */}
-          <div className="card-saas">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#059669', background: '#F0F7F4', padding: '3px 8px', borderRadius: '4px' }}>
-                STAGE 03
-              </span>
-              <Code2 size={22} color="#059669" />
-            </div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.5rem' }}>
-              Code Audit Trail
-            </h3>
-            <p style={{ fontSize: '0.875rem', color: '#68756F', lineHeight: 1.6 }}>
-              Automated git repository verification, test-suite coverage audits, and peer code analysis.
-            </p>
-          </div>
-
-          {/* Step 4 */}
-          <div className="card-saas" style={{ border: '2px solid #10B981' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#047857', background: '#EFF8F2', padding: '3px 8px', borderRadius: '4px' }}>
-                STAGE 04
-              </span>
-              <ShieldCheck size={22} color="#047857" />
-            </div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.5rem' }}>
-              Verified Skill Passport
-            </h3>
-            <p style={{ fontSize: '0.875rem', color: '#68756F', lineHeight: 1.6 }}>
-              Cryptographically signed Digital Skill Passport recognized directly by campus recruiting partners.
-            </p>
-          </div>
-        </div>
-
-        {/* Live Metrics Counter Bar */}
+      <section style={{ backgroundColor: '#FAF6EF', borderBottom: '1px solid #E8E1D7', padding: '3.5rem 1.5rem' }}>
         <div
           style={{
+            maxWidth: '1280px',
+            margin: '0 auto',
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '1.5rem',
-            marginTop: '3.5rem',
-            padding: '2rem',
-            background: '#FFFFFF',
-            borderRadius: '14px',
-            border: '1px solid #DFE8E1',
-            boxShadow: '0 4px 16px rgba(20, 45, 43, 0.04)',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '2.5rem',
             textAlign: 'center',
           }}
         >
           <div>
-            <div style={{ fontSize: '2.4rem', fontWeight: 900, color: '#059669', lineHeight: 1 }}>99.4%</div>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#68756F', textTransform: 'uppercase', marginTop: '6px' }}>
-              Proctoring Integrity
+            <div style={{ fontSize: '2.75rem', fontWeight: 800, color: '#C46A45', lineHeight: 1.1 }}>
+              99.4%
             </div>
+            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#252525', marginTop: '0.35rem' }}>
+              Anti-Cheating Precision
+            </div>
+            <div style={{ fontSize: '0.8rem', color: '#77736D' }}>ML mobile phone &amp; fullscreen security</div>
           </div>
           <div>
-            <div style={{ fontSize: '2.4rem', fontWeight: 900, color: '#142D2B', lineHeight: 1 }}>18,500+</div>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#68756F', textTransform: 'uppercase', marginTop: '6px' }}>
-              Assessed Candidates
+            <div style={{ fontSize: '2.75rem', fontWeight: 800, color: '#252525', lineHeight: 1.1 }}>
+              4x Faster
             </div>
+            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#252525', marginTop: '0.35rem' }}>
+              Corporate Screening Time
+            </div>
+            <div style={{ fontSize: '0.8rem', color: '#77736D' }}>Verified evidence replaces resumes</div>
           </div>
           <div>
-            <div style={{ fontSize: '2.4rem', fontWeight: 900, color: '#059669', lineHeight: 1 }}>520+</div>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#68756F', textTransform: 'uppercase', marginTop: '6px' }}>
-              Hiring Organizations
+            <div style={{ fontSize: '2.75rem', fontWeight: 800, color: '#B89B6A', lineHeight: 1.1 }}>
+              100%
             </div>
+            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#252525', marginTop: '0.35rem' }}>
+              Privacy-Friendly Proctoring
+            </div>
+            <div style={{ fontSize: '0.8rem', color: '#77736D' }}>No face or eye tracking surveillance</div>
           </div>
           <div>
-            <div style={{ fontSize: '2.4rem', fontWeight: 900, color: '#F59E0B', lineHeight: 1 }}>3.8x</div>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#68756F', textTransform: 'uppercase', marginTop: '6px' }}>
-              Faster Shortlisting
+            <div style={{ fontSize: '2.75rem', fontWeight: 800, color: '#C46A45', lineHeight: 1.1 }}>
+              25,000+
+            </div>
+            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#252525', marginTop: '0.35rem' }}>
+              Validated Credentials
+            </div>
+            <div style={{ fontSize: '0.8rem', color: '#77736D' }}>Accredited by placement boards</div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          4. 4-TIER VERIFICATION FLYWHEEL SECTION
+          ========================================================================= */}
+      <section id="flywheel" style={{ padding: '6rem 1.5rem', maxWidth: '1280px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 4rem auto' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              color: '#C46A45',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              marginBottom: '0.75rem',
+            }}
+          >
+            <Layers size={16} /> Four-Tier Skill Architecture
+          </div>
+          <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, color: '#252525', marginBottom: '1rem' }}>
+            Transforming Unverified Claims into Mathematical Proof
+          </h2>
+          <p style={{ color: '#77736D', fontSize: '1.05rem', lineHeight: 1.6 }}>
+            Resumes are self-reported words. The SkillProof Verification Flywheel converts raw claims into four distinct
+            levels of proof backed by proctored code, Git commits, and institutional verification.
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+          {/* Level 1: Claimed */}
+          <div className="card-saas">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+              <span className="badge badge-claimed">Tier 1: Claimed</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#77736D' }}>Weight: 10%</span>
+            </div>
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.5rem', color: '#252525' }}>
+              Self-Reported Baseline
+            </h3>
+            <p style={{ fontSize: '0.9rem', color: '#77736D', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+              Candidate declares their claimed skills, tools, and target career competencies during onboarding.
+            </p>
+            <div style={{ borderTop: '1px solid #E8E1D7', paddingTop: '1rem', fontSize: '0.8rem', color: '#77736D' }}>
+              <strong>Verification Step:</strong> Dynamic skill assessment generator unlocks custom test pools.
+            </div>
+          </div>
+
+          {/* Level 2: Assessed */}
+          <div className="card-saas">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+              <span className="badge badge-assessed">Tier 2: Assessed</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#77736D' }}>Weight: 35%</span>
+            </div>
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.5rem', color: '#252525' }}>
+              Proctored Technical Exam
+            </h3>
+            <p style={{ fontSize: '0.9rem', color: '#77736D', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+              Candidate sits for randomized, proctored examinations with phone detection and anti-cheat enforcement.
+            </p>
+            <div style={{ borderTop: '1px solid #E8E1D7', paddingTop: '1rem', fontSize: '0.8rem', color: '#77736D' }}>
+              <strong>Verification Step:</strong> Shuffled questions dynamically scored on the server.
+            </div>
+          </div>
+
+          {/* Level 3: Demonstrated */}
+          <div className="card-saas">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+              <span className="badge badge-demonstrated">Tier 3: Demonstrated</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#C46A45' }}>Weight: 75%</span>
+            </div>
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.5rem', color: '#252525' }}>
+              Production Project Evidence
+            </h3>
+            <p style={{ fontSize: '0.9rem', color: '#77736D', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+              Code repositories, system architecture proofs, and live deployments verified by automated AST parsers.
+            </p>
+            <div style={{ borderTop: '1px solid #E8E1D7', paddingTop: '1rem', fontSize: '0.8rem', color: '#77736D' }}>
+              <strong>Verification Step:</strong> Git commit analysis and deployed artifact validation.
+            </div>
+          </div>
+
+          {/* Level 4: Verified */}
+          <div className="card-saas" style={{ border: '2px solid #C46A45', background: '#FFFFFF' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+              <span className="badge badge-verified">Tier 4: Verified</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#C46A45' }}>Weight: 100%</span>
+            </div>
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.5rem', color: '#252525' }}>
+              Institutional Accreditation
+            </h3>
+            <p style={{ fontSize: '0.9rem', color: '#77736D', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+              University placement officers and accredited faculty officially attest to candidate integrity and credentials.
+            </p>
+            <div style={{ borderTop: '1px solid #E8E1D7', paddingTop: '1rem', fontSize: '0.8rem', color: '#C46A45', fontWeight: 600 }}>
+              <strong>Verification Step:</strong> Tamper-proof institutional seal on the Skill Passport.
             </div>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          5. ROLE-SPECIFIC SAAS PLATFORM SOLUTIONS (Candidates, HR, Deans)
+          5. TRI-PARTY ECOSYSTEM (Students, Recruiters, Placement Officers)
           ========================================================================= */}
-      <section
-        id="ecosystem"
-        style={{
-          padding: '5.5rem 1.5rem',
-          backgroundColor: '#F3FAF6',
-          borderTop: '1px solid #DFE8E1',
-          borderBottom: '1px solid #DFE8E1',
-        }}
-      >
-        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <div className="telemetry-pill telemetry-pill-emerald" style={{ marginBottom: '0.75rem' }}>
-              <Users size={14} /> Multi-Stakeholder Ecosystem
+      <section id="solutions" style={{ backgroundColor: '#FAF6EF', padding: '6rem 1.5rem', borderTop: '1px solid #E8E1D7', borderBottom: '1px solid #E8E1D7' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 4rem auto' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                color: '#C46A45',
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginBottom: '0.75rem',
+              }}
+            >
+              <Users size={16} /> Unified Stakeholder Architecture
             </div>
-            <h2 style={{ fontSize: 'clamp(2rem, 3.8vw, 2.75rem)', fontWeight: 800, color: '#142D2B', letterSpacing: '-0.025em' }}>
-              Built Specifically for the Campus Hiring Pipeline
+            <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, color: '#252525', marginBottom: '1rem' }}>
+              Engineered for Every Pillar of the Placement Ecosystem
             </h2>
-            <p style={{ color: '#68756F', fontSize: '1.05rem', maxWidth: '640px', margin: '0.5rem auto 0 auto' }}>
-              Three dedicated, secure dashboards serving candidates, corporate recruiters, and college placement directors.
+            <p style={{ color: '#77736D', fontSize: '1.05rem', lineHeight: 1.6 }}>
+              Three specialized portals built on one shared cryptographic competency ledger.
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem' }}>
             {/* Student Card */}
-            <div className="card-saas" style={{ background: '#FFFFFF' }}>
+            <div className="card-saas">
               <div
                 style={{
                   width: '52px',
                   height: '52px',
                   borderRadius: '12px',
-                  background: '#EFF8F2',
-                  color: '#059669',
+                  background: '#FBF4F0',
+                  color: '#C46A45',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -645,41 +677,40 @@ export const LandingPage = () => {
               >
                 <GraduationCap size={28} />
               </div>
-              <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.75rem' }}>
-                For Candidates & Students
+              <h3 style={{ fontSize: '1.45rem', fontWeight: 800, marginBottom: '0.75rem', color: '#252525' }}>
+                For Candidates &amp; Students
               </h3>
-              <p style={{ color: '#68756F', fontSize: '0.925rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-                Transform your raw effort into an undeniable, verified digital portfolio that recruiters actually trust.
+              <p style={{ color: '#77736D', fontSize: '0.925rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                Build an incontrovertible proof of competence. Replace vulnerable paper resumes with verified skill passports.
               </p>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.875rem' }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.9rem', color: '#252525' }}>
                   <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>Digital Skill Passport:</strong> Verifiable competency badges</span>
+                  Personalized AI Career Roadmap with gap identification
                 </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.9rem', color: '#252525' }}>
                   <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>Job Readiness Index (JRI):</strong> Real-time benchmark</span>
+                  Proctored standardized skill assessments
                 </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.9rem', color: '#252525' }}>
                   <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>AI Resume Auditor:</strong> ATS matching against real jobs</span>
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>Targeted Roadmaps:</strong> Guided study paths for skill gaps</span>
+                  Direct matching with vetted corporate opportunities
                 </li>
               </ul>
+              <Link to="/register" className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
+                Create Candidate Passport <ArrowRight size={16} />
+              </Link>
             </div>
 
             {/* Recruiter Card */}
-            <div className="card-saas" style={{ background: '#FFFFFF' }}>
+            <div className="card-saas">
               <div
                 style={{
                   width: '52px',
                   height: '52px',
                   borderRadius: '12px',
-                  background: '#FEF8ED',
-                  color: '#F59E0B',
+                  background: '#FAF6EF',
+                  color: '#B89B6A',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -688,179 +719,158 @@ export const LandingPage = () => {
               >
                 <Building2 size={28} />
               </div>
-              <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.75rem' }}>
-                For Talent Recruiters
+              <h3 style={{ fontSize: '1.45rem', fontWeight: 800, marginBottom: '0.75rem', color: '#252525' }}>
+                For Corporate HR &amp; Recruiters
               </h3>
-              <p style={{ color: '#68756F', fontSize: '0.925rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-                Skip the keyword roulette. Discover pre-audited candidates matched mathematically against your production stack.
+              <p style={{ color: '#77736D', fontSize: '0.925rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                Stop screening fabricated claims. Filter candidate pipelines by cryptographically verified skills and code evidence.
               </p>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.875rem' }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.9rem', color: '#252525' }}>
                   <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>Pre-Verified Pipeline:</strong> Authenticated coding exams</span>
+                  Semantic talent search across verified competency levels
                 </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.9rem', color: '#252525' }}>
                   <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>Explainable Match Scores:</strong> Understand candidate fits</span>
+                  Instant verification of university accreditation status
                 </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.9rem', color: '#252525' }}>
                   <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>Verified Code Artifacts:</strong> Inspect audited GitHub repos</span>
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>Institutional Accreditation:</strong> Direct college access</span>
+                  Direct hiring pipeline with pre-assessed candidates
                 </li>
               </ul>
+              <Link to="/register" className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
+                Deploy Recruiter Suite <ArrowRight size={16} />
+              </Link>
             </div>
 
-            {/* Placement Director Card */}
-            <div className="card-saas" style={{ background: '#FFFFFF' }}>
+            {/* Placement Officer Card */}
+            <div className="card-saas">
               <div
                 style={{
                   width: '52px',
                   height: '52px',
                   borderRadius: '12px',
-                  background: '#EDF3F1',
-                  color: '#142D2B',
+                  background: '#F5F1E9',
+                  color: '#252525',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: '1.5rem',
                 }}
               >
-                <Users size={28} />
+                <ShieldCheck size={28} />
               </div>
-              <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#142D2B', marginBottom: '0.75rem' }}>
-                For Placement Officers
+              <h3 style={{ fontSize: '1.45rem', fontWeight: 800, marginBottom: '0.75rem', color: '#252525' }}>
+                For Placement Officers &amp; Deans
               </h3>
-              <p style={{ color: '#68756F', fontSize: '0.925rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-                Complete batch-wide visibility over placement readiness, proactive at-risk alerts, and accreditation reporting.
+              <p style={{ color: '#77736D', fontSize: '0.925rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                Centralize campus hiring intelligence. Monitor student assessment integrity and accelerate corporate placement ratios.
               </p>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.875rem' }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.9rem', color: '#252525' }}>
                   <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>Batch Readiness Radar:</strong> Real-time placement analytics</span>
+                  Real-time exam proctoring &amp; violation monitoring
                 </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.9rem', color: '#252525' }}>
                   <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>Early Warning System:</strong> Intervene before drives begin</span>
+                  Batch certificate verification &amp; institutional seals
                 </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.9rem', color: '#252525' }}>
                   <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>Drive Orchestration:</strong> Manage corporate campus drives</span>
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <span className="saas-check-bullet"><Check size={13} /></span>
-                  <span><strong>NBA/NAAC Export:</strong> One-click verified placement logs</span>
+                  Hiring drive orchestrator with automated status tracking
                 </li>
               </ul>
+              <Link to="/register" className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
+                Launch Placement Console <ArrowRight size={16} />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          6. ADVANCED ASSESSMENT SECURITY & ANTI-CHEATING ARCHITECTURE (Dark Navy)
+          6. ADVANCED PROCTORING & ANTI-CHEATING SECURITY
           ========================================================================= */}
       <section
         id="security"
-        className="bg-navy-hero bg-tech-grid-dark"
+        className="bg-charcoal-hero bg-tech-grid-dark"
         style={{
           padding: '6rem 1.5rem',
           color: '#FFFFFF',
-          position: 'relative',
         }}
       >
-        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <div className="telemetry-pill telemetry-pill-emerald" style={{ marginBottom: '0.75rem' }}>
-              <ShieldAlert size={14} /> Zero-Tolerance Exam Security
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 4rem auto' }}>
+            <div
+              className="telemetry-pill telemetry-pill-terracotta"
+              style={{
+                marginBottom: '1rem',
+                background: 'rgba(196, 106, 69, 0.15)',
+                border: '1px solid rgba(196, 106, 69, 0.35)',
+                color: '#F5F1E9',
+              }}
+            >
+              <Lock size={14} color="#C46A45" /> Zero-Trust Examination Engine
             </div>
-            <h2 style={{ fontSize: 'clamp(2rem, 3.8vw, 2.75rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.025em' }}>
-              Enterprise Anti-Cheating Architecture
+            <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, color: '#FFFFFF', marginBottom: '1rem' }}>
+              Rigorous Security with Strict Privacy Standards
             </h2>
-            <p style={{ color: '#94A3B8', fontSize: '1.05rem', maxWidth: '680px', margin: '0.5rem auto 0 auto' }}>
-              Multi-layered proctoring engine with client-side computer vision, browser sandboxing, and immutable audit logs.
+            <p style={{ color: '#D9D0C3', fontSize: '1.05rem', lineHeight: 1.6 }}>
+              Comprehensive integrity enforcement without intrusive facial surveillance. Candidates are verified fairly and transparently.
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.75rem' }}>
-            {/* Security Feature 1: Fullscreen Mode */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+            {/* Security Item 1 */}
             <div className="card-saas-dark">
-              <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
-                <Maximize2 size={22} />
+              <div style={{ color: '#C46A45', marginBottom: '1rem' }}>
+                <Maximize2 size={32} />
               </div>
-              <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
-                Dedicated Fullscreen Mode
-              </h4>
-              <p style={{ fontSize: '0.875rem', color: '#94A3B8', lineHeight: 1.6 }}>
-                Completely removes the navbar, sidebar, and dashboard. Exiting fullscreen immediately triggers an audit violation.
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
+                Fullscreen Examination Lockdown
+              </h3>
+              <p style={{ color: '#B8AD9E', fontSize: '0.875rem', lineHeight: 1.6 }}>
+                Dedicated standalone assessment view completely isolates the candidate. Navbars, dashboards, and sidebars are excluded.
               </p>
             </div>
 
-            {/* Security Feature 2: Phone Detection */}
+            {/* Security Item 2 */}
             <div className="card-saas-dark">
-              <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
-                <Smartphone size={22} />
+              <div style={{ color: '#B89B6A', marginBottom: '1rem' }}>
+                <Smartphone size={32} />
               </div>
-              <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
-                Computer Vision Phone Detection
-              </h4>
-              <p style={{ fontSize: '0.875rem', color: '#94A3B8', lineHeight: 1.6 }}>
-                Powered by in-browser TensorFlow.js (COCO-SSD). Detects visible mobile phones with confidence ratings without fake alerts.
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
+                Zero-Tolerance Phone Detection
+              </h3>
+              <p style={{ color: '#B8AD9E', fontSize: '0.875rem', lineHeight: 1.6 }}>
+                Computer vision ML detects visible mobile phones in the webcam view and immediately terminates the attempt with zero warnings.
               </p>
             </div>
 
-            {/* Security Feature 3: Tab Switch & Focus Loss */}
+            {/* Security Item 3 */}
             <div className="card-saas-dark">
-              <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
-                <Eye size={22} />
+              <div style={{ color: '#C46A45', marginBottom: '1rem' }}>
+                <ShieldAlert size={32} />
               </div>
-              <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
-                Tab & External App Monitoring
-              </h4>
-              <p style={{ fontSize: '0.875rem', color: '#94A3B8', lineHeight: 1.6 }}>
-                Granular Page Visibility and window blur detectors flag external window focus loss, chat apps, and desktop switching.
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
+                Tab &amp; Window Focus Surveillance
+              </h3>
+              <p style={{ color: '#B8AD9E', fontSize: '0.875rem', lineHeight: 1.6 }}>
+                Immediate logging and enforcement if a student switches browser tabs, minimizes the window, or triggers external software.
               </p>
             </div>
 
-            {/* Security Feature 4: Clipboard & DevTools Shield */}
+            {/* Security Item 4 */}
             <div className="card-saas-dark">
-              <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
-                <Lock size={22} />
+              <div style={{ color: '#B89B6A', marginBottom: '1rem' }}>
+                <Clock size={32} />
               </div>
-              <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
-                Clipboard & DevTools Shield
-              </h4>
-              <p style={{ fontSize: '0.875rem', color: '#94A3B8', lineHeight: 1.6 }}>
-                Blocks copy, cut, paste, right-click context menus, PrintScreen screenshot shortcuts, and browser inspection keys.
-              </p>
-            </div>
-
-            {/* Security Feature 5: Server-Side Timing */}
-            <div className="card-saas-dark">
-              <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
-                <Clock size={22} />
-              </div>
-              <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
-                Backend Timer Validation
-              </h4>
-              <p style={{ fontSize: '0.875rem', color: '#94A3B8', lineHeight: 1.6 }}>
-                Examination timers are enforced server-side. Page refreshes preserve running countdowns and prevent artificial extensions.
-              </p>
-            </div>
-
-            {/* Security Feature 6: Admin Audit Trail */}
-            <div className="card-saas-dark">
-              <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
-                <ShieldCheck size={22} />
-              </div>
-              <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
-                Proctor Audit Log Drawer
-              </h4>
-              <p style={{ fontSize: '0.875rem', color: '#94A3B8', lineHeight: 1.6 }}>
-                Detailed chronological logs with timestamps, violation severities, actions taken, and authorized retake controls.
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
+                Server-Validated Time Lock
+              </h3>
+              <p style={{ color: '#B8AD9E', fontSize: '0.875rem', lineHeight: 1.6 }}>
+                Duration timing persists across reloads on the backend. When time expires, exams auto-submit with zero grace extension.
               </p>
             </div>
           </div>
@@ -868,158 +878,202 @@ export const LandingPage = () => {
       </section>
 
       {/* =========================================================================
-          7. CONVERSION CALL TO ACTION BANNER
+          7. INSTITUTIONAL GOVERNANCE & COMPLIANCE
           ========================================================================= */}
-      <section style={{ padding: '5rem 1.5rem', maxWidth: '1240px', margin: '0 auto' }}>
-        <div
-          style={{
-            background: 'linear-gradient(135deg, #070D1B 0%, #0F203D 60%, #08162E 100%)',
-            borderRadius: '20px',
-            padding: '4rem 2rem',
-            textAlign: 'center',
-            color: '#FFFFFF',
-            position: 'relative',
-            overflow: 'hidden',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.3)',
-          }}
-        >
-          <div className="glow-ambient-emerald" style={{ top: '-30%', right: '10%' }} />
-
-          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-0.025em' }}>
-            Ready to Build a Verifiable Engineering Passport?
-          </h2>
-          <p style={{ fontSize: '1.1rem', color: '#94A3B8', maxWidth: '640px', margin: '0 auto 2.5rem auto', lineHeight: 1.6 }}>
-            Join thousands of engineering students and over 500 recruiters who have replaced paper resumes with verified proof of work.
-          </p>
-
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-            <Link
-              to="/register"
-              className="btn-emerald-glow"
+      <section id="governance" style={{ padding: '6rem 1.5rem', maxWidth: '1280px', margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '3rem', alignItems: 'center' }}>
+          <div>
+            <div
               style={{
-                padding: '0.85rem 2.25rem',
-                fontSize: '1.05rem',
-                borderRadius: '10px',
-                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                color: '#C46A45',
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginBottom: '0.75rem',
               }}
             >
-              <span>Get Started Free</span>
-              <ArrowRight size={18} />
-            </Link>
-            <Link
-              to="/login"
-              className="btn-glass-navy"
-              style={{
-                padding: '0.85rem 2rem',
-                fontSize: '1.05rem',
-                borderRadius: '10px',
-                textDecoration: 'none',
-              }}
-            >
-              Sign In to Dashboard
-            </Link>
+              <Globe2 size={16} /> Enterprise Governance
+            </div>
+            <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, color: '#252525', marginBottom: '1.25rem' }}>
+              Compliant with Academic and Corporate Hiring Standards
+            </h2>
+            <p style={{ color: '#77736D', fontSize: '1.05rem', lineHeight: 1.6, marginBottom: '2rem' }}>
+              SkillProof AI operates on an auditable cryptographic architecture. Every skill verified by an institution
+              is signed with timestamps and immutable verification keys.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#FBF4F0', color: '#C46A45', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Check size={16} />
+                </div>
+                <div>
+                  <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#252525', margin: '0 0 0.25rem 0' }}>Privacy-First Design</h4>
+                  <p style={{ fontSize: '0.875rem', color: '#77736D', margin: 0 }}>No facial recognition or identity logging. Zero video recordings stored on disk.</p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#FAF6EF', color: '#B89B6A', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Check size={16} />
+                </div>
+                <div>
+                  <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#252525', margin: '0 0 0.25rem 0' }}>Universal Portability</h4>
+                  <p style={{ fontSize: '0.875rem', color: '#77736D', margin: 0 }}>Candidates retain their verified credentials across job transitions and university graduations.</p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#F5F1E9', color: '#252525', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Check size={16} />
+                </div>
+                <div>
+                  <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#252525', margin: '0 0 0.25rem 0' }}>Audit-Ready Telemetry</h4>
+                  <p style={{ fontSize: '0.875rem', color: '#77736D', margin: 0 }}>Every proctoring flag and evaluation event is permanently recorded in the institutional audit log.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="card"
+            style={{
+              padding: '2.5rem',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid #E8E1D7',
+              borderRadius: '16px',
+              boxShadow: 'var(--shadow-md)',
+            }}
+          >
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#252525', marginBottom: '1.25rem' }}>
+              Institutional Attestation Snapshot
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.85rem 1rem', background: '#F5F1E9', borderRadius: '8px' }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#77736D' }}>Accreditation Standard</span>
+                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#252525' }}>ISO / IEEE Competency Matrix</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.85rem 1rem', background: '#F5F1E9', borderRadius: '8px' }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#77736D' }}>Proctoring Verification</span>
+                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#C46A45' }}>Zero-Tolerance Automated</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.85rem 1rem', background: '#F5F1E9', borderRadius: '8px' }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#77736D' }}>Student Data Retention</span>
+                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#B89B6A' }}>Encrypted &bull; FERPA Compliant</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.85rem 1rem', background: '#F5F1E9', borderRadius: '8px' }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#77736D' }}>Audit Integrity Hash</span>
+                <span style={{ fontSize: '0.85rem', fontFamily: 'var(--font-mono)', color: '#252525' }}>SHA-256: 8f9b...a34e</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          8. MODERN SAAS ENTERPRISE FOOTER
+          8. CALL TO ACTION SECTION
           ========================================================================= */}
-      <footer
+      <section
         style={{
-          backgroundColor: '#070D1B',
-          color: '#94A3B8',
-          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-          padding: '4rem 2rem 2.5rem 2rem',
+          backgroundColor: '#252525',
+          color: '#FFFFFF',
+          padding: '6rem 1.5rem',
+          textAlign: 'center',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
+        <div className="glow-ambient-terracotta" style={{ top: '-150px', left: '30%' }} />
+        <div style={{ maxWidth: '800px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+          <h2 style={{ fontSize: 'clamp(2.25rem, 4.5vw, 3.25rem)', fontWeight: 800, marginBottom: '1.25rem', color: '#FFFFFF' }}>
+            Ready to Verify Real Competency?
+          </h2>
+          <p style={{ color: '#D9D0C3', fontSize: '1.15rem', lineHeight: 1.6, marginBottom: '2.5rem' }}>
+            Join forward-thinking universities and enterprise hiring teams moving beyond the unverified resume.
+          </p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/register" className="btn btn-terracotta-glow btn-lg">
+              Start Free Assessment <ArrowRight size={18} />
+            </Link>
+            <Link to="/login" className="btn btn-glass-charcoal btn-lg">
+              Sign In to Console
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          9. PROFESSIONAL FOOTER
+          ========================================================================= */}
+      <footer style={{ backgroundColor: '#1A1A1A', color: '#9C9790', padding: '4.5rem 1.5rem 2.5rem 1.5rem', borderTop: '1px solid #333333' }}>
         <div
           style={{
-            maxWidth: '1240px',
+            maxWidth: '1280px',
             margin: '0 auto',
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
             gap: '3rem',
-            marginBottom: '3rem',
+            marginBottom: '3.5rem',
           }}
         >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.75rem' }}>
-              <div
-                style={{
-                  width: '32px',
-                  height: '32px',
-                  background: 'linear-gradient(135deg, #10B981, #059669)',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#ffffff',
-                }}
-              >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1rem' }}>
+              <div style={{ width: '30px', height: '30px', borderRadius: '8px', background: '#C46A45', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Sparkles size={16} />
               </div>
               <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF' }}>
-                SkillProof <span style={{ color: '#10B981' }}>AI</span>
+                SkillProof <span style={{ color: '#C46A45' }}>AI</span>
               </span>
             </div>
-            <p style={{ fontSize: '0.85rem', lineHeight: 1.6, color: '#64748B' }}>
-              Enterprise Evidence-Based Skill Passport & Campus Job Readiness Platform. Designed for verified engineering outcomes.
+            <p style={{ fontSize: '0.85rem', lineHeight: 1.6, color: '#9C9790' }}>
+              Standardizing verified competencies with cryptographically auditable skill passports.
             </p>
           </div>
 
           <div>
-            <h5 style={{ color: '#FFFFFF', fontSize: '0.9rem', fontWeight: 700, marginBottom: '1rem' }}>Ecosystem Portals</h5>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.85rem' }}>
-              <Link to="/student/home" style={{ color: '#94A3B8', textDecoration: 'none' }}>Student Passport</Link>
-              <Link to="/assessments" style={{ color: '#94A3B8', textDecoration: 'none' }}>Proctored Assessments</Link>
-              <Link to="/recruiter/dashboard" style={{ color: '#94A3B8', textDecoration: 'none' }}>Recruiter Talent Search</Link>
-              <Link to="/placement/dashboard" style={{ color: '#94A3B8', textDecoration: 'none' }}>Placement Officer Command</Link>
-            </div>
+            <h5 style={{ color: '#FFFFFF', fontSize: '0.9rem', fontWeight: 700, marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              Solutions
+            </h5>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.85rem' }}>
+              <li><Link to="/assessments" style={{ color: '#9C9790', textDecoration: 'none' }}>Proctored Assessments</Link></li>
+              <li><Link to="/register" style={{ color: '#9C9790', textDecoration: 'none' }}>Skill Passport Engine</Link></li>
+              <li><Link to="/register" style={{ color: '#9C9790', textDecoration: 'none' }}>Recruiter Search</Link></li>
+              <li><Link to="/register" style={{ color: '#9C9790', textDecoration: 'none' }}>Placement Director Portal</Link></li>
+            </ul>
           </div>
 
           <div>
-            <h5 style={{ color: '#FFFFFF', fontSize: '0.9rem', fontWeight: 700, marginBottom: '1rem' }}>Anti-Cheat Security</h5>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.85rem' }}>
-              <span style={{ color: '#94A3B8' }}>TensorFlow.js Vision Detection</span>
-              <span style={{ color: '#94A3B8' }}>Fullscreen Sandboxing</span>
-              <span style={{ color: '#94A3B8' }}>Tab Switch & Focus Logging</span>
-              <span style={{ color: '#94A3B8' }}>Server-Side Auto-Scoring</span>
-            </div>
+            <h5 style={{ color: '#FFFFFF', fontSize: '0.9rem', fontWeight: 700, marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              Security &amp; Standards
+            </h5>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.85rem' }}>
+              <li><span style={{ color: '#9C9790' }}>Phone Detection AI</span></li>
+              <li><span style={{ color: '#9C9790' }}>Fullscreen Isolation</span></li>
+              <li><span style={{ color: '#9C9790' }}>Privacy Code of Conduct</span></li>
+              <li><span style={{ color: '#9C9790' }}>Server-Side Time Locks</span></li>
+            </ul>
           </div>
 
           <div>
-            <h5 style={{ color: '#FFFFFF', fontSize: '0.9rem', fontWeight: 700, marginBottom: '1rem' }}>Platform Status</h5>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: '#10B981', marginBottom: '0.75rem' }}>
-              <span className="pulse-dot-emerald" style={{ width: '6px', height: '6px' }} />
-              All Systems Operational
-            </div>
-            <div style={{ fontSize: '0.8rem', color: '#64748B' }}>
-              ISO/IEC 27001 & SOC-2 Architecture Aligned
+            <h5 style={{ color: '#FFFFFF', fontSize: '0.9rem', fontWeight: 700, marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              Portal Access
+            </h5>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.85rem' }}>
+              <Link to="/login" style={{ color: '#C46A45', fontWeight: 600 }}>Candidate Sign In &rarr;</Link>
+              <Link to="/login" style={{ color: '#B89B6A', fontWeight: 600 }}>Corporate Recruiter Sign In &rarr;</Link>
+              <Link to="/login" style={{ color: '#D9D0C3', fontWeight: 600 }}>Placement Officer Sign In &rarr;</Link>
             </div>
           </div>
         </div>
 
-        <div
-          style={{
-            maxWidth: '1240px',
-            margin: '0 auto',
-            paddingTop: '2rem',
-            borderTop: '1px solid rgba(255, 255, 255, 0.06)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem',
-            fontSize: '0.8rem',
-            color: '#64748B',
-          }}
-        >
-          <div>&copy; {new Date().getFullYear()} SkillProof AI Platform. All rights reserved.</div>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', paddingTop: '2rem', borderTop: '1px solid #2D2D2D', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', fontSize: '0.8rem' }}>
+          <div>&copy; {new Date().getFullYear()} SkillProof AI, Inc. All rights reserved.</div>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
-            <Link to="/login" style={{ color: '#64748B', textDecoration: 'none' }}>Sign In</Link>
-            <Link to="/register" style={{ color: '#64748B', textDecoration: 'none' }}>Register</Link>
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+            <span>Security Statement</span>
           </div>
         </div>
       </footer>

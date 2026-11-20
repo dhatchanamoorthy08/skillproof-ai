@@ -513,7 +513,7 @@ export const Register = () => {
         alignItems: 'center',
         minHeight: '100vh',
         padding: '2.5rem 1rem',
-        backgroundColor: '#F8FAF9',
+        backgroundColor: '#F5F1E9',
       }}
     >
       <div
@@ -521,10 +521,10 @@ export const Register = () => {
           width: '100%',
           maxWidth: '780px',
           padding: '2.75rem 2.5rem',
-          boxShadow: '0 20px 40px -15px rgba(20, 45, 43, 0.08), 0 0 1px 1px rgba(7, 134, 106, 0.1)',
+          boxShadow: '0 20px 40px -15px rgba(37, 37, 37, 0.08)',
           borderRadius: '16px',
           backgroundColor: '#ffffff',
-          border: '1px solid #DFE8E1',
+          border: '1px solid #E8E1D7',
           transition: 'all 0.3s ease',
         }}
       >
@@ -534,22 +534,22 @@ export const Register = () => {
             style={{
               width: '50px',
               height: '50px',
-              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+              background: 'linear-gradient(135deg, #C46A45 0%, #B15B38 100%)',
               borderRadius: '12px',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#ffffff',
               marginBottom: '1rem',
-              boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
+              boxShadow: '0 4px 14px rgba(196, 106, 69, 0.35)',
             }}
           >
             <Sparkles size={24} />
           </div>
-          <h1 style={{ fontSize: '1.85rem', fontWeight: 800, margin: '0 0 0.5rem', letterSpacing: '-0.025em', color: '#142D2B' }}>
+          <h1 style={{ fontSize: '1.85rem', fontWeight: 800, margin: '0 0 0.5rem', letterSpacing: '-0.025em', color: '#252525' }}>
             Create Your Account
           </h1>
-          <p style={{ color: '#68756F', margin: 0, fontSize: '0.95rem' }}>
+          <p style={{ color: '#77736D', margin: 0, fontSize: '0.95rem' }}>
             Join the evidence-based skill verification and campus placement platform
           </p>
         </div>
@@ -593,7 +593,7 @@ export const Register = () => {
               borderRadius: 'var(--radius-md)',
               border: role === 'recruiter' ? '2px solid var(--accent)' : '1px solid var(--border-light)',
               background: role === 'recruiter' ? 'var(--accent-light)' : '#ffffff',
-              color: role === 'recruiter' ? '#B27315' : 'var(--text-muted)',
+              color: role === 'recruiter' ? '#B89B6A' : 'var(--text-muted)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -614,7 +614,7 @@ export const Register = () => {
               padding: '0.75rem 0.5rem',
               borderRadius: 'var(--radius-md)',
               border: role === 'placement_officer' ? '2px solid var(--secondary)' : '1px solid var(--border-light)',
-              background: role === 'placement_officer' ? '#EDF3F1' : '#ffffff',
+              background: role === 'placement_officer' ? '#F5F1E9' : '#ffffff',
               color: role === 'placement_officer' ? 'var(--secondary)' : 'var(--text-muted)',
               display: 'flex',
               flexDirection: 'column',
@@ -657,9 +657,9 @@ export const Register = () => {
             style={{
               padding: '0.75rem 1rem',
               borderRadius: 'var(--radius-md)',
-              backgroundColor: '#ecfdf5',
-              border: '1px solid #a7f3d0',
-              color: '#065f46',
+              backgroundColor: '#FAF6EF',
+              border: '1px solid #E2D3B8',
+              color: '#8E703C',
               fontSize: '0.85rem',
               display: 'flex',
               alignItems: 'center',
@@ -667,7 +667,7 @@ export const Register = () => {
               marginBottom: '1.25rem',
             }}
           >
-            <CheckCircle2 size={16} color="#059669" />
+            <CheckCircle2 size={16} color="#B89B6A" />
             <span>{successMsg}</span>
           </div>
         )}
@@ -765,9 +765,9 @@ export const Register = () => {
                       fontWeight: 600,
                       padding: '0.35rem 0.6rem',
                       borderRadius: 'var(--radius-sm)',
-                      border: '1px solid #fee2e2',
-                      backgroundColor: '#fef2f2',
-                      color: '#dc2626',
+                      border: '1px solid #F3C6C6',
+                      backgroundColor: '#FCF4F4',
+                      color: '#C44545',
                       cursor: 'pointer',
                       display: 'inline-flex',
                       alignItems: 'center',
@@ -1051,8 +1051,8 @@ export const Register = () => {
                               padding: '0.25rem 0.6rem',
                               borderRadius: '9999px',
                               border: isSelected ? '1px solid var(--primary)' : '1px solid var(--border-light)',
-                              backgroundColor: isSelected ? 'var(--primary-light)' : '#f8fafc',
-                              color: isSelected ? 'var(--primary)' : '#475569',
+                              backgroundColor: isSelected ? 'var(--primary-light)' : '#FAF6EF',
+                              color: isSelected ? 'var(--primary)' : 'var(--text-secondary)',
                               fontWeight: isSelected ? 700 : 500,
                               cursor: 'pointer',
                               display: 'inline-flex',

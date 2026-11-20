@@ -49,7 +49,7 @@ export const AssessmentListPage = () => {
   return (
     <div>
       <div className="card" style={{ marginBottom: '1.5rem' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#07866A', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#C46A45', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
           <ShieldCheck size={16} /> Standardized Examination Engine
         </div>
         <h2 style={{ fontSize: '1.85rem', fontWeight: 800, margin: 0 }}>Proctored Technical Assessments</h2>
@@ -132,8 +132,8 @@ export const AssessmentListPage = () => {
                     style={{
                       padding: '0.85rem',
                       borderRadius: 'var(--radius-md)',
-                      backgroundColor: assessment.userAttempt.passed ? '#EFF8F2' : '#FCF0F2',
-                      border: `1px solid ${assessment.userAttempt.passed ? '#C8E6D2' : '#F7D4D7'}`,
+                      backgroundColor: assessment.userAttempt.passed ? '#FAF6EF' : '#FCF4F4',
+                      border: `1px solid ${assessment.userAttempt.passed ? '#E2D3B8' : '#F3C6C6'}`,
                       marginBottom: '1rem',
                       display: 'flex',
                       alignItems: 'center',

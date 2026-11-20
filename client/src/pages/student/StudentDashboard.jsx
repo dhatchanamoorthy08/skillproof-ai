@@ -58,7 +58,7 @@ export const StudentDashboard = () => {
       <div
         className="card"
         style={{
-          background: '#142D2B',
+          background: '#252525',
           color: '#ffffff',
           marginBottom: '2rem',
           padding: '2.25rem',
@@ -68,7 +68,7 @@ export const StudentDashboard = () => {
           flexWrap: 'wrap',
           gap: '1.5rem',
           boxShadow: 'var(--shadow-md)',
-          border: '1px solid rgba(223, 232, 225, 0.15)',
+          border: '1px solid rgba(232, 225, 215, 0.15)',
         }}
       >
         <div>
@@ -77,9 +77,9 @@ export const StudentDashboard = () => {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              color: '#E8A23A',
-              backgroundColor: 'rgba(232, 162, 58, 0.12)',
-              border: '1px solid rgba(232, 162, 58, 0.25)',
+              color: '#B89B6A',
+              backgroundColor: 'rgba(184, 155, 106, 0.15)',
+              border: '1px solid rgba(184, 155, 106, 0.3)',
               padding: '3px 10px',
               borderRadius: '999px',
               fontSize: '0.78rem',
@@ -91,12 +91,12 @@ export const StudentDashboard = () => {
           >
             <ShieldCheck size={14} /> Evidence-Backed Candidate Profile
           </div>
-          <h2 style={{ fontSize: '1.85rem', color: '#FAFAF5', marginBottom: '0.4rem', fontWeight: 800 }}>
+          <h2 style={{ fontSize: '1.85rem', color: '#F5F1E9', marginBottom: '0.4rem', fontWeight: 800 }}>
             Welcome back, {user?.fullName || 'Student'}!
           </h2>
-          <p style={{ color: '#A3B8B2', fontSize: '0.95rem', maxWidth: '600px' }}>
+          <p style={{ color: '#D9D0C3', fontSize: '0.95rem', maxWidth: '600px' }}>
             {profile?.department || 'Computer Science'} &bull; Target Role:{' '}
-            <strong style={{ color: '#FAFAF5' }}>{profile?.targetRole || 'Full Stack Developer'}</strong>
+            <strong style={{ color: '#FFFFFF' }}>{profile?.targetRole || 'Full Stack Developer'}</strong>
           </p>
         </div>
 
@@ -135,8 +135,8 @@ export const StudentDashboard = () => {
           value={`${passport?.jobReadinessIndex || 50}%`}
           subtitle={<ReadinessTierBadge tier={passport?.readinessTier} />}
           icon={<TrendingUp size={22} />}
-          iconBg="#F0F7F4"
-          iconColor="#07866A"
+          iconBg="#FBF4F0"
+          iconColor="#C46A45"
         />
 
         <MetricCard
@@ -144,8 +144,8 @@ export const StudentDashboard = () => {
           value={`${profile?.profileCompletion || 65}%`}
           subtitle="Add links and resume"
           icon={<CheckCircle2 size={22} />}
-          iconBg="#EFF8F2"
-          iconColor="#247A48"
+          iconBg="#FAF6EF"
+          iconColor="#B89B6A"
         />
 
         <MetricCard
@@ -153,8 +153,8 @@ export const StudentDashboard = () => {
           value={demonstratedCount}
           subtitle="Backed by code/projects"
           icon={<FileCode2 size={22} />}
-          iconBg="#FEF8ED"
-          iconColor="#E8A23A"
+          iconBg="#F5F1E9"
+          iconColor="#252525"
         />
 
         <MetricCard
@@ -162,8 +162,8 @@ export const StudentDashboard = () => {
           value={verifiedCount}
           subtitle="Audited by placement"
           icon={<ShieldCheck size={22} />}
-          iconBg="#EDF3F1"
-          iconColor="#142D2B"
+          iconBg="#FBF4F0"
+          iconColor="#C46A45"
         />
       </div>
 
@@ -189,7 +189,7 @@ export const StudentDashboard = () => {
                   style={{
                     width: `${((passport?.readinessBreakdown?.assessedScore || 0) / 35) * 100}%`,
                     height: '100%',
-                    backgroundColor: '#07866A',
+                    backgroundColor: '#C46A45',
                     borderRadius: '4px',
                   }}
                 />
@@ -206,7 +206,7 @@ export const StudentDashboard = () => {
                   style={{
                     width: `${((passport?.readinessBreakdown?.demonstratedScore || 0) / 25) * 100}%`,
                     height: '100%',
-                    backgroundColor: '#142D2B',
+                    backgroundColor: '#252525',
                     borderRadius: '4px',
                   }}
                 />
@@ -223,7 +223,7 @@ export const StudentDashboard = () => {
                   style={{
                     width: `${((passport?.readinessBreakdown?.verifiedScore || 0) / 25) * 100}%`,
                     height: '100%',
-                    backgroundColor: '#247A48',
+                    backgroundColor: '#B89B6A',
                     borderRadius: '4px',
                   }}
                 />
@@ -240,7 +240,7 @@ export const StudentDashboard = () => {
                   style={{
                     width: `${((passport?.readinessBreakdown?.profileCompletenessScore || 0) / 15) * 100}%`,
                     height: '100%',
-                    backgroundColor: '#E8A23A',
+                    backgroundColor: '#D9D0C3',
                     borderRadius: '4px',
                   }}
                 />
@@ -319,8 +319,9 @@ export const StudentDashboard = () => {
                       style={{
                         padding: '0.3rem 0.65rem',
                         borderRadius: 'var(--radius-md)',
-                        backgroundColor: matchScore >= 75 ? '#ecfdf5' : '#eff6ff',
-                        color: matchScore >= 75 ? '#047857' : '#1d4ed8',
+                        backgroundColor: matchScore >= 75 ? '#FAF6EF' : '#FBF4F0',
+                        color: matchScore >= 75 ? '#B89B6A' : '#C46A45',
+                        border: matchScore >= 75 ? '1px solid #E2D3B8' : '1px solid #E8C2B2',
                         fontWeight: 700,
                         fontSize: '0.875rem',
                       }}

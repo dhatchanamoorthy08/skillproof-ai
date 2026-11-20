@@ -50,7 +50,7 @@ export const RecruiterDashboard = () => {
       <div
         className="card"
         style={{
-          background: '#142D2B',
+          background: '#252525',
           color: '#ffffff',
           marginBottom: '2rem',
           padding: '2.25rem',
@@ -59,7 +59,7 @@ export const RecruiterDashboard = () => {
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '1.5rem',
-          border: '1px solid rgba(223, 232, 225, 0.15)',
+          border: '1px solid rgba(232, 225, 215, 0.15)',
         }}
       >
         <div>
@@ -68,9 +68,9 @@ export const RecruiterDashboard = () => {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              color: isVerified ? '#247A48' : '#E8A23A',
-              backgroundColor: isVerified ? 'rgba(36, 122, 72, 0.15)' : 'rgba(232, 162, 58, 0.15)',
-              border: `1px solid ${isVerified ? 'rgba(36, 122, 72, 0.3)' : 'rgba(232, 162, 58, 0.3)'}`,
+              color: isVerified ? '#B89B6A' : '#C46A45',
+              backgroundColor: isVerified ? 'rgba(184, 155, 106, 0.15)' : 'rgba(196, 106, 69, 0.15)',
+              border: `1px solid ${isVerified ? 'rgba(184, 155, 106, 0.3)' : 'rgba(196, 106, 69, 0.3)'}`,
               padding: '3px 10px',
               borderRadius: '999px',
               fontSize: '0.78rem',
@@ -86,7 +86,7 @@ export const RecruiterDashboard = () => {
           <h2 style={{ fontSize: '1.85rem', color: '#FAFAF5', marginBottom: '0.4rem', fontWeight: 800 }}>
             {profile?.companyName || 'Corporate Partner'}
           </h2>
-          <p style={{ color: '#A3B8B2', fontSize: '0.95rem' }}>
+          <p style={{ color: '#D9D0C3', fontSize: '0.95rem' }}>
             Recruiter: <strong style={{ color: '#FAFAF5' }}>{user?.fullName}</strong> &bull; {profile?.location || 'Bangalore, India'}
           </p>
         </div>
@@ -117,9 +117,9 @@ export const RecruiterDashboard = () => {
           style={{
             padding: '1.25rem',
             borderRadius: 'var(--radius-md)',
-            backgroundColor: 'var(--warning-light)',
-            border: '1px solid var(--warning-border)',
-            color: '#B27315',
+            backgroundColor: '#FCF8F5',
+            border: '1px solid #E8E1D7',
+            color: '#C46A45',
             marginBottom: '2rem',
             display: 'flex',
             alignItems: 'center',
@@ -129,10 +129,10 @@ export const RecruiterDashboard = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <AlertTriangle size={22} color="#E8A23A" style={{ flexShrink: 0 }} />
+            <AlertTriangle size={22} color="#C46A45" style={{ flexShrink: 0 }} />
             <div>
               <strong style={{ fontSize: '0.95rem' }}>2-Step Company Verification Pending</strong>
-              <p style={{ fontSize: '0.85rem', color: '#92400E', margin: '2px 0 0 0' }}>
+              <p style={{ fontSize: '0.85rem', color: '#77736D', margin: '2px 0 0 0' }}>
                 Per institutional guidelines, only approved recruiters can publish jobs or browse candidate passports.
               </p>
             </div>
@@ -150,8 +150,8 @@ export const RecruiterDashboard = () => {
           value={analytics?.activeJobs || 0}
           subtitle="Currently published"
           icon={<Briefcase size={22} />}
-          iconBg="#F0F7F4"
-          iconColor="#07866A"
+          iconBg="#FBF4F0"
+          iconColor="#C46A45"
         />
 
         <MetricCard
@@ -159,8 +159,8 @@ export const RecruiterDashboard = () => {
           value={analytics?.totalApplications || 0}
           subtitle="Received to date"
           icon={<Users size={22} />}
-          iconBg="#FEF8ED"
-          iconColor="#E8A23A"
+          iconBg="#FAF6EF"
+          iconColor="#B89B6A"
         />
 
         <MetricCard
@@ -168,8 +168,8 @@ export const RecruiterDashboard = () => {
           value={analytics?.shortlistedCount || 0}
           subtitle="Passed evidence screening"
           icon={<CheckCircle2 size={22} />}
-          iconBg="#EFF8F2"
-          iconColor="#247A48"
+          iconBg="#FAF6EF"
+          iconColor="#B89B6A"
         />
 
         <MetricCard
@@ -177,8 +177,8 @@ export const RecruiterDashboard = () => {
           value={`${analytics?.conversionRate || 0}%`}
           subtitle="Application to Offer"
           icon={<TrendingUp size={22} />}
-          iconBg="#EDF3F1"
-          iconColor="#142D2B"
+          iconBg="#F5F1E9"
+          iconColor="#252525"
         />
       </div>
 

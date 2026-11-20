@@ -179,17 +179,17 @@ export const InterviewPrepPage = () => {
                   justifyContent: 'space-between',
                   padding: '1rem',
                   borderRadius: 'var(--radius-md)',
-                  backgroundColor: feedback.score >= 75 ? '#ecfdf5' : '#eff6ff',
-                  border: `1px solid ${feedback.score >= 75 ? '#a7f3d0' : '#bfdbfe'}`,
+                  backgroundColor: feedback.score >= 75 ? '#FBF4F0' : '#FAF6EF',
+                  border: `1px solid ${feedback.score >= 75 ? '#E8E1D7' : '#E8E1D7'}`,
                 }}
               >
                 <div>
                   <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)' }}>Response Rating</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: feedback.score >= 75 ? '#047857' : '#1d4ed8' }}>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: feedback.score >= 75 ? '#C46A45' : '#B89B6A' }}>
                     {feedback.score} / 100
                   </div>
                 </div>
-                <Award size={32} color={feedback.score >= 75 ? '#047857' : '#1d4ed8'} />
+                <Award size={32} color={feedback.score >= 75 ? '#C46A45' : '#B89B6A'} />
               </div>
 
               <div>

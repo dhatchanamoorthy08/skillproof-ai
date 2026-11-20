@@ -82,14 +82,14 @@ export const PlacementReportsPage = () => {
         </div>
 
         {/* CSV Export Card */}
-        <div className="card" style={{ padding: '2.25rem', borderTop: '5px solid #059669' }}>
+        <div className="card" style={{ padding: '2.25rem', borderTop: '5px solid #C46A45' }}>
           <div
             style={{
               width: '48px',
               height: '48px',
               borderRadius: 'var(--radius-md)',
               backgroundColor: '#ecfdf5',
-              color: '#059669',
+              color: '#C46A45',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -107,7 +107,7 @@ export const PlacementReportsPage = () => {
           <button
             onClick={() => handleExport('csv')}
             className="btn btn-primary"
-            style={{ width: '100%', backgroundColor: '#059669', gap: '0.5rem' }}
+            style={{ width: '100%', backgroundColor: '#C46A45', gap: '0.5rem' }}
           >
             <Download size={16} />
             <span>Export Raw CSV Spreadsheet</span>

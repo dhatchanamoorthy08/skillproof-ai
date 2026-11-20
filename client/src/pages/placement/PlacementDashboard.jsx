@@ -48,7 +48,7 @@ export const PlacementDashboard = () => {
       <div
         className="card"
         style={{
-          background: '#142D2B',
+          background: '#252525',
           color: '#ffffff',
           marginBottom: '2rem',
           padding: '2.25rem',
@@ -115,8 +115,8 @@ export const PlacementDashboard = () => {
           value={`${stats?.placementPercentage || 0}%`}
           subtitle={`${stats?.placedCount || 0} of ${stats?.totalStudents || 0} placed`}
           icon={<TrendingUp size={22} />}
-          iconBg="#EFF8F2"
-          iconColor="#247A48"
+          iconBg="#FAF6EF"
+          iconColor="#B89B6A"
         />
 
         <MetricCard
@@ -124,8 +124,8 @@ export const PlacementDashboard = () => {
           value={stats?.placementReadyCount || 0}
           subtitle="Meets corporate benchmarks"
           icon={<ShieldCheck size={22} />}
-          iconBg="#F0F7F4"
-          iconColor="#07866A"
+          iconBg="#FBF4F0"
+          iconColor="#C46A45"
         />
 
         <MetricCard

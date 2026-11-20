@@ -1,112 +1,123 @@
 /* ==========================================================================
-   SkillProof AI Enterprise Design System
-   Emerald Green + Midnight Blue + Warm White + Golden Amber
-   Premium, Human-Designed Enterprise SaaS Architecture
+   SkillProof AI Corporate SaaS Design System
+   Palette:
+   - Charcoal Black: #252525
+   - Warm Ivory:     #F5F1E9
+   - Terracotta:     #C46A45
+   - Muted Gold:     #B89B6A
+   - Pure White:     #FFFFFF
+   - Secondary Text: #77736D
+   - Light Border:   #E8E1D7
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Core Surface Palette */
-  --bg-main: #FAFAF5;        /* Warm White Main Background */
-  --bg-card: #FFFFFF;        /* Clean White Cards */
-  --bg-card-subtle: #F4F6F2;
+  /* Core Brand Tokens */
+  --color-charcoal: #252525;
+  --color-ivory: #F5F1E9;
+  --color-terracotta: #C46A45;
+  --color-gold: #B89B6A;
+  --color-white: #FFFFFF;
+  --color-secondary-text: #77736D;
+  --color-light-border: #E8E1D7;
+
+  /* Surface & Background Tokens */
+  --bg-main: #F5F1E9;        /* Warm Ivory */
+  --bg-card: #FFFFFF;        /* Pure White */
+  --bg-card-subtle: #FAF6EF;
   --bg-card-hover: #FDFCFA;
   
-  /* Sidebar Enterprise Palette */
-  --bg-sidebar: #142D2B;      /* Sophisticated Midnight Blue-Green */
-  --bg-sidebar-elevated: #1B3835;
-  --bg-sidebar-hover: #1E3F3C;
-  --bg-sidebar-active: #07866A;  /* Emerald Green Active Navigation */
-  --sidebar-border: rgba(223, 232, 225, 0.12);
+  /* Sidebar Palette: Deep Charcoal Black */
+  --bg-sidebar: #252525;      /* Charcoal Black */
+  --bg-sidebar-elevated: #2D2D2D;
+  --bg-sidebar-hover: #363636;
+  --bg-sidebar-active: #C46A45;  /* Terracotta */
+  --sidebar-border: rgba(232, 225, 215, 0.12);
 
-  /* Primary & Brand Tokens */
-  --primary: #07866A;         /* Emerald Green Primary */
-  --primary-hover: #067059;
-  --primary-dark: #055C49;
-  --primary-light: #F0F7F4;
-  --primary-border: #A3D4C7;
-  --primary-gradient: #07866A; /* Restrained solid emerald */
-  --hero-gradient: linear-gradient(135deg, #142D2B 0%, #1A3936 60%, #112624 100%);
+  /* Primary Brand: Terracotta */
+  --primary: #C46A45;
+  --primary-hover: #B15B38;
+  --primary-dark: #9A4C2C;
+  --primary-light: #FBF4F0;
+  --primary-border: #E8C2B2;
+  --primary-gradient: #C46A45;
+  --hero-gradient: linear-gradient(145deg, #252525 0%, #1E1E1E 55%, #2B231F 100%);
 
-  /* Secondary: Midnight Blue-Green */
-  --secondary: #142D2B;
-  --secondary-hover: #1B3835;
-  --secondary-dark: #0E201E;
-  --secondary-light: #F0F4F3;
-  --secondary-border: #CAD6CE;
+  /* Secondary Brand: Charcoal Black */
+  --secondary: #252525;
+  --secondary-hover: #363636;
+  --secondary-dark: #1A1A1A;
+  --secondary-light: #F5F1E9;
+  --secondary-border: #E8E1D7;
 
-  /* Accent: Golden Amber */
-  --accent: #E8A23A;          /* Golden Amber Accent */
-  --accent-hover: #D4902A;
-  --accent-light: #FEF8ED;
-  --accent-border: #F7D49E;
-  --accent-amber: #E8A23A;
-  --accent-emerald: #247A48;  /* Verified Status: #247A48 */
-  --accent-rose: #C83E4D;     /* Error Status: #C83E4D */
-  --accent-violet: #4B6B94;
+  /* Accent: Muted Gold */
+  --accent: #B89B6A;
+  --accent-hover: #A58757;
+  --accent-light: #FAF6EF;
+  --accent-border: #E2D3B8;
+  --accent-gold: #B89B6A;
+  --accent-terracotta: #C46A45;
 
-  /* Text & Typography Colors */
-  --text-main: #202824;       /* Main text: #202824 */
-  --text-secondary: #4A5650;
-  --text-muted: #68756F;       /* Secondary text: #68756F */
-  --text-subtle: #8A9791;
-  --text-inverse: #FAFAF5;
+  /* Text & Typography */
+  --text-main: #252525;       /* Charcoal Black */
+  --text-secondary: #4A4642;
+  --text-muted: #77736D;      /* Secondary Text */
+  --text-subtle: #9C9790;
+  --text-inverse: #F5F1E9;
 
   /* Functional Status Tokens */
-  --success: #247A48;         /* Verified: #247A48 */
-  --success-light: #EFF8F2;
-  --success-border: #A9DCBC;
-  --error: #C83E4D;           /* Error: #C83E4D */
-  --error-light: #FCF0F2;
-  --error-border: #F3BAC1;
-  --warning: #E8A23A;         /* Golden Amber */
-  --warning-light: #FEF8ED;
-  --warning-border: #F7D49E;
+  --success: #B89B6A;         /* Muted Gold for verified */
+  --success-light: #FAF6EF;
+  --success-border: #E2D3B8;
+  --error: #C44545;           /* Terracotta Alert */
+  --error-light: #FCF4F4;
+  --error-border: #F3C6C6;
+  --warning: #C46A45;         /* Terracotta Warning */
+  --warning-light: #FBF4F0;
+  --warning-border: #E8C2B2;
 
-  /* Hairline Borders & Dividers */
-  --border-light: #DFE8E1;    /* Borders: #DFE8E1 */
-  --border-medium: #CAD6CE;
-  --border-dark: #98A79F;
-  --border-focus: #07866A;
+  /* Borders & Dividers */
+  --border-light: #E8E1D7;    /* Light Border */
+  --border-medium: #D9D0C3;
+  --border-dark: #B8AD9E;
+  --border-focus: #C46A45;
 
-  /* Layered Depth & Elevation Shadows (Subtle, Clean Enterprise) */
-  --shadow-xs: 0 1px 2px 0 rgba(20, 45, 43, 0.04);
-  --shadow-sm: 0 1px 3px 0 rgba(20, 45, 43, 0.05), 0 1px 2px -1px rgba(20, 45, 43, 0.03);
-  --shadow-md: 0 4px 6px -1px rgba(20, 45, 43, 0.06), 0 2px 4px -2px rgba(20, 45, 43, 0.03);
-  --shadow-lg: 0 10px 15px -3px rgba(20, 45, 43, 0.07), 0 4px 6px -4px rgba(20, 45, 43, 0.02);
-  --shadow-xl: 0 20px 25px -5px rgba(20, 45, 43, 0.08);
-  --shadow-glow: none;
-  --shadow-glow-teal: none;
+  /* Layered Depth & Elevation Shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(37, 37, 37, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(37, 37, 37, 0.05), 0 1px 2px -1px rgba(37, 37, 37, 0.03);
+  --shadow-md: 0 4px 6px -1px rgba(37, 37, 37, 0.06), 0 2px 4px -2px rgba(37, 37, 37, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(37, 37, 37, 0.07), 0 4px 6px -4px rgba(37, 37, 37, 0.02);
+  --shadow-xl: 0 20px 25px -5px rgba(37, 37, 37, 0.08);
 
   /* Skill Verification State Tokens */
-  --state-claimed-bg: #FEF8ED;
-  --state-claimed-text: #B27315;
-  --state-claimed-border: #F7D49E;
+  --state-claimed-bg: #FAF6EF;
+  --state-claimed-text: #8E703C;
+  --state-claimed-border: #E2D3B8;
 
-  --state-assessed-bg: #EDF3F1;
-  --state-assessed-text: #142D2B;
-  --state-assessed-border: #CADAD4;
+  --state-assessed-bg: #F5F1E9;
+  --state-assessed-text: #252525;
+  --state-assessed-border: #D9D0C3;
 
-  --state-demonstrated-bg: #F0F7F4;
-  --state-demonstrated-text: #07866A;
-  --state-demonstrated-border: #B9E2D8;
+  --state-demonstrated-bg: #FBF4F0;
+  --state-demonstrated-text: #C46A45;
+  --state-demonstrated-border: #E8C2B2;
 
-  --state-verified-bg: #EFF8F2;
-  --state-verified-text: #247A48;
-  --state-verified-border: #A9DCBC;
+  --state-verified-bg: #FAF6EF;
+  --state-verified-text: #B89B6A;
+  --state-verified-border: #E2D3B8;
 
   /* Typography Stacks */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'Fira Code', monospace;
 
   /* Border Radii */
   --radius-xs: 4px;
-  --radius-sm: 8px;
+  --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
   --radius-full: 9999px;
 
   /* Timing & Transitions */
@@ -171,16 +182,16 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #F5F1E9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #D9D0C3;
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #B89B6A;
 }
 
 /* ==========================================================================
@@ -234,7 +245,7 @@ button {
   position: sticky;
   top: 0;
   z-index: 40;
-  box-shadow: 0 1px 3px 0 rgba(20, 45, 43, 0.03);
+  box-shadow: 0 1px 3px 0 rgba(37, 37, 37, 0.03);
 }
 
 .topbar-left {
@@ -255,7 +266,7 @@ button {
   align-items: center;
   gap: 0.5rem;
   padding: 0.35rem 0.85rem;
-  background-color: #F4F6F2;
+  background-color: #FAF6EF;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-full);
   font-size: 0.825rem;
@@ -268,19 +279,19 @@ button {
   height: 8px;
   border-radius: 50%;
   background-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(7, 134, 106, 0.2);
+  box-shadow: 0 0 0 2px rgba(196, 106, 69, 0.2);
   display: inline-block;
   animation: pulseDot 2s infinite;
 }
 
 @keyframes pulseDot {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(7, 134, 106, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(7, 134, 106, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(7, 134, 106, 0); }
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(196, 106, 69, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(196, 106, 69, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(196, 106, 69, 0); }
 }
 
 /* ==========================================================================
-   Sidebar Navigation — Deep Midnight Blue-Green (#142D2B)
+   Sidebar Navigation — Charcoal Black (#252525)
    ========================================================================== */
 .sidebar {
   width: 280px;
@@ -300,7 +311,7 @@ button {
   align-items: center;
   padding: 0 1.5rem;
   border-bottom: 1px solid var(--sidebar-border);
-  background: rgba(14, 32, 30, 0.6);
+  background: rgba(28, 28, 28, 0.95);
 }
 
 .brand-logo {
@@ -310,7 +321,7 @@ button {
   font-family: var(--font-heading);
   font-weight: 800;
   font-size: 1.25rem;
-  color: #FAFAF5;
+  color: #FFFFFF;
   letter-spacing: -0.02em;
 }
 
@@ -323,7 +334,7 @@ button {
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  box-shadow: 0 2px 8px rgba(7, 134, 106, 0.35);
+  box-shadow: 0 2px 8px rgba(196, 106, 69, 0.35);
 }
 
 .sidebar-menu {
@@ -338,7 +349,7 @@ button {
 .sidebar-section-title {
   font-size: 0.68rem;
   font-weight: 700;
-  color: #7D938B;
+  color: #9C9790;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 0.85rem 0.85rem 0.35rem 0.85rem;
@@ -350,7 +361,7 @@ button {
   gap: 0.85rem;
   padding: 0.72rem 1rem;
   border-radius: var(--radius-md);
-  color: #A3B8B2;
+  color: #D9D0C3;
   font-weight: 500;
   font-size: 0.9rem;
   transition: all var(--transition-fast);
@@ -366,14 +377,14 @@ button {
 .nav-link.active {
   color: #ffffff;
   background: var(--primary);
-  box-shadow: 0 2px 8px rgba(7, 134, 106, 0.3);
+  box-shadow: 0 2px 8px rgba(196, 106, 69, 0.3);
   font-weight: 600;
 }
 
 .sidebar-footer {
   padding: 1.25rem;
   border-top: 1px solid var(--sidebar-border);
-  background: rgba(14, 32, 30, 0.4);
+  background: rgba(28, 28, 28, 0.95);
 }
 
 /* ==========================================================================
@@ -480,7 +491,7 @@ button {
 }
 
 /* ==========================================================================
-   Button System — Emerald Green & Corporate Accents
+   Button System — Terracotta & Charcoal Palette
    ========================================================================== */
 .btn {
   display: inline-flex;
@@ -505,14 +516,14 @@ button {
   background: var(--primary);
   color: #ffffff;
   border: 1px solid var(--primary);
-  box-shadow: 0 1px 3px rgba(7, 134, 106, 0.2);
+  box-shadow: 0 1px 3px rgba(196, 106, 69, 0.2);
 }
 
 .btn-primary:hover {
   background: var(--primary-hover);
   border-color: var(--primary-hover);
   color: #ffffff;
-  box-shadow: 0 3px 8px rgba(7, 134, 106, 0.28);
+  box-shadow: 0 3px 8px rgba(196, 106, 69, 0.28);
   transform: translateY(-1px);
 }
 
@@ -524,9 +535,23 @@ button {
 }
 
 .btn-secondary:hover {
-  background-color: #F4F6F2;
+  background-color: #FAF6EF;
   border-color: var(--border-medium);
   color: var(--text-main);
+}
+
+.btn-charcoal {
+  background: var(--color-charcoal);
+  color: #ffffff;
+  border: 1px solid var(--color-charcoal);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-charcoal:hover {
+  background: #363636;
+  border-color: #363636;
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .btn-outline {
@@ -544,23 +569,23 @@ button {
   background: var(--accent);
   color: #ffffff;
   border: 1px solid var(--accent);
-  box-shadow: 0 1px 3px rgba(232, 162, 58, 0.25);
+  box-shadow: 0 1px 3px rgba(184, 155, 106, 0.25);
 }
 
 .btn-accent:hover {
   background: var(--accent-hover);
-  box-shadow: 0 3px 8px rgba(232, 162, 58, 0.35);
+  box-shadow: 0 3px 8px rgba(184, 155, 106, 0.35);
   transform: translateY(-1px);
 }
 
 .btn-success {
-  background: var(--success);
+  background: var(--color-gold);
   color: #ffffff;
-  border: 1px solid var(--success);
+  border: 1px solid var(--color-gold);
 }
 
 .btn-success:hover {
-  background: #1B6138;
+  background: #A58757;
 }
 
 .btn-danger {
@@ -570,7 +595,7 @@ button {
 }
 
 .btn-danger:hover {
-  background: #A82F3C;
+  background: #A83535;
 }
 
 .btn-sm {
@@ -626,15 +651,15 @@ button {
 }
 
 .badge-ready {
-  background: var(--success-light);
-  color: var(--success);
-  border: 1px solid var(--success-border);
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
 }
 
 .badge-developing {
-  background: var(--warning-light);
-  color: #B27315;
-  border: 1px solid var(--warning-border);
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid var(--primary-border);
 }
 
 .badge-support {
@@ -674,7 +699,7 @@ button {
   outline: none;
   border-color: var(--primary);
   background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(7, 134, 106, 0.15);
+  box-shadow: 0 0 0 3px rgba(196, 106, 69, 0.15);
 }
 
 .form-control::placeholder {
@@ -684,7 +709,7 @@ button {
 
 .form-select {
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2368756F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2377736D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0.85rem center;
   background-size: 1.1em;
@@ -710,7 +735,7 @@ button {
 }
 
 .table th {
-  background-color: #F4F6F2;
+  background-color: #FAF6EF;
   padding: 0.9rem 1.15rem;
   font-weight: 700;
   color: var(--text-muted);
@@ -732,7 +757,7 @@ button {
 }
 
 .table tr:hover td {
-  background-color: #F8FAF6;
+  background-color: #FAF8F4;
 }
 
 /* ==========================================================================
@@ -741,7 +766,7 @@ button {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.65);
+  background: rgba(37, 37, 37, 0.7);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -779,12 +804,12 @@ button {
    Assessment Proctoring Overlay
    ========================================================================== */
 .proctor-alert-banner {
-  background: #fef2f2;
-  border-left: 4px solid #ef4444;
+  background: #FCF4F4;
+  border-left: 4px solid #C44545;
   padding: 0.9rem 1.25rem;
   border-radius: var(--radius-md);
   margin-bottom: 1.5rem;
-  color: #991b1b;
+  color: #8C2626;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -804,7 +829,7 @@ html, body, #root {
 .sidebar-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(37, 37, 37, 0.75);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   z-index: 998;
@@ -915,21 +940,21 @@ html, body, #root {
 }
 
 /* ==========================================================================
-   SkillProof AI World-Class Enterprise SaaS Platform Design Tokens & Styles
-   Premium Dark Navy Hero + Mint & White Surfaces + Vibrant Emerald Highlights
+   SkillProof AI Corporate SaaS Theme Classes
+   Charcoal Black + Warm Ivory + Terracotta + Muted Gold
    ========================================================================== */
 
-/* Modern Gradients & Backgrounds */
-.bg-navy-hero {
-  background: radial-gradient(120% 120% at 50% 0%, #0F203D 0%, #0A1428 50%, #070D1B 100%);
+/* Modern Charcoal Hero & Minimal SaaS Patterns */
+.bg-charcoal-hero {
+  background: radial-gradient(120% 120% at 50% 0%, #252525 0%, #1D1D1D 50%, #161616 100%);
   position: relative;
   overflow: hidden;
 }
 
 .bg-tech-grid {
   background-image: 
-    linear-gradient(to right, rgba(16, 185, 129, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(196, 106, 69, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(196, 106, 69, 0.08) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -941,64 +966,64 @@ html, body, #root {
 }
 
 .bg-dots-pattern {
-  background-image: radial-gradient(rgba(16, 185, 129, 0.15) 1.5px, transparent 1.5px);
+  background-image: radial-gradient(rgba(184, 155, 106, 0.18) 1.5px, transparent 1.5px);
   background-size: 24px 24px;
 }
 
-/* Emerald Gradients & Glow Effects */
-.text-emerald-gradient {
-  background: linear-gradient(135deg, #34D399 0%, #10B981 50%, #059669 100%);
+/* Terracotta & Gold Typography Gradients */
+.text-terracotta-gradient {
+  background: linear-gradient(135deg, #C46A45 0%, #E08560 50%, #B15B38 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gold-gradient {
-  background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 100%);
+  background: linear-gradient(135deg, #D4BC92 0%, #B89B6A 50%, #9C7F4E 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.glow-ambient-emerald {
+.glow-ambient-terracotta {
   position: absolute;
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(5, 150, 105, 0) 70%);
+  background: radial-gradient(circle, rgba(196, 106, 69, 0.15) 0%, rgba(196, 106, 69, 0) 70%);
   pointer-events: none;
   filter: blur(40px);
 }
 
-.glow-ambient-cyan {
+.glow-ambient-gold {
   position: absolute;
   width: 450px;
   height: 450px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(14, 165, 233, 0) 70%);
+  background: radial-gradient(circle, rgba(184, 155, 106, 0.14) 0%, rgba(184, 155, 106, 0) 70%);
   pointer-events: none;
   filter: blur(40px);
 }
 
 /* Glassmorphism Panels */
 .glass-panel-dark {
-  background: rgba(13, 25, 48, 0.72);
+  background: rgba(37, 37, 37, 0.78);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(232, 225, 215, 0.12);
   box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
 }
 
 .glass-panel-light {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(223, 232, 225, 0.85);
-  box-shadow: 0 10px 30px -10px rgba(14, 29, 56, 0.06);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 10px 30px -10px rgba(37, 37, 37, 0.06);
 }
 
 /* SaaS Interactive Cards */
 .card-saas {
   background: #FFFFFF;
-  border: 1px solid #DFE8E1;
+  border: 1px solid var(--border-light);
   border-radius: 14px;
   padding: 2rem;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1007,13 +1032,13 @@ html, body, #root {
 
 .card-saas:hover {
   transform: translateY(-4px);
-  border-color: #A3D4C7;
-  box-shadow: 0 16px 32px -8px rgba(7, 134, 106, 0.1), 0 4px 12px rgba(20, 45, 43, 0.04);
+  border-color: var(--primary);
+  box-shadow: 0 16px 32px -8px rgba(196, 106, 69, 0.12), 0 4px 12px rgba(37, 37, 37, 0.04);
 }
 
 .card-saas-dark {
-  background: rgba(16, 29, 54, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(37, 37, 37, 0.75);
+  border: 1px solid rgba(232, 225, 215, 0.12);
   border-radius: 14px;
   padding: 2rem;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1022,17 +1047,17 @@ html, body, #root {
 
 .card-saas-dark:hover {
   transform: translateY(-4px);
-  border-color: rgba(16, 185, 129, 0.4);
-  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 24px rgba(16, 185, 129, 0.15);
+  border-color: rgba(196, 106, 69, 0.45);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 24px rgba(196, 106, 69, 0.15);
 }
 
 /* Premium Buttons */
-.btn-emerald-glow {
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+.btn-terracotta-glow {
+  background: linear-gradient(135deg, #C46A45 0%, #B15B38 100%);
   color: #FFFFFF !important;
   font-weight: 700;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 4px 16px rgba(196, 106, 69, 0.35);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
@@ -1040,17 +1065,17 @@ html, body, #root {
   gap: 0.5rem;
 }
 
-.btn-emerald-glow:hover {
-  background: linear-gradient(135deg, #34D399 0%, #059669 100%);
-  box-shadow: 0 6px 24px rgba(16, 185, 129, 0.5);
+.btn-terracotta-glow:hover {
+  background: linear-gradient(135deg, #D47953 0%, #B15B38 100%);
+  box-shadow: 0 6px 24px rgba(196, 106, 69, 0.5);
   transform: translateY(-2px);
 }
 
-.btn-glass-navy {
-  background: rgba(255, 255, 255, 0.07);
-  color: #FAFAF5 !important;
+.btn-glass-charcoal {
+  background: rgba(255, 255, 255, 0.08);
+  color: #F5F1E9 !important;
   font-weight: 600;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(232, 225, 215, 0.2);
   backdrop-filter: blur(8px);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
@@ -1059,9 +1084,9 @@ html, body, #root {
   gap: 0.5rem;
 }
 
-.btn-glass-navy:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.3);
+.btn-glass-charcoal:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(232, 225, 215, 0.4);
   transform: translateY(-2px);
   color: #FFFFFF !important;
 }
@@ -1078,44 +1103,42 @@ html, body, #root {
   letter-spacing: 0.02em;
 }
 
-.telemetry-pill-emerald {
-  background: rgba(16, 185, 129, 0.12);
-  color: #10B981;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+.telemetry-pill-terracotta {
+  background: rgba(196, 106, 69, 0.12);
+  color: #C46A45;
+  border: 1px solid rgba(196, 106, 69, 0.3);
 }
 
-.telemetry-pill-amber {
-  background: rgba(245, 158, 11, 0.12);
-  color: #F59E0B;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+.telemetry-pill-gold {
+  background: rgba(184, 155, 106, 0.14);
+  color: #B89B6A;
+  border: 1px solid rgba(184, 155, 106, 0.35);
 }
 
-.pulse-dot-emerald {
+.pulse-dot-terracotta {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #10B981;
-  box-shadow: 0 0 8px #10B981;
-  animation: pulseEmerald 2s infinite;
+  background-color: #C46A45;
+  box-shadow: 0 0 8px #C46A45;
+  animation: pulseTerracotta 2s infinite;
 }
 
-@keyframes pulseEmerald {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-  70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+@keyframes pulseTerracotta {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(196, 106, 69, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(196, 106, 69, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(196, 106, 69, 0); }
 }
 
-/* Feature Checkmark Icons */
+/* Feature Bullet Icons */
 .saas-check-bullet {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: rgba(5, 150, 105, 0.12);
-  color: #059669;
+  background: rgba(196, 106, 69, 0.12);
+  color: #C46A45;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
-
-
