@@ -505,19 +505,19 @@ export const AdminPanel = () => {
     return list;
   }, [roadmaps, selectedRoadmapForMaterial]);
 
-  // Design Tokens (Charcoal #252525, Warm Ivory #F5F1E9, Terracotta #C46A45, Muted Gold #B89B6A)
+  // Design Tokens (Charcoal #17233D, Warm Ivory #F5F8FF, Terracotta #2455D6, Muted Gold #2455D6)
   const styles = {
     container: {
       display: 'flex',
       minHeight: '100vh',
-      backgroundColor: '#F5F1E9',
+      backgroundColor: '#F5F8FF',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: '#252525',
+      color: '#17233D',
     },
     sidebar: {
       width: '260px',
-      backgroundColor: '#252525',
-      color: '#FAF6EF',
+      backgroundColor: '#17233D',
+      color: '#F5F8FF',
       display: 'flex',
       flexDirection: 'column',
       flexShrink: 0,
@@ -536,11 +536,11 @@ export const AdminPanel = () => {
       borderRadius: '8px',
       fontSize: '13px',
       fontWeight: active ? 700 : 500,
-      color: active ? '#252525' : '#D1C8BA',
-      backgroundColor: active ? '#FAF6EF' : 'transparent',
+      color: active ? '#FFFFFF' : '#BFC7D5',
+      backgroundColor: active ? '#2455D6' : 'transparent',
       cursor: 'pointer',
       transition: 'all 0.15s ease',
-      border: active ? '1px solid #B89B6A' : '1px solid transparent',
+      border: active ? '1px solid #2455D6' : '1px solid transparent',
     }),
     main: {
       flex: 1,
@@ -551,7 +551,7 @@ export const AdminPanel = () => {
     topNav: {
       height: '64px',
       backgroundColor: '#FFFFFF',
-      borderBottom: '1px solid #E8E1D7',
+      borderBottom: '1px solid #BFC7D5',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -566,14 +566,14 @@ export const AdminPanel = () => {
     },
     card: {
       backgroundColor: '#FFFFFF',
-      border: '1px solid #E8E1D7',
+      border: '1px solid #BFC7D5',
       borderRadius: '12px',
       padding: '22px',
-      boxShadow: '0 2px 8px rgba(37, 37, 37, 0.04)',
+      boxShadow: '0 2px 8px rgba(23, 35, 61, 0.04)',
       marginBottom: '24px',
     },
     btnPrimary: {
-      backgroundColor: '#C46A45',
+      backgroundColor: '#2455D6',
       color: '#FFFFFF',
       border: 'none',
       borderRadius: '8px',
@@ -586,9 +586,9 @@ export const AdminPanel = () => {
       gap: '6px',
     },
     btnSecondary: {
-      backgroundColor: '#FAF6EF',
-      color: '#252525',
-      border: '1px solid #E8E1D7',
+      backgroundColor: '#F5F8FF',
+      color: '#17233D',
+      border: '1px solid #BFC7D5',
       borderRadius: '8px',
       padding: '8px 14px',
       fontSize: '13px',
@@ -606,22 +606,22 @@ export const AdminPanel = () => {
     },
     th: {
       padding: '12px 16px',
-      borderBottom: '1px solid #E8E1D7',
-      color: '#77736D',
+      borderBottom: '1px solid #BFC7D5',
+      color: '#5A6882',
       fontWeight: 700,
       textTransform: 'uppercase',
       fontSize: '11px',
       letterSpacing: '0.05em',
-      backgroundColor: '#FAF6EF',
+      backgroundColor: '#F5F8FF',
     },
     td: {
       padding: '14px 16px',
-      borderBottom: '1px solid #F0EAE1',
-      color: '#252525',
+      borderBottom: '1px solid #EAEFFA',
+      color: '#17233D',
     },
     badge: (type) => {
-      let bg = '#F0EAE1';
-      let fg = '#252525';
+      let bg = '#EAEFFA';
+      let fg = '#17233D';
       if (type === 'active' || type === 'verified' || type === 'published') {
         bg = '#ECFDF5';
         fg = '#065F46';
@@ -649,7 +649,7 @@ export const AdminPanel = () => {
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: 'rgba(37, 37, 37, 0.6)',
+      backgroundColor: 'rgba(23, 35, 61, 0.6)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -678,39 +678,39 @@ export const AdminPanel = () => {
 
         <nav style={{ padding: '14px 0', flex: 1, overflowY: 'auto' }}>
           <div style={styles.navItem(activeTab === 'overview')} onClick={() => setActiveTab('overview')}>
-            <LayoutDashboard size={18} color={activeTab === 'overview' ? '#C46A45' : '#D1C8BA'} />
+            <LayoutDashboard size={18} color={activeTab === 'overview' ? '#2455D6' : '#BFC7D5'} />
             Dashboard Overview
           </div>
           <div style={styles.navItem(activeTab === 'users')} onClick={() => setActiveTab('users')}>
-            <Users size={18} color={activeTab === 'users' ? '#C46A45' : '#D1C8BA'} />
+            <Users size={18} color={activeTab === 'users' ? '#2455D6' : '#BFC7D5'} />
             User Management
           </div>
           <div style={styles.navItem(activeTab === 'roadmaps')} onClick={() => setActiveTab('roadmaps')}>
-            <Map size={18} color={activeTab === 'roadmaps' ? '#C46A45' : '#D1C8BA'} />
+            <Map size={18} color={activeTab === 'roadmaps' ? '#2455D6' : '#BFC7D5'} />
             Career Roadmaps
           </div>
           <div style={styles.navItem(activeTab === 'materials')} onClick={() => setActiveTab('materials')}>
-            <BookOpen size={18} color={activeTab === 'materials' ? '#C46A45' : '#D1C8BA'} />
+            <BookOpen size={18} color={activeTab === 'materials' ? '#2455D6' : '#BFC7D5'} />
             Study Materials
           </div>
           <div style={styles.navItem(activeTab === 'courses')} onClick={() => setActiveTab('courses')}>
-            <GraduationCap size={18} color={activeTab === 'courses' ? '#C46A45' : '#D1C8BA'} />
+            <GraduationCap size={18} color={activeTab === 'courses' ? '#2455D6' : '#BFC7D5'} />
             Free Courses
           </div>
           <div style={styles.navItem(activeTab === 'assessments')} onClick={() => setActiveTab('assessments')}>
-            <FileCheck size={18} color={activeTab === 'assessments' ? '#C46A45' : '#D1C8BA'} />
+            <FileCheck size={18} color={activeTab === 'assessments' ? '#2455D6' : '#BFC7D5'} />
             Assessments &amp; Integrity
           </div>
           <div style={styles.navItem(activeTab === 'evidence')} onClick={() => setActiveTab('evidence')}>
-            <Award size={18} color={activeTab === 'evidence' ? '#C46A45' : '#D1C8BA'} />
+            <Award size={18} color={activeTab === 'evidence' ? '#2455D6' : '#BFC7D5'} />
             Evidence Verification
           </div>
           <div style={styles.navItem(activeTab === 'reports')} onClick={() => setActiveTab('reports')}>
-            <FileText size={18} color={activeTab === 'reports' ? '#C46A45' : '#D1C8BA'} />
+            <FileText size={18} color={activeTab === 'reports' ? '#2455D6' : '#BFC7D5'} />
             Institutional Reports
           </div>
           <div style={styles.navItem(activeTab === 'settings')} onClick={() => setActiveTab('settings')}>
-            <Settings size={18} color={activeTab === 'settings' ? '#C46A45' : '#D1C8BA'} />
+            <Settings size={18} color={activeTab === 'settings' ? '#2455D6' : '#BFC7D5'} />
             Admin Settings &amp; Logs
           </div>
         </nav>
@@ -726,10 +726,10 @@ export const AdminPanel = () => {
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: 700, color: '#FAF6EF' }}>
+            <div style={{ fontSize: '12px', fontWeight: 700, color: '#F5F8FF' }}>
               {user?.fullName || 'Website Owner'}
             </div>
-            <div style={{ fontSize: '11px', color: '#B89B6A' }}>Master Administrator</div>
+            <div style={{ fontSize: '11px', color: '#2455D6' }}>Master Administrator</div>
           </div>
           <button
             onClick={handleLogout}
@@ -738,7 +738,7 @@ export const AdminPanel = () => {
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: '#D1C8BA',
+              color: '#BFC7D5',
               padding: '6px',
             }}
           >
@@ -778,8 +778,8 @@ export const AdminPanel = () => {
               style={{
                 fontSize: '11px',
                 fontWeight: 700,
-                color: '#C46A45',
-                backgroundColor: 'rgba(196, 106, 69, 0.1)',
+                color: '#2455D6',
+                backgroundColor: 'rgba(36, 85, 214, 0.1)',
                 padding: '4px 10px',
                 borderRadius: '9999px',
               }}
@@ -828,34 +828,34 @@ export const AdminPanel = () => {
                 }}
               >
                 <div style={styles.card}>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#77736D', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#5A6882', textTransform: 'uppercase' }}>
                     Registered Students
                   </div>
-                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#252525', marginTop: '6px' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#17233D', marginTop: '6px' }}>
                     {overviewStats?.totalStudents ?? 0}
                   </div>
                 </div>
 
                 <div style={styles.card}>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#77736D', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#5A6882', textTransform: 'uppercase' }}>
                     HR Recruiters
                   </div>
-                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#252525', marginTop: '6px' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#17233D', marginTop: '6px' }}>
                     {overviewStats?.totalRecruiters ?? 0}
                   </div>
                 </div>
 
                 <div style={styles.card}>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#77736D', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#5A6882', textTransform: 'uppercase' }}>
                     Placement Officers
                   </div>
-                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#252525', marginTop: '6px' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#17233D', marginTop: '6px' }}>
                     {overviewStats?.totalPlacementOfficers ?? 0}
                   </div>
                 </div>
 
                 <div style={styles.card}>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#77736D', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#5A6882', textTransform: 'uppercase' }}>
                     Active Accounts
                   </div>
                   <div style={{ fontSize: '28px', fontWeight: 800, color: '#065F46', marginTop: '6px' }}>
@@ -864,28 +864,28 @@ export const AdminPanel = () => {
                 </div>
 
                 <div style={styles.card}>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#77736D', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#5A6882', textTransform: 'uppercase' }}>
                     Career Roadmaps
                   </div>
-                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#C46A45', marginTop: '6px' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#2455D6', marginTop: '6px' }}>
                     {overviewStats?.totalRoadmaps ?? 0}
                   </div>
                 </div>
 
                 <div style={styles.card}>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#77736D', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#5A6882', textTransform: 'uppercase' }}>
                     Free Courses
                   </div>
-                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#B89B6A', marginTop: '6px' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#2455D6', marginTop: '6px' }}>
                     {overviewStats?.totalCourses ?? 0}
                   </div>
                 </div>
 
                 <div style={styles.card}>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#77736D', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#5A6882', textTransform: 'uppercase' }}>
                     Code Assessments
                   </div>
-                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#252525', marginTop: '6px' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 800, color: '#17233D', marginTop: '6px' }}>
                     {overviewStats?.totalAssessments ?? 0}
                   </div>
                 </div>
@@ -894,7 +894,7 @@ export const AdminPanel = () => {
               {/* Quick Actions & System Status */}
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginBottom: '28px' }}>
                 <div style={styles.card}>
-                  <h3 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 16px 0', color: '#252525' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 16px 0', color: '#17233D' }}>
                     Administrative Quick Actions
                   </h3>
                   <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
@@ -917,21 +917,21 @@ export const AdminPanel = () => {
                 </div>
 
                 <div style={styles.card}>
-                  <h3 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 12px 0', color: '#252525' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 12px 0', color: '#17233D' }}>
                     Platform Health
                   </h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '13px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ color: '#77736D' }}>REST API Status</span>
+                      <span style={{ color: '#5A6882' }}>REST API Status</span>
                       <span style={styles.badge('active')}>Operational</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ color: '#77736D' }}>Proctor AI Service</span>
+                      <span style={{ color: '#5A6882' }}>Proctor AI Service</span>
                       <span style={styles.badge('active')}>Zero-Tolerance Active</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ color: '#77736D' }}>Security Protocol</span>
-                      <span style={{ fontWeight: 600, color: '#C46A45' }}>AES-256 + RBAC</span>
+                      <span style={{ color: '#5A6882' }}>Security Protocol</span>
+                      <span style={{ fontWeight: 600, color: '#2455D6' }}>AES-256 + RBAC</span>
                     </div>
                   </div>
                 </div>
@@ -940,7 +940,7 @@ export const AdminPanel = () => {
               {/* Recent Activities & Security Audit Table */}
               <div style={styles.card}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                  <h3 style={{ fontSize: '15px', fontWeight: 700, margin: 0, color: '#252525' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: 700, margin: 0, color: '#17233D' }}>
                     Recent System &amp; Administrative Activities
                   </h3>
                   <button style={styles.btnSecondary} onClick={() => setActiveTab('settings')}>
@@ -961,7 +961,7 @@ export const AdminPanel = () => {
                     <tbody>
                       {recentActivities.length === 0 ? (
                         <tr>
-                          <td colSpan={5} style={{ ...styles.td, textAlign: 'center', color: '#77736D' }}>
+                          <td colSpan={5} style={{ ...styles.td, textAlign: 'center', color: '#5A6882' }}>
                             No recent activity logs recorded yet.
                           </td>
                         </tr>
@@ -971,7 +971,7 @@ export const AdminPanel = () => {
                             <td style={styles.td}>
                               {new Date(act.timestamp).toLocaleDateString()} {new Date(act.timestamp).toLocaleTimeString()}
                             </td>
-                            <td style={{ ...styles.td, fontWeight: 700, color: '#C46A45' }}>{act.action}</td>
+                            <td style={{ ...styles.td, fontWeight: 700, color: '#2455D6' }}>{act.action}</td>
                             <td style={styles.td}>{act.userEmail || act.user || 'System'}</td>
                             <td style={styles.td}>{act.resourceType || 'SECURITY'}</td>
                             <td style={styles.td}>{act.ipAddress || '127.0.0.1'}</td>
@@ -993,7 +993,7 @@ export const AdminPanel = () => {
               {/* Search & Filters */}
               <div style={{ ...styles.card, padding: '16px 20px', display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center' }}>
                 <div style={{ position: 'relative', flex: 1, minWidth: '220px' }}>
-                  <Search size={16} color="#77736D" style={{ position: 'absolute', left: '12px', top: '12px' }} />
+                  <Search size={16} color="#5A6882" style={{ position: 'absolute', left: '12px', top: '12px' }} />
                   <input
                     type="text"
                     value={userSearch}
@@ -1003,7 +1003,7 @@ export const AdminPanel = () => {
                       width: '100%',
                       padding: '9px 12px 9px 36px',
                       borderRadius: '8px',
-                      border: '1px solid #E8E1D7',
+                      border: '1px solid #BFC7D5',
                       fontSize: '13px',
                       boxSizing: 'border-box',
                       outline: 'none',
@@ -1017,10 +1017,10 @@ export const AdminPanel = () => {
                   style={{
                     padding: '9px 14px',
                     borderRadius: '8px',
-                    border: '1px solid #E8E1D7',
+                    border: '1px solid #BFC7D5',
                     fontSize: '13px',
                     backgroundColor: '#FFFFFF',
-                    color: '#252525',
+                    color: '#17233D',
                   }}
                 >
                   <option value="all">All Roles</option>
@@ -1036,10 +1036,10 @@ export const AdminPanel = () => {
                   style={{
                     padding: '9px 14px',
                     borderRadius: '8px',
-                    border: '1px solid #E8E1D7',
+                    border: '1px solid #BFC7D5',
                     fontSize: '13px',
                     backgroundColor: '#FFFFFF',
-                    color: '#252525',
+                    color: '#17233D',
                   }}
                 >
                   <option value="all">All Account Statuses</option>
@@ -1066,7 +1066,7 @@ export const AdminPanel = () => {
                     <tbody>
                       {filteredUsers.length === 0 ? (
                         <tr>
-                          <td colSpan={6} style={{ ...styles.td, textAlign: 'center', color: '#77736D' }}>
+                          <td colSpan={6} style={{ ...styles.td, textAlign: 'center', color: '#5A6882' }}>
                             No users matched your search criteria.
                           </td>
                         </tr>
@@ -1145,7 +1145,7 @@ export const AdminPanel = () => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
                       <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 800 }}>User Profile Intelligence</h3>
                       <button onClick={() => setSelectedUser(null)} style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
-                        <XCircle size={20} color="#77736D" />
+                        <XCircle size={20} color="#5A6882" />
                       </button>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '13px' }}>
@@ -1153,7 +1153,7 @@ export const AdminPanel = () => {
                       <div><strong>Email:</strong> {selectedUser.email}</div>
                       <div><strong>Role:</strong> <span style={styles.badge(selectedUser.role)}>{selectedUser.role}</span></div>
                       <div><strong>Status:</strong> <span style={styles.badge(selectedUser.status || 'active')}>{selectedUser.status || 'active'}</span></div>
-                      <div><strong>User ID:</strong> <code style={{ backgroundColor: '#FAF6EF', padding: '2px 6px', borderRadius: '4px' }}>{selectedUser._id}</code></div>
+                      <div><strong>User ID:</strong> <code style={{ backgroundColor: '#F5F8FF', padding: '2px 6px', borderRadius: '4px' }}>{selectedUser._id}</code></div>
                       <div><strong>Registered At:</strong> {new Date(selectedUser.createdAt).toLocaleString()}</div>
                       <div><strong>Email Verified:</strong> {selectedUser.isEmailVerified ? 'Yes' : 'Pending Verification'}</div>
                     </div>
@@ -1171,7 +1171,7 @@ export const AdminPanel = () => {
                     <h3 style={{ margin: '0 0 12px 0', fontSize: '17px', fontWeight: 800 }}>
                       Change User Role
                     </h3>
-                    <p style={{ fontSize: '13px', color: '#77736D', margin: '0 0 16px 0' }}>
+                    <p style={{ fontSize: '13px', color: '#5A6882', margin: '0 0 16px 0' }}>
                       Modify institutional authorization for <strong>{userRoleModal.fullName}</strong> ({userRoleModal.email}).
                     </p>
                     <select
@@ -1181,7 +1181,7 @@ export const AdminPanel = () => {
                         width: '100%',
                         padding: '10px 12px',
                         borderRadius: '8px',
-                        border: '1px solid #E8E1D7',
+                        border: '1px solid #BFC7D5',
                         fontSize: '13px',
                         marginBottom: '20px',
                       }}
@@ -1209,7 +1209,7 @@ export const AdminPanel = () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <div>
                   <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 800 }}>Career Learning Paths</h3>
-                  <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#77736D' }}>
+                  <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#5A6882' }}>
                     Publish, edit, and organize curriculum paths and skill competencies.
                   </p>
                 </div>
@@ -1239,22 +1239,22 @@ export const AdminPanel = () => {
                   <div key={rm._id || rm.slug} style={styles.card}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
                       <span style={styles.badge(rm.status || 'published')}>{rm.status || 'published'}</span>
-                      <span style={{ fontSize: '11px', color: '#77736D', fontWeight: 600 }}>{rm.category}</span>
+                      <span style={{ fontSize: '11px', color: '#5A6882', fontWeight: 600 }}>{rm.category}</span>
                     </div>
 
-                    <h4 style={{ margin: '0 0 6px 0', fontSize: '16px', fontWeight: 800, color: '#252525' }}>
+                    <h4 style={{ margin: '0 0 6px 0', fontSize: '16px', fontWeight: 800, color: '#17233D' }}>
                       {rm.title}
                     </h4>
-                    <p style={{ fontSize: '12px', color: '#77736D', margin: '0 0 14px 0', minHeight: '34px' }}>
+                    <p style={{ fontSize: '12px', color: '#5A6882', margin: '0 0 14px 0', minHeight: '34px' }}>
                       {rm.description || 'Structured learning roadmap with hands-on practice modules.'}
                     </p>
 
-                    <div style={{ fontSize: '12px', color: '#252525', marginBottom: '14px', display: 'flex', gap: '16px' }}>
+                    <div style={{ fontSize: '12px', color: '#17233D', marginBottom: '14px', display: 'flex', gap: '16px' }}>
                       <div><strong>Duration:</strong> {rm.estimatedDuration}</div>
                       <div><strong>Modules:</strong> {rm.modules?.length || 0}</div>
                     </div>
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #E8E1D7', paddingTop: '14px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #BFC7D5', paddingTop: '14px' }}>
                       <button
                         onClick={() => handleToggleRoadmapPublish(rm)}
                         style={{ ...styles.btnSecondary, padding: '4px 8px', fontSize: '11px' }}
@@ -1314,7 +1314,7 @@ export const AdminPanel = () => {
                           value={roadmapFormData.title}
                           onChange={(e) => setRoadmapFormData({ ...roadmapFormData, title: e.target.value })}
                           placeholder="e.g. Full Stack Web Developer"
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                         />
                       </div>
 
@@ -1328,7 +1328,7 @@ export const AdminPanel = () => {
                           value={roadmapFormData.slug}
                           onChange={(e) => setRoadmapFormData({ ...roadmapFormData, slug: e.target.value })}
                           placeholder="e.g. full-stack-web-developer"
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                         />
                       </div>
 
@@ -1340,7 +1340,7 @@ export const AdminPanel = () => {
                             value={roadmapFormData.category}
                             onChange={(e) => setRoadmapFormData({ ...roadmapFormData, category: e.target.value })}
                             placeholder="e.g. Web Development"
-                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                           />
                         </div>
                         <div>
@@ -1350,7 +1350,7 @@ export const AdminPanel = () => {
                             value={roadmapFormData.estimatedDuration}
                             onChange={(e) => setRoadmapFormData({ ...roadmapFormData, estimatedDuration: e.target.value })}
                             placeholder="e.g. 6 Months"
-                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                           />
                         </div>
                       </div>
@@ -1364,7 +1364,7 @@ export const AdminPanel = () => {
                           value={roadmapFormData.description}
                           onChange={(e) => setRoadmapFormData({ ...roadmapFormData, description: e.target.value })}
                           placeholder="Comprehensive career path overview..."
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                         />
                       </div>
 
@@ -1377,7 +1377,7 @@ export const AdminPanel = () => {
                           value={roadmapFormData.requiredSkills}
                           onChange={(e) => setRoadmapFormData({ ...roadmapFormData, requiredSkills: e.target.value })}
                           placeholder="JavaScript, React, Node.js, MongoDB"
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                         />
                       </div>
 
@@ -1405,7 +1405,7 @@ export const AdminPanel = () => {
                 <h3 style={{ margin: '0 0 6px 0', fontSize: '16px', fontWeight: 800 }}>
                   Upload &amp; Assign Topic Study Materials
                 </h3>
-                <p style={{ margin: '0 0 20px 0', fontSize: '13px', color: '#77736D' }}>
+                <p style={{ margin: '0 0 20px 0', fontSize: '13px', color: '#5A6882' }}>
                   Upload learning documents (PDF, notes) or configure external reference documentation for student roadmap topics.
                 </p>
 
@@ -1421,7 +1421,7 @@ export const AdminPanel = () => {
                           setSelectedRoadmapForMaterial(e.target.value);
                           setSelectedTopicIdForMaterial('');
                         }}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px' }}
                       >
                         {roadmaps.map((r) => (
                           <option key={r.slug || r._id} value={r.slug || r._id}>
@@ -1438,7 +1438,7 @@ export const AdminPanel = () => {
                       <select
                         value={selectedTopicIdForMaterial}
                         onChange={(e) => setSelectedTopicIdForMaterial(e.target.value)}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px' }}
                       >
                         <option value="">-- Choose Module Topic --</option>
                         {currentTopics.map((t) => (
@@ -1460,7 +1460,7 @@ export const AdminPanel = () => {
                       value={materialForm.title}
                       onChange={(e) => setMaterialForm({ ...materialForm, title: e.target.value })}
                       placeholder="e.g. REST API Principles &amp; Architecture Notes"
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                     />
                   </div>
 
@@ -1472,7 +1472,7 @@ export const AdminPanel = () => {
                       <select
                         value={materialForm.type}
                         onChange={(e) => setMaterialForm({ ...materialForm, type: e.target.value })}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px' }}
                       >
                         <option value="notes">Concept Notes</option>
                         <option value="code">Code Syntax &amp; Examples</option>
@@ -1491,7 +1491,7 @@ export const AdminPanel = () => {
                         value={materialForm.url}
                         onChange={(e) => setMaterialForm({ ...materialForm, url: e.target.value })}
                         placeholder="https://developer.mozilla.org"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                       />
                     </div>
                   </div>
@@ -1503,7 +1503,7 @@ export const AdminPanel = () => {
                     <input
                       type="file"
                       onChange={(e) => setMaterialFile(e.target.files[0] || null)}
-                      style={{ fontSize: '13px', color: '#77736D' }}
+                      style={{ fontSize: '13px', color: '#5A6882' }}
                     />
                   </div>
 
@@ -1516,7 +1516,7 @@ export const AdminPanel = () => {
                       value={materialForm.content}
                       onChange={(e) => setMaterialForm({ ...materialForm, content: e.target.value })}
                       placeholder="Enter detailed study explanations, important concepts, interview preparation notes..."
-                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                     />
                   </div>
 
@@ -1536,7 +1536,7 @@ export const AdminPanel = () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <div>
                   <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 800 }}>Free Curriculum Directory</h3>
-                  <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#77736D' }}>
+                  <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#5A6882' }}>
                     Manage verified free educational courses from Harvard, FreeCodeCamp, Coursera, and MIT.
                   </p>
                 </div>
@@ -1580,7 +1580,7 @@ export const AdminPanel = () => {
                     <tbody>
                       {courses.length === 0 ? (
                         <tr>
-                          <td colSpan={7} style={{ ...styles.td, textAlign: 'center', color: '#77736D' }}>
+                          <td colSpan={7} style={{ ...styles.td, textAlign: 'center', color: '#5A6882' }}>
                             No courses found. Click 'Add Free Course' to add one.
                           </td>
                         </tr>
@@ -1603,7 +1603,7 @@ export const AdminPanel = () => {
                                 href={crs.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                style={{ color: '#C46A45', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                                style={{ color: '#2455D6', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                               >
                                 Visit <ExternalLink size={12} />
                               </a>
@@ -1657,7 +1657,7 @@ export const AdminPanel = () => {
                           value={courseFormData.title}
                           onChange={(e) => setCourseFormData({ ...courseFormData, title: e.target.value })}
                           placeholder="e.g. CS50: Introduction to Computer Science"
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                         />
                       </div>
 
@@ -1672,7 +1672,7 @@ export const AdminPanel = () => {
                             value={courseFormData.provider}
                             onChange={(e) => setCourseFormData({ ...courseFormData, provider: e.target.value })}
                             placeholder="Harvard University / FreeCodeCamp"
-                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                           />
                         </div>
 
@@ -1686,7 +1686,7 @@ export const AdminPanel = () => {
                             value={courseFormData.url}
                             onChange={(e) => setCourseFormData({ ...courseFormData, url: e.target.value })}
                             placeholder="https://pll.harvard.edu/course/cs50..."
-                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                           />
                         </div>
                       </div>
@@ -1699,7 +1699,7 @@ export const AdminPanel = () => {
                           <select
                             value={courseFormData.skillLevel}
                             onChange={(e) => setCourseFormData({ ...courseFormData, skillLevel: e.target.value })}
-                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px' }}
+                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px' }}
                           >
                             <option value="Beginner">Beginner</option>
                             <option value="Intermediate">Intermediate</option>
@@ -1716,7 +1716,7 @@ export const AdminPanel = () => {
                             value={courseFormData.duration}
                             onChange={(e) => setCourseFormData({ ...courseFormData, duration: e.target.value })}
                             placeholder="e.g. 6 Weeks (Self-paced)"
-                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                           />
                         </div>
                       </div>
@@ -1763,7 +1763,7 @@ export const AdminPanel = () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <div>
                   <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 800 }}>Proctored Assessments &amp; Integrity Logs</h3>
-                  <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#77736D' }}>
+                  <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#5A6882' }}>
                     Configure proctored question banks, test parameters, and inspect student camera violation records.
                   </p>
                 </div>
@@ -1806,7 +1806,7 @@ export const AdminPanel = () => {
                 <h4 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: 700, color: '#991B1B' }}>
                   Student Integrity Violation Audit Log
                 </h4>
-                <p style={{ margin: '0 0 14px 0', fontSize: '12px', color: '#77736D' }}>
+                <p style={{ margin: '0 0 14px 0', fontSize: '12px', color: '#5A6882' }}>
                   Zero-tolerance camera phone detections, tab switching flags, and termination records.
                 </p>
                 <div style={{ overflowX: 'auto' }}>
@@ -1823,7 +1823,7 @@ export const AdminPanel = () => {
                     <tbody>
                       {assessmentViolations.length === 0 ? (
                         <tr>
-                          <td colSpan={5} style={{ ...styles.td, textAlign: 'center', color: '#77736D' }}>
+                          <td colSpan={5} style={{ ...styles.td, textAlign: 'center', color: '#5A6882' }}>
                             Zero violations reported. All student sessions verified integrity-compliant.
                           </td>
                         </tr>
@@ -1874,7 +1874,7 @@ export const AdminPanel = () => {
                           value={assessmentFormData.title}
                           onChange={(e) => setAssessmentFormData({ ...assessmentFormData, title: e.target.value })}
                           placeholder="e.g. Advanced Distributed Systems &amp; Concurrency"
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                          style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                         />
                       </div>
 
@@ -1886,7 +1886,7 @@ export const AdminPanel = () => {
                             value={assessmentFormData.domain}
                             onChange={(e) => setAssessmentFormData({ ...assessmentFormData, domain: e.target.value })}
                             placeholder="Software Engineering"
-                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                           />
                         </div>
                         <div>
@@ -1895,7 +1895,7 @@ export const AdminPanel = () => {
                             type="number"
                             value={assessmentFormData.durationMinutes}
                             onChange={(e) => setAssessmentFormData({ ...assessmentFormData, durationMinutes: parseInt(e.target.value) || 40 })}
-                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                            style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                           />
                         </div>
                       </div>
@@ -1916,7 +1916,7 @@ export const AdminPanel = () => {
                         </div>
 
                         {assessmentFormData.questions.map((q, qIndex) => (
-                          <div key={qIndex} style={{ backgroundColor: '#FAF6EF', padding: '12px', borderRadius: '8px', marginBottom: '12px' }}>
+                          <div key={qIndex} style={{ backgroundColor: '#F5F8FF', padding: '12px', borderRadius: '8px', marginBottom: '12px' }}>
                             <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '6px' }}>
                               Question {qIndex + 1}
                             </div>
@@ -1930,7 +1930,7 @@ export const AdminPanel = () => {
                                 newQ[qIndex].questionText = e.target.value;
                                 setAssessmentFormData({ ...assessmentFormData, questions: newQ });
                               }}
-                              style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #E8E1D7', fontSize: '12px', marginBottom: '8px', boxSizing: 'border-box' }}
+                              style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #BFC7D5', fontSize: '12px', marginBottom: '8px', boxSizing: 'border-box' }}
                             />
 
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
@@ -1956,7 +1956,7 @@ export const AdminPanel = () => {
                                       newQ[qIndex].options[oIndex] = e.target.value;
                                       setAssessmentFormData({ ...assessmentFormData, questions: newQ });
                                     }}
-                                    style={{ width: '100%', padding: '6px 8px', borderRadius: '6px', border: '1px solid #E8E1D7', fontSize: '11px', boxSizing: 'border-box' }}
+                                    style={{ width: '100%', padding: '6px 8px', borderRadius: '6px', border: '1px solid #BFC7D5', fontSize: '11px', boxSizing: 'border-box' }}
                                   />
                                 </div>
                               ))}
@@ -1988,7 +1988,7 @@ export const AdminPanel = () => {
               <div style={{ ...styles.card, padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                   <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 800 }}>Skill Passport Evidence Review</h3>
-                  <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#77736D' }}>
+                  <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#5A6882' }}>
                     Audit certificates, capstone projects, and GitHub repositories submitted by students.
                   </p>
                 </div>
@@ -1999,7 +1999,7 @@ export const AdminPanel = () => {
                   style={{
                     padding: '8px 12px',
                     borderRadius: '8px',
-                    border: '1px solid #E8E1D7',
+                    border: '1px solid #BFC7D5',
                     fontSize: '13px',
                     backgroundColor: '#FFFFFF',
                   }}
@@ -2029,7 +2029,7 @@ export const AdminPanel = () => {
                     <tbody>
                       {evidenceList.length === 0 ? (
                         <tr>
-                          <td colSpan={7} style={{ ...styles.td, textAlign: 'center', color: '#77736D' }}>
+                          <td colSpan={7} style={{ ...styles.td, textAlign: 'center', color: '#5A6882' }}>
                             No evidence submissions found for the selected filter.
                           </td>
                         </tr>
@@ -2080,7 +2080,7 @@ export const AdminPanel = () => {
                       {verifyModal.verificationUrl && (
                         <div>
                           <strong>Verification URL:</strong>{' '}
-                          <a href={verifyModal.verificationUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#C46A45' }}>
+                          <a href={verifyModal.verificationUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#2455D6' }}>
                             {verifyModal.verificationUrl} <ExternalLink size={12} />
                           </a>
                         </div>
@@ -2094,7 +2094,7 @@ export const AdminPanel = () => {
                       <select
                         value={verifyStatus}
                         onChange={(e) => setVerifyStatus(e.target.value)}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px' }}
                       >
                         <option value="verified">Approve &amp; Verify into Skill Passport</option>
                         <option value="rejected">Reject Submission (Ineligible or Fraudulent)</option>
@@ -2110,7 +2110,7 @@ export const AdminPanel = () => {
                         value={verifyRemarks}
                         onChange={(e) => setVerifyRemarks(e.target.value)}
                         placeholder="Add institutional audit notes explaining the verification decision..."
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                       />
                     </div>
 
@@ -2133,7 +2133,7 @@ export const AdminPanel = () => {
                 <h3 style={{ margin: '0 0 6px 0', fontSize: '16px', fontWeight: 800 }}>
                   Institutional Reports &amp; Data Export
                 </h3>
-                <p style={{ margin: '0 0 20px 0', fontSize: '13px', color: '#77736D' }}>
+                <p style={{ margin: '0 0 20px 0', fontSize: '13px', color: '#5A6882' }}>
                   Generate comprehensive audit summaries for website owners, stakeholders, and institutional leadership.
                 </p>
 
@@ -2144,7 +2144,7 @@ export const AdminPanel = () => {
                     style={{
                       padding: '9px 14px',
                       borderRadius: '8px',
-                      border: '1px solid #E8E1D7',
+                      border: '1px solid #BFC7D5',
                       fontSize: '13px',
                       backgroundColor: '#FFFFFF',
                       minWidth: '220px',
@@ -2165,11 +2165,11 @@ export const AdminPanel = () => {
                   </button>
                 </div>
 
-                <div style={{ backgroundColor: '#FAF6EF', padding: '16px', borderRadius: '8px', border: '1px solid #E8E1D7' }}>
-                  <div style={{ fontSize: '13px', fontWeight: 700, color: '#252525', marginBottom: '4px' }}>
+                <div style={{ backgroundColor: '#F5F8FF', padding: '16px', borderRadius: '8px', border: '1px solid #BFC7D5' }}>
+                  <div style={{ fontSize: '13px', fontWeight: 700, color: '#17233D', marginBottom: '4px' }}>
                     Automated Compliance &amp; Audit Ready
                   </div>
-                  <div style={{ fontSize: '12px', color: '#77736D' }}>
+                  <div style={{ fontSize: '12px', color: '#5A6882' }}>
                     All exported reports include real-time timestamping, cryptographic admin session verification, and full adherence to institutional records standards.
                   </div>
                 </div>
@@ -2196,7 +2196,7 @@ export const AdminPanel = () => {
                         required
                         value={adminProfile.fullName}
                         onChange={(e) => setAdminProfile({ ...adminProfile, fullName: e.target.value })}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                       />
                     </div>
                     <div style={{ marginBottom: '18px' }}>
@@ -2208,7 +2208,7 @@ export const AdminPanel = () => {
                         required
                         value={adminProfile.email}
                         onChange={(e) => setAdminProfile({ ...adminProfile, email: e.target.value })}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                       />
                     </div>
                     <button type="submit" style={styles.btnPrimary}>Save Profile Changes</button>
@@ -2226,7 +2226,7 @@ export const AdminPanel = () => {
                         required
                         value={passwordForm.currentPassword}
                         onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                       />
                     </div>
                     <div style={{ marginBottom: '12px' }}>
@@ -2236,7 +2236,7 @@ export const AdminPanel = () => {
                         required
                         value={passwordForm.newPassword}
                         onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                       />
                     </div>
                     <div style={{ marginBottom: '18px' }}>
@@ -2246,7 +2246,7 @@ export const AdminPanel = () => {
                         required
                         value={passwordForm.confirmPassword}
                         onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                       />
                     </div>
                     <button type="submit" style={styles.btnPrimary}>Update Password</button>
@@ -2257,7 +2257,7 @@ export const AdminPanel = () => {
               {/* Create Authorized Admin */}
               <div style={{ ...styles.card, maxWidth: '640px', marginBottom: '28px' }}>
                 <h3 style={{ margin: '0 0 6px 0', fontSize: '16px', fontWeight: 800 }}>Create Authorized Admin Account</h3>
-                <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#77736D' }}>
+                <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#5A6882' }}>
                   Provision access for a co-freelancer, system architect, or platform owner.
                 </p>
                 <form onSubmit={handleCreateAdminAccount}>
@@ -2270,7 +2270,7 @@ export const AdminPanel = () => {
                         value={newAdminForm.fullName}
                         onChange={(e) => setNewAdminForm({ ...newAdminForm, fullName: e.target.value })}
                         placeholder="e.g. Platform Administrator"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                       />
                     </div>
                     <div>
@@ -2281,7 +2281,7 @@ export const AdminPanel = () => {
                         value={newAdminForm.email}
                         onChange={(e) => setNewAdminForm({ ...newAdminForm, email: e.target.value })}
                         placeholder="newadmin@skillproof.ai"
-                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                       />
                     </div>
                   </div>
@@ -2293,7 +2293,7 @@ export const AdminPanel = () => {
                       value={newAdminForm.password}
                       onChange={(e) => setNewAdminForm({ ...newAdminForm, password: e.target.value })}
                       placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #E8E1D7', fontSize: '13px', boxSizing: 'border-box' }}
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #BFC7D5', fontSize: '13px', boxSizing: 'border-box' }}
                     />
                   </div>
                   <button type="submit" style={styles.btnPrimary}>Create Admin Account</button>
@@ -2317,7 +2317,7 @@ export const AdminPanel = () => {
                     <tbody>
                       {auditLogs.length === 0 ? (
                         <tr>
-                          <td colSpan={5} style={{ ...styles.td, textAlign: 'center', color: '#77736D' }}>
+                          <td colSpan={5} style={{ ...styles.td, textAlign: 'center', color: '#5A6882' }}>
                             No audit logs available.
                           </td>
                         </tr>
@@ -2327,7 +2327,7 @@ export const AdminPanel = () => {
                             <td style={styles.td}>
                               {new Date(log.timestamp).toLocaleDateString()} {new Date(log.timestamp).toLocaleTimeString()}
                             </td>
-                            <td style={{ ...styles.td, fontWeight: 700, color: '#C46A45' }}>{log.action}</td>
+                            <td style={{ ...styles.td, fontWeight: 700, color: '#2455D6' }}>{log.action}</td>
                             <td style={styles.td}>{log.userEmail || log.user || 'System'}</td>
                             <td style={styles.td}>{log.resourceType || 'SECURITY'}</td>
                             <td style={styles.td}>{log.ipAddress || '127.0.0.1'}</td>

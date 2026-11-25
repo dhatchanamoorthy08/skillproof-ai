@@ -514,7 +514,7 @@ export const Register = () => {
         alignItems: 'center',
         minHeight: '100vh',
         padding: '2.5rem 1rem',
-        backgroundColor: '#F5F1E9',
+        backgroundColor: '#F5F8FF',
       }}
     >
       <div
@@ -522,10 +522,10 @@ export const Register = () => {
           width: '100%',
           maxWidth: '780px',
           padding: '2.75rem 2.5rem',
-          boxShadow: '0 20px 40px -15px rgba(37, 37, 37, 0.08)',
+          boxShadow: '0 20px 40px -15px rgba(23, 35, 61, 0.08)',
           borderRadius: '16px',
           backgroundColor: '#ffffff',
-          border: '1px solid #E8E1D7',
+          border: '1px solid #BFC7D5',
           transition: 'all 0.3s ease',
         }}
       >
@@ -534,10 +534,10 @@ export const Register = () => {
           <div style={{ display: 'inline-flex', marginBottom: '1rem' }}>
             <SkillProofLogo size={46} theme="light" />
           </div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem', letterSpacing: '-0.025em', color: '#252525' }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem', letterSpacing: '-0.025em', color: '#17233D' }}>
             Create Your Account
           </h1>
-          <p style={{ color: '#77736D', margin: 0, fontSize: '0.95rem' }}>
+          <p style={{ color: '#5A6882', margin: 0, fontSize: '0.95rem' }}>
             Join the evidence-based skill verification and campus placement platform
           </p>
         </div>
@@ -581,7 +581,7 @@ export const Register = () => {
               borderRadius: 'var(--radius-md)',
               border: role === 'recruiter' ? '2px solid var(--accent)' : '1px solid var(--border-light)',
               background: role === 'recruiter' ? 'var(--accent-light)' : '#ffffff',
-              color: role === 'recruiter' ? '#B89B6A' : 'var(--text-muted)',
+              color: role === 'recruiter' ? '#2455D6' : 'var(--text-muted)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -602,7 +602,7 @@ export const Register = () => {
               padding: '0.75rem 0.5rem',
               borderRadius: 'var(--radius-md)',
               border: role === 'placement_officer' ? '2px solid var(--secondary)' : '1px solid var(--border-light)',
-              background: role === 'placement_officer' ? '#F5F1E9' : '#ffffff',
+              background: role === 'placement_officer' ? '#F5F8FF' : '#ffffff',
               color: role === 'placement_officer' ? 'var(--secondary)' : 'var(--text-muted)',
               display: 'flex',
               flexDirection: 'column',
@@ -645,8 +645,8 @@ export const Register = () => {
             style={{
               padding: '0.75rem 1rem',
               borderRadius: 'var(--radius-md)',
-              backgroundColor: '#FAF6EF',
-              border: '1px solid #E2D3B8',
+              backgroundColor: '#F5F8FF',
+              border: '1px solid #BFC7D5',
               color: '#8E703C',
               fontSize: '0.85rem',
               display: 'flex',
@@ -655,7 +655,7 @@ export const Register = () => {
               marginBottom: '1.25rem',
             }}
           >
-            <CheckCircle2 size={16} color="#B89B6A" />
+            <CheckCircle2 size={16} color="#2455D6" />
             <span>{successMsg}</span>
           </div>
         )}
@@ -1039,7 +1039,7 @@ export const Register = () => {
                               padding: '0.25rem 0.6rem',
                               borderRadius: '9999px',
                               border: isSelected ? '1px solid var(--primary)' : '1px solid var(--border-light)',
-                              backgroundColor: isSelected ? 'var(--primary-light)' : '#FAF6EF',
+                              backgroundColor: isSelected ? 'var(--primary-light)' : '#F5F8FF',
                               color: isSelected ? 'var(--primary)' : 'var(--text-secondary)',
                               fontWeight: isSelected ? 700 : 500,
                               cursor: 'pointer',

@@ -8,12 +8,12 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
   const getRoleBadge = (role) => {
     switch (role) {
       case 'recruiter':
-        return { label: 'Corporate Recruiter', bg: '#FAF6EF', color: '#B89B6A', border: '#E2D3B8' };
+        return { label: 'Corporate Recruiter', bg: '#F5F8FF', color: '#2455D6', border: '#BFC7D5' };
       case 'placement_officer':
-        return { label: 'Placement Director', bg: '#F5F1E9', color: '#252525', border: '#E8E1D7' };
+        return { label: 'Placement Director', bg: '#F5F8FF', color: '#17233D', border: '#BFC7D5' };
       case 'student':
       default:
-        return { label: 'Candidate', bg: '#FBF4F0', color: '#C46A45', border: '#E8C2B2' };
+        return { label: 'Candidate', bg: '#EBF1FF', color: '#2455D6', border: '#C5D5FA' };
     }
   };
 
@@ -27,7 +27,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
         background: 'rgba(255, 255, 255, 0.96)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
-        borderBottom: '1px solid #E8E1D7',
+        borderBottom: '1px solid #BFC7D5',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -35,7 +35,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
         position: 'sticky',
         top: 0,
         zIndex: 40,
-        boxShadow: '0 1px 3px rgba(37, 37, 37, 0.03)',
+        boxShadow: '0 1px 3px rgba(23, 35, 61, 0.03)',
       }}
     >
       <div className="topbar-left" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
@@ -48,7 +48,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
           style={{
             background: 'transparent',
             border: 'none',
-            color: '#252525',
+            color: '#17233D',
             cursor: 'pointer',
             padding: '6px',
             borderRadius: '6px',
@@ -68,15 +68,15 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.4rem 0.9rem',
-            backgroundColor: '#FAF6EF',
-            border: '1px solid #E8E1D7',
+            backgroundColor: '#F5F8FF',
+            border: '1px solid #BFC7D5',
             borderRadius: '9999px',
             fontSize: '0.825rem',
             fontWeight: 600,
-            color: '#252525',
+            color: '#17233D',
           }}
         >
-          <ShieldCheck size={16} color="#C46A45" />
+          <ShieldCheck size={16} color="#2455D6" />
           <span>
             {profile?.collegeName || profile?.companyName || 'National Institute of Technology'}
           </span>
@@ -85,13 +85,13 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
               fontSize: '0.675rem',
               fontWeight: 800,
               backgroundColor: '#FFFFFF',
-              color: '#B89B6A',
+              color: '#2455D6',
               padding: '2px 8px',
               borderRadius: '9999px',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '3px',
-              border: '1px solid #E2D3B8',
+              border: '1px solid #BFC7D5',
             }}
           >
             <CheckCircle2 size={10} /> Verified
@@ -108,14 +108,14 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
             gap: '0.45rem',
             fontSize: '0.775rem',
             fontWeight: 700,
-            color: '#C46A45',
+            color: '#2455D6',
             padding: '0.35rem 0.85rem',
-            backgroundColor: '#FBF4F0',
+            backgroundColor: '#EBF1FF',
             borderRadius: '9999px',
-            border: '1px solid #E8C2B2',
+            border: '1px solid #C5D5FA',
           }}
         >
-          <span className="pulse-dot-terracotta" style={{ width: '7px', height: '7px' }} />
+          <span className="pulse-dot-cobalt" style={{ width: '7px', height: '7px' }} />
           <span>Evidence Sync Active</span>
         </div>
 
@@ -124,21 +124,21 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
           style={{
             position: 'relative',
             background: '#FFFFFF',
-            border: '1px solid #E8E1D7',
+            border: '1px solid #BFC7D5',
             borderRadius: '50%',
             width: '38px',
             height: '38px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#77736D',
+            color: '#5A6882',
             cursor: 'pointer',
-            boxShadow: '0 1px 2px rgba(37, 37, 37, 0.04)',
+            boxShadow: '0 1px 2px rgba(23, 35, 61, 0.04)',
             transition: 'all 0.15s ease',
           }}
           title="Notifications"
-          onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#C46A45')}
-          onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#E8E1D7')}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#2455D6')}
+          onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#BFC7D5')}
         >
           <Bell size={17} />
           <span
@@ -164,8 +164,8 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
             padding: '0.35rem 0.85rem 0.35rem 0.5rem',
             borderRadius: '9999px',
             background: '#FFFFFF',
-            border: '1px solid #E8E1D7',
-            boxShadow: '0 1px 3px rgba(37, 37, 37, 0.04)',
+            border: '1px solid #BFC7D5',
+            boxShadow: '0 1px 3px rgba(23, 35, 61, 0.04)',
           }}
         >
           <div
@@ -173,9 +173,9 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
               width: '34px',
               height: '34px',
               borderRadius: '50%',
-              background: '#252525',
+              background: '#17233D',
               color: '#FFFFFF',
-              border: '2px solid #C46A45',
+              border: '2px solid #2455D6',
               fontWeight: 800,
               fontSize: '0.85rem',
               display: 'flex',
@@ -197,7 +197,7 @@ export const Navbar = ({ onToggleMobileMenu, isMobileMenuOpen }) => {
           </div>
 
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontWeight: 800, fontSize: '0.825rem', color: '#252525', lineHeight: 1.2 }}>
+            <div style={{ fontWeight: 800, fontSize: '0.825rem', color: '#17233D', lineHeight: 1.2 }}>
               {user?.fullName || 'User Account'}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '2px' }}>

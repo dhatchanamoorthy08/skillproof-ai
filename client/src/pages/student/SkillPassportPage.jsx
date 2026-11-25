@@ -213,7 +213,7 @@ export const SkillPassportPage = () => {
                     </td>
                     <td>
                       {skill.assessmentScore != null ? (
-                        <span style={{ fontWeight: 700, color: skill.assessmentScore >= 70 ? '#B89B6A' : '#C46A45' }}>
+                        <span style={{ fontWeight: 700, color: skill.assessmentScore >= 70 ? '#2455D6' : '#2455D6' }}>
                           {skill.assessmentScore}%
                         </span>
                       ) : (
@@ -261,7 +261,7 @@ export const SkillPassportPage = () => {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <FileCode2 size={18} color="#C46A45" />
+                    <FileCode2 size={18} color="#2455D6" />
                     <div>
                       <h4 style={{ fontSize: '1rem', fontWeight: 700, margin: 0 }}>
                         {ev.title || ev.courseName || ev.companyName}
@@ -304,8 +304,8 @@ export const SkillPassportPage = () => {
                       fontSize: '0.78rem',
                       padding: '0.4rem 0.6rem',
                       borderRadius: '4px',
-                      background: ev.verificationStatus === 'verified' ? '#FAF6EF' : '#FCF4F4',
-                      color: ev.verificationStatus === 'verified' ? '#B89B6A' : '#C44545',
+                      background: ev.verificationStatus === 'verified' ? '#F5F8FF' : '#FCF4F4',
+                      color: ev.verificationStatus === 'verified' ? '#2455D6' : '#C44545',
                     }}
                   >
                     <strong>Faculty Audit:</strong> {ev.verificationNotes}
@@ -318,7 +318,7 @@ export const SkillPassportPage = () => {
                       href={ev.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: '#C46A45', textDecoration: 'none', fontWeight: 600 }}
+                      style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: '#2455D6', textDecoration: 'none', fontWeight: 600 }}
                     >
                       <ExternalLink size={12} />
                       <span>View Uploaded Certificate</span>

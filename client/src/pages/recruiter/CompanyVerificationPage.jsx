@@ -117,16 +117,16 @@ export const CompanyVerificationPage = () => {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           {isApproved ? (
-            <CheckCircle2 size={32} color="#B89B6A" />
+            <CheckCircle2 size={32} color="#2455D6" />
           ) : isPending ? (
-            <Clock size={32} color="#C46A45" />
+            <Clock size={32} color="#2455D6" />
           ) : (
-            <AlertTriangle size={32} color="#77736D" />
+            <AlertTriangle size={32} color="#5A6882" />
           )}
           <div>
             <div style={{ fontSize: '1.1rem', fontWeight: 700 }}>
               Status:{' '}
-              <span style={{ textTransform: 'uppercase', color: isApproved ? '#B89B6A' : isPending ? '#C46A45' : 'var(--text-main)' }}>
+              <span style={{ textTransform: 'uppercase', color: isApproved ? '#2455D6' : isPending ? '#2455D6' : 'var(--text-main)' }}>
                 {verification?.status || 'Unsubmitted'}
               </span>
             </div>

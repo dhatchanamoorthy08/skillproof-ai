@@ -109,7 +109,7 @@ export const EvidenceReviewPage = () => {
   return (
     <div style={{ maxWidth: '1280px', margin: '0 auto', paddingBottom: '3rem' }}>
       {/* Header */}
-      <div className="card" style={{ marginBottom: '1.5rem', background: '#FFFFFF', border: '1px solid #E8E1D7' }}>
+      <div className="card" style={{ marginBottom: '1.5rem', background: '#FFFFFF', border: '1px solid #BFC7D5' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
@@ -122,12 +122,12 @@ export const EvidenceReviewPage = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#C46A45',
+                  color: '#2455D6',
                 }}
               >
                 <FileCheck2 size={20} />
               </div>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: '#252525' }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: '#17233D' }}>
                 Student Certificate Evidence Verification
               </h2>
             </div>
@@ -153,20 +153,20 @@ export const EvidenceReviewPage = () => {
             gap: '1rem',
             marginTop: '1.5rem',
             paddingTop: '1.25rem',
-            borderTop: '1px solid #F5F1E9',
+            borderTop: '1px solid #F5F8FF',
           }}
         >
-          <div style={{ padding: '0.875rem 1rem', background: '#F5F1E9', borderRadius: '8px', border: '1px solid #E8E1D7' }}>
+          <div style={{ padding: '0.875rem 1rem', background: '#F5F8FF', borderRadius: '8px', border: '1px solid #BFC7D5' }}>
             <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#68756F', textTransform: 'uppercase' }}>Total Submissions</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#252525', marginTop: '0.2rem' }}>{totalSubmissions}</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#17233D', marginTop: '0.2rem' }}>{totalSubmissions}</div>
           </div>
           <div style={{ padding: '0.875rem 1rem', background: '#FEF7ED', borderRadius: '8px', border: '1px solid #FCDCA6' }}>
             <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#A0681B', textTransform: 'uppercase' }}>Pending Review</div>
             <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#C48227', marginTop: '0.2rem' }}>{pendingCount}</div>
           </div>
-          <div style={{ padding: '0.875rem 1rem', background: '#EFF8F2', borderRadius: '8px', border: '1px solid #E2D3B8' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#B89B6A', textTransform: 'uppercase' }}>Verified & Approved</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#B89B6A', marginTop: '0.2rem' }}>{verifiedCount}</div>
+          <div style={{ padding: '0.875rem 1rem', background: '#EFF8F2', borderRadius: '8px', border: '1px solid #BFC7D5' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#2455D6', textTransform: 'uppercase' }}>Verified & Approved</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#2455D6', marginTop: '0.2rem' }}>{verifiedCount}</div>
           </div>
           <div style={{ padding: '0.875rem 1rem', background: '#FCF0F2', borderRadius: '8px', border: '1px solid #F7D4D7' }}>
             <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#822430', textTransform: 'uppercase' }}>Rejected / Incomplete</div>
@@ -181,7 +181,7 @@ export const EvidenceReviewPage = () => {
         style={{
           marginBottom: '1.5rem',
           background: '#FFFFFF',
-          border: '1px solid #E8E1D7',
+          border: '1px solid #BFC7D5',
           padding: '1rem',
         }}
       >
@@ -243,13 +243,13 @@ export const EvidenceReviewPage = () => {
       {/* Submissions List */}
       {loading ? (
         <div className="card" style={{ textAlign: 'center', padding: '3rem', color: '#68756F' }}>
-          <RefreshCw size={28} className="animate-spin" style={{ margin: '0 auto 1rem', color: '#C46A45' }} />
+          <RefreshCw size={28} className="animate-spin" style={{ margin: '0 auto 1rem', color: '#2455D6' }} />
           <div>Loading student evidence queue...</div>
         </div>
       ) : evidenceList.length === 0 ? (
         <div className="card" style={{ textAlign: 'center', padding: '3.5rem 1rem', color: '#68756F' }}>
           <FileCheck2 size={44} style={{ color: '#8B9892', margin: '0 auto 1rem' }} />
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#252525', marginBottom: '0.4rem' }}>
+          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#17233D', marginBottom: '0.4rem' }}>
             No evidence submissions found
           </h3>
           <p style={{ fontSize: '0.875rem', margin: 0 }}>
@@ -274,7 +274,7 @@ export const EvidenceReviewPage = () => {
                   border: isPending
                     ? '1.5px solid #E8A23A'
                     : isVerified
-                    ? '1px solid #E2D3B8'
+                    ? '1px solid #BFC7D5'
                     : '1px solid #F7D4D7',
                   padding: '1.25rem',
                   display: 'flex',
@@ -291,7 +291,7 @@ export const EvidenceReviewPage = () => {
                         width: '42px',
                         height: '42px',
                         borderRadius: '50%',
-                        background: '#252525',
+                        background: '#17233D',
                         color: '#FFFFFF',
                         display: 'flex',
                         alignItems: 'center',
@@ -304,7 +304,7 @@ export const EvidenceReviewPage = () => {
                     </div>
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <span style={{ fontWeight: 700, color: '#252525', fontSize: '1.05rem' }}>
+                        <span style={{ fontWeight: 700, color: '#17233D', fontSize: '1.05rem' }}>
                           {ev.studentName || 'Student'}
                         </span>
                         {ev.studentRollNumber && (
@@ -312,7 +312,7 @@ export const EvidenceReviewPage = () => {
                             style={{
                               fontSize: '0.75rem',
                               padding: '2px 8px',
-                              background: '#F5F1E9',
+                              background: '#F5F8FF',
                               color: '#4A5651',
                               borderRadius: '4px',
                               fontWeight: 600,
@@ -359,12 +359,12 @@ export const EvidenceReviewPage = () => {
                           alignItems: 'center',
                           gap: '0.35rem',
                           background: '#EFF8F2',
-                          color: '#B89B6A',
+                          color: '#2455D6',
                           padding: '0.35rem 0.75rem',
                           borderRadius: '999px',
                           fontSize: '0.8rem',
                           fontWeight: 700,
-                          border: '1px solid #E2D3B8',
+                          border: '1px solid #BFC7D5',
                         }}
                       >
                         <CheckCircle2 size={14} /> Verified & Approved
@@ -394,10 +394,10 @@ export const EvidenceReviewPage = () => {
                 {/* Evidence Details Block */}
                 <div
                   style={{
-                    background: '#F5F1E9',
+                    background: '#F5F8FF',
                     borderRadius: '8px',
                     padding: '1rem',
-                    border: '1px solid #E8E1D7',
+                    border: '1px solid #BFC7D5',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
@@ -417,15 +417,15 @@ export const EvidenceReviewPage = () => {
                             : 'rgba(99, 102, 241, 0.1)',
                         color:
                           ev.type === 'course'
-                            ? '#C46A45'
+                            ? '#2455D6'
                             : ev.type === 'internship'
                             ? '#0D9488'
-                            : '#252525',
+                            : '#17233D',
                       }}
                     >
                       {ev.type === 'course' ? 'Course Certificate' : ev.type === 'internship' ? 'Internship Certificate' : 'Project / Additional'}
                     </span>
-                    <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 700, color: '#252525' }}>
+                    <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 700, color: '#17233D' }}>
                       {ev.title || ev.courseName || ev.companyName}
                     </h4>
                   </div>
@@ -435,15 +435,15 @@ export const EvidenceReviewPage = () => {
                       <>
                         <div>
                           <span style={{ color: '#68756F' }}>Provider: </span>
-                          <strong style={{ color: '#252525' }}>{ev.courseProvider || 'Independent'}</strong>
+                          <strong style={{ color: '#17233D' }}>{ev.courseProvider || 'Independent'}</strong>
                         </div>
                         {ev.relatedSkill && (
                           <div>
                             <span style={{ color: '#68756F' }}>Related Skill: </span>
                             <span
                               style={{
-                                background: '#E8E1D7',
-                                color: '#252525',
+                                background: '#BFC7D5',
+                                color: '#17233D',
                                 padding: '1px 8px',
                                 borderRadius: '4px',
                                 fontWeight: 600,
@@ -457,13 +457,13 @@ export const EvidenceReviewPage = () => {
                         {ev.issueDate && (
                           <div>
                             <span style={{ color: '#68756F' }}>Issue Date: </span>
-                            <strong style={{ color: '#252525' }}>{ev.issueDate}</strong>
+                            <strong style={{ color: '#17233D' }}>{ev.issueDate}</strong>
                           </div>
                         )}
                         {ev.certificateId && (
                           <div>
                             <span style={{ color: '#68756F' }}>Credential ID: </span>
-                            <code style={{ background: '#E8E1D7', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem' }}>
+                            <code style={{ background: '#BFC7D5', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem' }}>
                               {ev.certificateId}
                             </code>
                           </div>
@@ -475,22 +475,22 @@ export const EvidenceReviewPage = () => {
                       <>
                         <div>
                           <span style={{ color: '#68756F' }}>Company: </span>
-                          <strong style={{ color: '#252525' }}>{ev.companyName}</strong>
+                          <strong style={{ color: '#17233D' }}>{ev.companyName}</strong>
                         </div>
                         <div>
                           <span style={{ color: '#68756F' }}>Role: </span>
-                          <strong style={{ color: '#252525' }}>{ev.internshipRole || 'Intern'}</strong>
+                          <strong style={{ color: '#17233D' }}>{ev.internshipRole || 'Intern'}</strong>
                         </div>
                         {ev.internshipDomain && (
                           <div>
                             <span style={{ color: '#68756F' }}>Domain: </span>
-                            <strong style={{ color: '#252525' }}>{ev.internshipDomain}</strong>
+                            <strong style={{ color: '#17233D' }}>{ev.internshipDomain}</strong>
                           </div>
                         )}
                         {(ev.startDate || ev.endDate) && (
                           <div>
                             <span style={{ color: '#68756F' }}>Duration: </span>
-                            <strong style={{ color: '#252525' }}>
+                            <strong style={{ color: '#17233D' }}>
                               {ev.startDate || '—'} to {ev.endDate || '—'}
                             </strong>
                           </div>
@@ -503,13 +503,13 @@ export const EvidenceReviewPage = () => {
                         {ev.courseProvider && (
                           <div>
                             <span style={{ color: '#68756F' }}>Issuing Authority: </span>
-                            <strong style={{ color: '#252525' }}>{ev.courseProvider}</strong>
+                            <strong style={{ color: '#17233D' }}>{ev.courseProvider}</strong>
                           </div>
                         )}
                         {ev.relatedSkill && (
                           <div>
                             <span style={{ color: '#68756F' }}>Skill: </span>
-                            <strong style={{ color: '#252525' }}>{ev.relatedSkill}</strong>
+                            <strong style={{ color: '#17233D' }}>{ev.relatedSkill}</strong>
                           </div>
                         )}
                       </>
@@ -527,10 +527,10 @@ export const EvidenceReviewPage = () => {
                             fontSize: '0.75rem',
                             padding: '2px 8px',
                             background: '#F0F7F4',
-                            color: '#C46A45',
+                            color: '#2455D6',
                             borderRadius: '4px',
                             fontWeight: 600,
-                            border: '1px solid #E8E1D7',
+                            border: '1px solid #BFC7D5',
                           }}
                         >
                           {sk}
@@ -556,7 +556,7 @@ export const EvidenceReviewPage = () => {
                         background: isVerified ? '#EFF8F2' : isRejected ? '#FCF0F2' : '#FEF7ED',
                         border: `1px solid ${isVerified ? '#EFF8F2' : isRejected ? '#FCF0F2' : '#FEF7ED'}`,
                         fontSize: '0.825rem',
-                        color: isVerified ? '#B89B6A' : isRejected ? '#822430' : '#A0681B',
+                        color: isVerified ? '#2455D6' : isRejected ? '#822430' : '#A0681B',
                       }}
                     >
                       <strong>Audit Notes:</strong> {ev.verificationNotes}
@@ -582,7 +582,7 @@ export const EvidenceReviewPage = () => {
                         rel="noreferrer"
                         style={{
                           fontSize: '0.8rem',
-                          color: '#C46A45',
+                          color: '#2455D6',
                           display: 'inline-flex',
                           alignItems: 'center',
                           gap: '0.25rem',
@@ -602,7 +602,7 @@ export const EvidenceReviewPage = () => {
                       onClick={() => openReviewModal(ev, 'verified')}
                       className="btn"
                       style={{
-                        background: '#B89B6A',
+                        background: '#2455D6',
                         color: '#FFFFFF',
                         border: 'none',
                         fontSize: '0.825rem',
@@ -653,8 +653,8 @@ export const EvidenceReviewPage = () => {
       >
         {selectedEvidence && (
           <form onSubmit={handleReviewSubmit}>
-            <div style={{ marginBottom: '1rem', padding: '0.75rem', background: '#F5F1E9', borderRadius: '6px', border: '1px solid #E8E1D7' }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#252525' }}>
+            <div style={{ marginBottom: '1rem', padding: '0.75rem', background: '#F5F8FF', borderRadius: '6px', border: '1px solid #BFC7D5' }}>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#17233D' }}>
                 {selectedEvidence.title || selectedEvidence.courseName || selectedEvidence.companyName}
               </div>
               <div style={{ fontSize: '0.8rem', color: '#68756F', marginTop: '2px' }}>
@@ -663,7 +663,7 @@ export const EvidenceReviewPage = () => {
             </div>
 
             <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#252525', marginBottom: '0.4rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#17233D', marginBottom: '0.4rem' }}>
                 Audit Determination:
               </label>
               <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -675,12 +675,12 @@ export const EvidenceReviewPage = () => {
                     gap: '0.5rem',
                     padding: '0.65rem 0.9rem',
                     borderRadius: '6px',
-                    border: decision === 'verified' ? '2px solid #B89B6A' : '1px solid #E8E1D7',
+                    border: decision === 'verified' ? '2px solid #2455D6' : '1px solid #BFC7D5',
                     background: decision === 'verified' ? '#EFF8F2' : '#FFFFFF',
                     cursor: 'pointer',
                     fontSize: '0.875rem',
                     fontWeight: 600,
-                    color: decision === 'verified' ? '#B89B6A' : '#252525',
+                    color: decision === 'verified' ? '#2455D6' : '#17233D',
                   }}
                 >
                   <input
@@ -700,12 +700,12 @@ export const EvidenceReviewPage = () => {
                     gap: '0.5rem',
                     padding: '0.65rem 0.9rem',
                     borderRadius: '6px',
-                    border: decision === 'rejected' ? '2px solid #C83E4D' : '1px solid #E8E1D7',
+                    border: decision === 'rejected' ? '2px solid #C83E4D' : '1px solid #BFC7D5',
                     background: decision === 'rejected' ? '#FCF0F2' : '#FFFFFF',
                     cursor: 'pointer',
                     fontSize: '0.875rem',
                     fontWeight: 600,
-                    color: decision === 'rejected' ? '#822430' : '#252525',
+                    color: decision === 'rejected' ? '#822430' : '#17233D',
                   }}
                 >
                   <input
@@ -721,7 +721,7 @@ export const EvidenceReviewPage = () => {
             </div>
 
             <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#252525', marginBottom: '0.4rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#17233D', marginBottom: '0.4rem' }}>
                 Review Feedback & Audit Notes (visible to student):
               </label>
               <textarea
@@ -749,7 +749,7 @@ export const EvidenceReviewPage = () => {
                 className="btn"
                 disabled={submitting}
                 style={{
-                  background: decision === 'verified' ? '#B89B6A' : '#C83E4D',
+                  background: decision === 'verified' ? '#2455D6' : '#C83E4D',
                   color: '#FFFFFF',
                   fontWeight: 600,
                 }}
@@ -779,19 +779,19 @@ export const EvidenceReviewPage = () => {
                   maxHeight: '520px',
                   objectFit: 'contain',
                   borderRadius: '6px',
-                  border: '1px solid #E8E1D7',
+                  border: '1px solid #BFC7D5',
                 }}
               />
             ) : previewDoc.fileUrl?.match(/\.pdf$/i) ? (
               <iframe
                 src={previewDoc.fileUrl.startsWith('http') ? previewDoc.fileUrl : `http://localhost:5000${previewDoc.fileUrl}`}
                 title="PDF Document"
-                style={{ width: '100%', height: '500px', border: '1px solid #E8E1D7', borderRadius: '6px' }}
+                style={{ width: '100%', height: '500px', border: '1px solid #BFC7D5', borderRadius: '6px' }}
               />
             ) : (
-              <div style={{ padding: '2rem', background: '#F5F1E9', borderRadius: '6px' }}>
-                <FileText size={48} style={{ color: '#C46A45', margin: '0 auto 1rem' }} />
-                <p style={{ color: '#252525', fontWeight: 600 }}>{previewDoc.fileName || 'Uploaded Credential Document'}</p>
+              <div style={{ padding: '2rem', background: '#F5F8FF', borderRadius: '6px' }}>
+                <FileText size={48} style={{ color: '#2455D6', margin: '0 auto 1rem' }} />
+                <p style={{ color: '#17233D', fontWeight: 600 }}>{previewDoc.fileName || 'Uploaded Credential Document'}</p>
                 <a
                   href={previewDoc.fileUrl.startsWith('http') ? previewDoc.fileUrl : `http://localhost:5000${previewDoc.fileUrl}`}
                   target="_blank"

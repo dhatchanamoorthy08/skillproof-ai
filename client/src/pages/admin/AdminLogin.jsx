@@ -37,7 +37,7 @@ export const AdminLogin = () => {
     <div
       style={{
         minHeight: '100vh',
-        backgroundColor: '#F5F1E9',
+        backgroundColor: '#F5F8FF',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -52,8 +52,8 @@ export const AdminLogin = () => {
           maxWidth: '460px',
           backgroundColor: '#FFFFFF',
           borderRadius: '16px',
-          border: '1px solid #E8E1D7',
-          boxShadow: '0 12px 32px rgba(37, 37, 37, 0.06)',
+          border: '1px solid #BFC7D5',
+          boxShadow: '0 12px 32px rgba(23, 35, 61, 0.06)',
           padding: '36px 32px',
         }}
       >
@@ -69,8 +69,8 @@ export const AdminLogin = () => {
               fontWeight: 700,
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              color: '#C46A45',
-              backgroundColor: 'rgba(196, 106, 69, 0.08)',
+              color: '#2455D6',
+              backgroundColor: 'rgba(36, 85, 214, 0.08)',
               padding: '4px 10px',
               borderRadius: '9999px',
               marginBottom: '8px',
@@ -78,10 +78,10 @@ export const AdminLogin = () => {
           >
             Master Administration Console
           </div>
-          <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#252525', margin: '0 0 6px 0' }}>
+          <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#17233D', margin: '0 0 6px 0' }}>
             SkillProof AI Admin
           </h1>
-          <p style={{ fontSize: '13px', color: '#77736D', margin: 0 }}>
+          <p style={{ fontSize: '13px', color: '#5A6882', margin: 0 }}>
             Website Owner &amp; Freelancer Administrative Portal
           </p>
         </div>
@@ -89,8 +89,8 @@ export const AdminLogin = () => {
         {/* Demo Credentials Quick-Fill Banner */}
         <div
           style={{
-            backgroundColor: '#FAF6EF',
-            border: '1px solid #E8E1D7',
+            backgroundColor: '#F5F8FF',
+            border: '1px solid #BFC7D5',
             borderRadius: '10px',
             padding: '12px 14px',
             marginBottom: '20px',
@@ -100,10 +100,10 @@ export const AdminLogin = () => {
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: 700, color: '#252525' }}>
+            <div style={{ fontSize: '12px', fontWeight: 700, color: '#17233D' }}>
               Owner Demo Credentials
             </div>
-            <div style={{ fontSize: '11px', color: '#77736D' }}>
+            <div style={{ fontSize: '11px', color: '#5A6882' }}>
               admin@skillproof.ai &bull; Password@123
             </div>
           </div>
@@ -111,7 +111,7 @@ export const AdminLogin = () => {
             type="button"
             onClick={handleFillDemo}
             style={{
-              backgroundColor: '#252525',
+              backgroundColor: '#17233D',
               color: '#FFFFFF',
               border: 'none',
               borderRadius: '6px',
@@ -124,7 +124,7 @@ export const AdminLogin = () => {
               gap: '4px',
             }}
           >
-            <Key size={12} color="#B89B6A" /> Auto-Fill
+            <Key size={12} color="#2455D6" /> Auto-Fill
           </button>
         </div>
 
@@ -158,7 +158,7 @@ export const AdminLogin = () => {
                 display: 'block',
                 fontSize: '12px',
                 fontWeight: 600,
-                color: '#252525',
+                color: '#17233D',
                 marginBottom: '6px',
               }}
             >
@@ -167,7 +167,7 @@ export const AdminLogin = () => {
             <div style={{ position: 'relative' }}>
               <Mail
                 size={16}
-                color="#77736D"
+                color="#5A6882"
                 style={{ position: 'absolute', left: '12px', top: '12px' }}
               />
               <input
@@ -181,10 +181,10 @@ export const AdminLogin = () => {
                   width: '100%',
                   padding: '10px 12px 10px 38px',
                   borderRadius: '8px',
-                  border: '1px solid #E8E1D7',
+                  border: '1px solid #BFC7D5',
                   backgroundColor: '#FFFFFF',
                   fontSize: '13px',
-                  color: '#252525',
+                  color: '#17233D',
                   boxSizing: 'border-box',
                   outline: 'none',
                 }}
@@ -199,7 +199,7 @@ export const AdminLogin = () => {
                 display: 'block',
                 fontSize: '12px',
                 fontWeight: 600,
-                color: '#252525',
+                color: '#17233D',
                 marginBottom: '6px',
               }}
             >
@@ -208,7 +208,7 @@ export const AdminLogin = () => {
             <div style={{ position: 'relative' }}>
               <Lock
                 size={16}
-                color="#77736D"
+                color="#5A6882"
                 style={{ position: 'absolute', left: '12px', top: '12px' }}
               />
               <input
@@ -222,10 +222,10 @@ export const AdminLogin = () => {
                   width: '100%',
                   padding: '10px 12px 10px 38px',
                   borderRadius: '8px',
-                  border: '1px solid #E8E1D7',
+                  border: '1px solid #BFC7D5',
                   backgroundColor: '#FFFFFF',
                   fontSize: '13px',
-                  color: '#252525',
+                  color: '#17233D',
                   boxSizing: 'border-box',
                   outline: 'none',
                 }}
@@ -238,7 +238,7 @@ export const AdminLogin = () => {
             disabled={submitting}
             style={{
               width: '100%',
-              backgroundColor: '#C46A45',
+              backgroundColor: '#2455D6',
               color: '#FFFFFF',
               border: 'none',
               borderRadius: '8px',
@@ -250,7 +250,7 @@ export const AdminLogin = () => {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              boxShadow: '0 4px 12px rgba(196, 106, 69, 0.25)',
+              boxShadow: '0 4px 12px rgba(36, 85, 214, 0.25)',
               transition: 'background-color 0.2s',
             }}
           >
@@ -264,17 +264,17 @@ export const AdminLogin = () => {
           style={{
             marginTop: '24px',
             paddingTop: '18px',
-            borderTop: '1px solid #E8E1D7',
+            borderTop: '1px solid #BFC7D5',
             display: 'flex',
             flexDirection: 'column',
             gap: '6px',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: '#77736D' }}>
-            <CheckCircle size={13} color="#B89B6A" /> Role-based authorization: Admin access strictly enforced.
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: '#5A6882' }}>
+            <CheckCircle size={13} color="#2455D6" /> Role-based authorization: Admin access strictly enforced.
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: '#77736D' }}>
-            <CheckCircle size={13} color="#B89B6A" /> All management actions logged with timestamp and IP address.
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: '#5A6882' }}>
+            <CheckCircle size={13} color="#2455D6" /> All management actions logged with timestamp and IP address.
           </div>
         </div>
 
@@ -283,7 +283,7 @@ export const AdminLogin = () => {
             to="/"
             style={{
               fontSize: '12px',
-              color: '#77736D',
+              color: '#5A6882',
               textDecoration: 'none',
             }}
           >

@@ -127,7 +127,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
             style={{
               background: 'transparent',
               border: 'none',
-              color: '#D9D0C3',
+              color: '#BFC7D5',
               cursor: 'pointer',
               padding: '4px',
               display: 'none',

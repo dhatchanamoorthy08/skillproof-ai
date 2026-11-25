@@ -232,10 +232,10 @@ export const StudentSettingsPage = () => {
             boxShadow: 'var(--shadow-sm)',
           }}
         >
-          <CheckCircle2 size={22} color="#B89B6A" />
+          <CheckCircle2 size={22} color="#2455D6" />
           <div>
             <div style={{ fontWeight: 700 }}>Profile Settings Successfully Saved!</div>
-            <div style={{ fontSize: '0.85rem', fontWeight: 400, color: '#77736D' }}>
+            <div style={{ fontSize: '0.85rem', fontWeight: 400, color: '#5A6882' }}>
               Your Skill Passport, academic credentials, and photo are live across the recruitment matching index.
             </div>
           </div>

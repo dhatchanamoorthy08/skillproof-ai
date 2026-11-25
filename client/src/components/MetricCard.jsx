@@ -6,8 +6,8 @@ export const MetricCard = ({
   value,
   subtitle,
   icon,
-  iconBg = '#FAF6EF',
-  iconColor = '#C46A45',
+  iconBg = '#EBF1FF',
+  iconColor = '#2455D6',
   trend,
 }) => {
   const isPositive = trend && trend.startsWith('+');
@@ -28,11 +28,11 @@ export const MetricCard = ({
               style={{
                 fontSize: '0.75rem',
                 fontWeight: 700,
-                color: isPositive ? '#B89B6A' : '#C44545',
-                backgroundColor: isPositive ? '#FAF6EF' : '#FCF4F4',
+                color: isPositive ? '#2455D6' : '#C44545',
+                backgroundColor: isPositive ? '#EBF1FF' : '#FCF4F4',
                 padding: '2px 8px',
                 borderRadius: '9999px',
-                border: `1px solid ${isPositive ? '#E2D3B8' : '#F3C6C6'}`,
+                border: `1px solid ${isPositive ? '#C5D5FA' : '#F3C6C6'}`,
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '3px',
@@ -50,7 +50,7 @@ export const MetricCard = ({
           backgroundColor: iconBg,
           color: iconColor,
           borderRadius: 'var(--radius-md)',
-          boxShadow: '0 1px 3px rgba(37, 37, 37, 0.05)',
+          boxShadow: '0 1px 3px rgba(23, 35, 61, 0.05)',
         }}
       >
         {icon}

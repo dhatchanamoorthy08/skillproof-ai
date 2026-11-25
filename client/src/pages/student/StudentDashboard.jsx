@@ -92,11 +92,11 @@ export const StudentDashboard = () => {
       <section
         className="student-welcome-section"
         style={{
-          backgroundColor: '#252525',
-          color: '#FAF6EF',
+          backgroundColor: '#17233D',
+          color: '#F5F8FF',
           borderRadius: '14px',
-          border: '1px solid rgba(232, 225, 215, 0.16)',
-          boxShadow: '0 8px 24px rgba(37, 37, 37, 0.08)',
+          border: '1px solid rgba(191, 199, 213, 0.16)',
+          boxShadow: '0 8px 24px rgba(23, 35, 61, 0.08)',
           padding: '1.25rem 1.5rem',
           display: 'grid',
           gridTemplateColumns: 'minmax(280px, 1fr) minmax(380px, 1.35fr)',
@@ -112,9 +112,9 @@ export const StudentDashboard = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.35rem',
-                color: '#B89B6A',
-                backgroundColor: 'rgba(184, 155, 106, 0.14)',
-                border: '1px solid rgba(184, 155, 106, 0.28)',
+                color: '#2455D6',
+                backgroundColor: 'rgba(36, 85, 214, 0.14)',
+                border: '1px solid rgba(36, 85, 214, 0.28)',
                 padding: '2px 8px',
                 borderRadius: '999px',
                 fontSize: '0.72rem',
@@ -123,7 +123,7 @@ export const StudentDashboard = () => {
                 letterSpacing: '0.05em',
               }}
             >
-              <ShieldCheck size={13} color="#B89B6A" /> Verified Candidate Profile
+              <ShieldCheck size={13} color="#2455D6" /> Verified Candidate Profile
             </span>
             <ReadinessTierBadge tier={passport?.readinessTier} />
           </div>
@@ -132,7 +132,7 @@ export const StudentDashboard = () => {
             style={{
               fontSize: '1.45rem',
               fontWeight: 800,
-              color: '#F5F1E9',
+              color: '#F5F8FF',
               margin: '0.15rem 0',
               letterSpacing: '-0.02em',
               lineHeight: 1.2,
@@ -143,7 +143,7 @@ export const StudentDashboard = () => {
 
           <p
             style={{
-              color: '#D9D0C3',
+              color: '#BFC7D5',
               fontSize: '0.85rem',
               margin: 0,
               lineHeight: 1.4,
@@ -162,7 +162,7 @@ export const StudentDashboard = () => {
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: '#C46A45',
+                color: '#2455D6',
                 fontSize: '0.78rem',
                 fontWeight: 700,
                 cursor: 'pointer',
@@ -191,7 +191,7 @@ export const StudentDashboard = () => {
           <div
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0.04)',
-              border: '1px solid rgba(232, 225, 215, 0.12)',
+              border: '1px solid rgba(191, 199, 213, 0.12)',
               borderRadius: '10px',
               padding: '0.65rem 0.85rem',
               display: 'flex',
@@ -212,21 +212,21 @@ export const StudentDashboard = () => {
                 style={{
                   fontSize: '0.72rem',
                   fontWeight: 700,
-                  color: '#D9D0C3',
+                  color: '#BFC7D5',
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
                 }}
               >
                 Job Readiness Index
               </span>
-              <TrendingUp size={15} color="#C46A45" />
+              <TrendingUp size={15} color="#2455D6" />
             </div>
 
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginTop: '0.2rem' }}>
-              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FAF6EF', lineHeight: 1 }}>
+              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#F5F8FF', lineHeight: 1 }}>
                 {passport?.jobReadinessIndex ?? 50}%
               </span>
-              <span style={{ fontSize: '0.72rem', color: '#C46A45', fontWeight: 600 }}>
+              <span style={{ fontSize: '0.72rem', color: '#2455D6', fontWeight: 600 }}>
                 {passport?.readinessTier ? passport.readinessTier.replace(/_/g, ' ') : 'Job Ready'}
               </span>
             </div>
@@ -246,7 +246,7 @@ export const StudentDashboard = () => {
                 style={{
                   width: `${Math.min(passport?.jobReadinessIndex ?? 50, 100)}%`,
                   height: '100%',
-                  backgroundColor: '#C46A45',
+                  backgroundColor: '#2455D6',
                   borderRadius: '2px',
                 }}
               />
@@ -257,7 +257,7 @@ export const StudentDashboard = () => {
           <div
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0.04)',
-              border: '1px solid rgba(232, 225, 215, 0.12)',
+              border: '1px solid rgba(191, 199, 213, 0.12)',
               borderRadius: '10px',
               padding: '0.65rem 0.85rem',
               display: 'flex',
@@ -278,21 +278,21 @@ export const StudentDashboard = () => {
                 style={{
                   fontSize: '0.72rem',
                   fontWeight: 700,
-                  color: '#D9D0C3',
+                  color: '#BFC7D5',
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
                 }}
               >
                 Profile Completeness
               </span>
-              <CheckCircle2 size={15} color="#B89B6A" />
+              <CheckCircle2 size={15} color="#2455D6" />
             </div>
 
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginTop: '0.2rem' }}>
-              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FAF6EF', lineHeight: 1 }}>
+              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#F5F8FF', lineHeight: 1 }}>
                 {profileCompleteness}%
               </span>
-              <span style={{ fontSize: '0.72rem', color: '#B89B6A', fontWeight: 600 }}>
+              <span style={{ fontSize: '0.72rem', color: '#2455D6', fontWeight: 600 }}>
                 Bio &amp; Portfolio
               </span>
             </div>
@@ -312,7 +312,7 @@ export const StudentDashboard = () => {
                 style={{
                   width: `${Math.min(profileCompleteness, 100)}%`,
                   height: '100%',
-                  backgroundColor: '#B89B6A',
+                  backgroundColor: '#2455D6',
                   borderRadius: '2px',
                 }}
               />
@@ -323,7 +323,7 @@ export const StudentDashboard = () => {
           <div
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0.04)',
-              border: '1px solid rgba(232, 225, 215, 0.12)',
+              border: '1px solid rgba(191, 199, 213, 0.12)',
               borderRadius: '10px',
               padding: '0.65rem 0.85rem',
               display: 'flex',
@@ -344,21 +344,21 @@ export const StudentDashboard = () => {
                 style={{
                   fontSize: '0.72rem',
                   fontWeight: 700,
-                  color: '#D9D0C3',
+                  color: '#BFC7D5',
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
                 }}
               >
                 Demonstrated Skills
               </span>
-              <FileCode2 size={15} color="#FAF6EF" />
+              <FileCode2 size={15} color="#F5F8FF" />
             </div>
 
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginTop: '0.2rem' }}>
-              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FAF6EF', lineHeight: 1 }}>
+              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#F5F8FF', lineHeight: 1 }}>
                 {demonstratedCount}
               </span>
-              <span style={{ fontSize: '0.72rem', color: '#D9D0C3', fontWeight: 500 }}>
+              <span style={{ fontSize: '0.72rem', color: '#BFC7D5', fontWeight: 500 }}>
                 Code &amp; Repo backed
               </span>
             </div>
@@ -368,7 +368,7 @@ export const StudentDashboard = () => {
                 style={{
                   fontSize: '0.66rem',
                   fontWeight: 700,
-                  color: '#FAF6EF',
+                  color: '#F5F8FF',
                   backgroundColor: 'rgba(255, 255, 255, 0.1)',
                   padding: '1px 6px',
                   borderRadius: '4px',
@@ -383,7 +383,7 @@ export const StudentDashboard = () => {
           <div
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0.04)',
-              border: '1px solid rgba(232, 225, 215, 0.12)',
+              border: '1px solid rgba(191, 199, 213, 0.12)',
               borderRadius: '10px',
               padding: '0.65rem 0.85rem',
               display: 'flex',
@@ -404,21 +404,21 @@ export const StudentDashboard = () => {
                 style={{
                   fontSize: '0.72rem',
                   fontWeight: 700,
-                  color: '#D9D0C3',
+                  color: '#BFC7D5',
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
                 }}
               >
                 Verified Evidence
               </span>
-              <Award size={15} color="#C46A45" />
+              <Award size={15} color="#2455D6" />
             </div>
 
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginTop: '0.2rem' }}>
-              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FAF6EF', lineHeight: 1 }}>
+              <span style={{ fontSize: '1.45rem', fontWeight: 800, color: '#F5F8FF', lineHeight: 1 }}>
                 {verifiedCount}
               </span>
-              <span style={{ fontSize: '0.72rem', color: '#D9D0C3', fontWeight: 500 }}>
+              <span style={{ fontSize: '0.72rem', color: '#BFC7D5', fontWeight: 500 }}>
                 Audited credentials
               </span>
             </div>
@@ -428,8 +428,8 @@ export const StudentDashboard = () => {
                 style={{
                   fontSize: '0.66rem',
                   fontWeight: 700,
-                  color: '#C46A45',
-                  backgroundColor: 'rgba(196, 106, 69, 0.16)',
+                  color: '#2455D6',
+                  backgroundColor: 'rgba(36, 85, 214, 0.16)',
                   padding: '1px 6px',
                   borderRadius: '4px',
                 }}
@@ -449,8 +449,8 @@ export const StudentDashboard = () => {
         style={{
           backgroundColor: '#FFFFFF',
           borderRadius: '14px',
-          border: '1px solid #E8E1D7',
-          boxShadow: '0 2px 8px rgba(37, 37, 37, 0.03)',
+          border: '1px solid #BFC7D5',
+          boxShadow: '0 2px 8px rgba(23, 35, 61, 0.03)',
           padding: '1.15rem 1.5rem',
           display: 'flex',
           flexDirection: 'column',
@@ -465,7 +465,7 @@ export const StudentDashboard = () => {
             justifyContent: 'space-between',
             flexWrap: 'wrap',
             gap: '0.75rem',
-            borderBottom: '1px solid #F0EAE1',
+            borderBottom: '1px solid #EAEFFA',
             paddingBottom: '0.75rem',
           }}
         >
@@ -475,14 +475,14 @@ export const StudentDashboard = () => {
                 width: '34px',
                 height: '34px',
                 borderRadius: '8px',
-                backgroundColor: '#FAF6EF',
+                backgroundColor: '#F5F8FF',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                border: '1px solid #E8E1D7',
+                border: '1px solid #BFC7D5',
               }}
             >
-              <Briefcase size={18} color="#C46A45" />
+              <Briefcase size={18} color="#2455D6" />
             </div>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -490,7 +490,7 @@ export const StudentDashboard = () => {
                   style={{
                     fontSize: '1.05rem',
                     fontWeight: 800,
-                    color: '#252525',
+                    color: '#17233D',
                     margin: 0,
                     letterSpacing: '-0.01em',
                   }}
@@ -513,7 +513,7 @@ export const StudentDashboard = () => {
                   </span>
                 )}
               </div>
-              <p style={{ fontSize: '0.78rem', color: '#77736D', margin: 0, marginTop: '2px' }}>
+              <p style={{ fontSize: '0.78rem', color: '#5A6882', margin: 0, marginTop: '2px' }}>
                 Recommended opportunities prioritized by your verified evidence, proctored assessments, and demonstrated skills.
               </p>
             </div>
@@ -524,9 +524,9 @@ export const StudentDashboard = () => {
             style={{
               fontSize: '0.8rem',
               fontWeight: 700,
-              color: '#C46A45',
-              backgroundColor: '#FAF6EF',
-              border: '1px solid #E8E1D7',
+              color: '#2455D6',
+              backgroundColor: '#F5F8FF',
+              border: '1px solid #BFC7D5',
               padding: '6px 14px',
               borderRadius: '8px',
               textDecoration: 'none',
@@ -548,11 +548,11 @@ export const StudentDashboard = () => {
               style={{
                 textAlign: 'center',
                 padding: '1.5rem',
-                color: '#77736D',
+                color: '#5A6882',
                 fontSize: '0.85rem',
-                backgroundColor: '#FAF6EF',
+                backgroundColor: '#F5F8FF',
                 borderRadius: '8px',
-                border: '1px dashed #E8E1D7',
+                border: '1px dashed #BFC7D5',
               }}
             >
               No active job matches found for your current skill passport. Browse open campus drives and requisitions in the Jobs catalog.
@@ -569,8 +569,8 @@ export const StudentDashboard = () => {
                 <div
                   key={job._id}
                   style={{
-                    backgroundColor: '#FAF6EF',
-                    border: '1px solid #E8E1D7',
+                    backgroundColor: '#F5F8FF',
+                    border: '1px solid #BFC7D5',
                     borderRadius: '10px',
                     padding: '0.95rem 1.1rem',
                     display: 'flex',
@@ -587,7 +587,7 @@ export const StudentDashboard = () => {
                         style={{
                           fontSize: '0.95rem',
                           fontWeight: 800,
-                          color: '#252525',
+                          color: '#17233D',
                           margin: 0,
                           lineHeight: 1.25,
                         }}
@@ -598,9 +598,9 @@ export const StudentDashboard = () => {
                         style={{
                           padding: '2px 7px',
                           borderRadius: '6px',
-                          backgroundColor: matchScore >= 75 ? 'rgba(196, 106, 69, 0.12)' : 'rgba(184, 155, 106, 0.12)',
-                          color: matchScore >= 75 ? '#C46A45' : '#B89B6A',
-                          border: `1px solid ${matchScore >= 75 ? 'rgba(196, 106, 69, 0.3)' : 'rgba(184, 155, 106, 0.3)'}`,
+                          backgroundColor: matchScore >= 75 ? 'rgba(36, 85, 214, 0.12)' : 'rgba(36, 85, 214, 0.12)',
+                          color: matchScore >= 75 ? '#2455D6' : '#2455D6',
+                          border: `1px solid ${matchScore >= 75 ? 'rgba(36, 85, 214, 0.3)' : 'rgba(36, 85, 214, 0.3)'}`,
                           fontWeight: 800,
                           fontSize: '0.75rem',
                           whiteSpace: 'nowrap',
@@ -610,8 +610,8 @@ export const StudentDashboard = () => {
                       </span>
                     </div>
 
-                    <p style={{ fontSize: '0.78rem', color: '#77736D', margin: '4px 0 0 0' }}>
-                      <strong style={{ color: '#252525' }}>{job.companyName}</strong> &bull; {job.location} ({job.workMode})
+                    <p style={{ fontSize: '0.78rem', color: '#5A6882', margin: '4px 0 0 0' }}>
+                      <strong style={{ color: '#17233D' }}>{job.companyName}</strong> &bull; {job.location} ({job.workMode})
                     </p>
                   </div>
 
@@ -619,7 +619,7 @@ export const StudentDashboard = () => {
                   <p
                     style={{
                       fontSize: '0.75rem',
-                      color: '#77736D',
+                      color: '#5A6882',
                       margin: 0,
                       lineHeight: 1.35,
                       display: '-webkit-box',
@@ -638,7 +638,7 @@ export const StudentDashboard = () => {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       marginTop: '0.2rem',
-                      borderTop: '1px solid rgba(232, 225, 215, 0.6)',
+                      borderTop: '1px solid rgba(191, 199, 213, 0.6)',
                       paddingTop: '0.45rem',
                     }}
                   >
@@ -650,8 +650,8 @@ export const StudentDashboard = () => {
                             fontSize: '0.68rem',
                             fontWeight: 600,
                             backgroundColor: '#FFFFFF',
-                            color: '#252525',
-                            border: '1px solid #E8E1D7',
+                            color: '#17233D',
+                            border: '1px solid #BFC7D5',
                             padding: '1px 6px',
                             borderRadius: '4px',
                           }}
@@ -666,7 +666,7 @@ export const StudentDashboard = () => {
                       style={{
                         fontSize: '0.74rem',
                         fontWeight: 700,
-                        backgroundColor: '#C46A45',
+                        backgroundColor: '#2455D6',
                         color: '#FFFFFF',
                         border: 'none',
                         padding: '4px 10px',
@@ -699,7 +699,7 @@ export const StudentDashboard = () => {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(37, 37, 37, 0.65)',
+            backgroundColor: 'rgba(23, 35, 61, 0.65)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -721,10 +721,10 @@ export const StudentDashboard = () => {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, color: '#252525' }}>
+                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, color: '#17233D' }}>
                   Job Readiness Index Breakdown
                 </h3>
-                <p style={{ margin: '2px 0 0 0', fontSize: '0.78rem', color: '#77736D' }}>
+                <p style={{ margin: '2px 0 0 0', fontSize: '0.78rem', color: '#5A6882' }}>
                   Transparent mathematical formula calculated by SkillProof AI
                 </p>
               </div>
@@ -733,7 +733,7 @@ export const StudentDashboard = () => {
                 onClick={() => setShowBreakdownModal(false)}
                 style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
               >
-                <XCircle size={20} color="#77736D" />
+                <XCircle size={20} color="#5A6882" />
               </button>
             </div>
 
@@ -741,17 +741,17 @@ export const StudentDashboard = () => {
               {/* Assessed Knowledge (Weight 35%) */}
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
-                  <span style={{ fontWeight: 700, color: '#252525' }}>Assessed Knowledge (Weight 35%)</span>
-                  <span style={{ fontWeight: 800, color: '#C46A45' }}>
+                  <span style={{ fontWeight: 700, color: '#17233D' }}>Assessed Knowledge (Weight 35%)</span>
+                  <span style={{ fontWeight: 800, color: '#2455D6' }}>
                     {passport?.readinessBreakdown?.assessedScore || 0} / 35
                   </span>
                 </div>
-                <div style={{ height: '6px', backgroundColor: '#FAF6EF', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ height: '6px', backgroundColor: '#F5F8FF', borderRadius: '3px', overflow: 'hidden' }}>
                   <div
                     style={{
                       width: `${((passport?.readinessBreakdown?.assessedScore || 0) / 35) * 100}%`,
                       height: '100%',
-                      backgroundColor: '#C46A45',
+                      backgroundColor: '#2455D6',
                       borderRadius: '3px',
                     }}
                   />
@@ -761,17 +761,17 @@ export const StudentDashboard = () => {
               {/* Demonstrated Projects (Weight 25%) */}
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
-                  <span style={{ fontWeight: 700, color: '#252525' }}>Demonstrated Projects (Weight 25%)</span>
-                  <span style={{ fontWeight: 800, color: '#252525' }}>
+                  <span style={{ fontWeight: 700, color: '#17233D' }}>Demonstrated Projects (Weight 25%)</span>
+                  <span style={{ fontWeight: 800, color: '#17233D' }}>
                     {passport?.readinessBreakdown?.demonstratedScore || 0} / 25
                   </span>
                 </div>
-                <div style={{ height: '6px', backgroundColor: '#FAF6EF', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ height: '6px', backgroundColor: '#F5F8FF', borderRadius: '3px', overflow: 'hidden' }}>
                   <div
                     style={{
                       width: `${((passport?.readinessBreakdown?.demonstratedScore || 0) / 25) * 100}%`,
                       height: '100%',
-                      backgroundColor: '#252525',
+                      backgroundColor: '#17233D',
                       borderRadius: '3px',
                     }}
                   />
@@ -781,17 +781,17 @@ export const StudentDashboard = () => {
               {/* Verified Evidence (Weight 25%) */}
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
-                  <span style={{ fontWeight: 700, color: '#252525' }}>Verified Evidence (Weight 25%)</span>
-                  <span style={{ fontWeight: 800, color: '#B89B6A' }}>
+                  <span style={{ fontWeight: 700, color: '#17233D' }}>Verified Evidence (Weight 25%)</span>
+                  <span style={{ fontWeight: 800, color: '#2455D6' }}>
                     {passport?.readinessBreakdown?.verifiedScore || 0} / 25
                   </span>
                 </div>
-                <div style={{ height: '6px', backgroundColor: '#FAF6EF', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ height: '6px', backgroundColor: '#F5F8FF', borderRadius: '3px', overflow: 'hidden' }}>
                   <div
                     style={{
                       width: `${((passport?.readinessBreakdown?.verifiedScore || 0) / 25) * 100}%`,
                       height: '100%',
-                      backgroundColor: '#B89B6A',
+                      backgroundColor: '#2455D6',
                       borderRadius: '3px',
                     }}
                   />
@@ -801,12 +801,12 @@ export const StudentDashboard = () => {
               {/* Profile Completeness (Weight 15%) */}
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
-                  <span style={{ fontWeight: 700, color: '#252525' }}>Profile Completeness (Weight 15%)</span>
-                  <span style={{ fontWeight: 800, color: '#77736D' }}>
+                  <span style={{ fontWeight: 700, color: '#17233D' }}>Profile Completeness (Weight 15%)</span>
+                  <span style={{ fontWeight: 800, color: '#5A6882' }}>
                     {passport?.readinessBreakdown?.profileCompletenessScore || 0} / 15
                   </span>
                 </div>
-                <div style={{ height: '6px', backgroundColor: '#FAF6EF', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ height: '6px', backgroundColor: '#F5F8FF', borderRadius: '3px', overflow: 'hidden' }}>
                   <div
                     style={{
                       width: `${((passport?.readinessBreakdown?.profileCompletenessScore || 0) / 15) * 100}%`,
@@ -822,7 +822,7 @@ export const StudentDashboard = () => {
             {/* Suggestions */}
             {passport?.actionableSuggestions?.length > 0 && (
               <div style={{ marginBottom: '1.25rem' }}>
-                <h4 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#252525', marginBottom: '0.5rem' }}>
+                <h4 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#17233D', marginBottom: '0.5rem' }}>
                   Actionable Next Steps
                 </h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
@@ -832,19 +832,19 @@ export const StudentDashboard = () => {
                       style={{
                         padding: '0.55rem 0.8rem',
                         borderRadius: '6px',
-                        backgroundColor: '#FAF6EF',
-                        borderLeft: '3px solid #C46A45',
+                        backgroundColor: '#F5F8FF',
+                        borderLeft: '3px solid #2455D6',
                         fontSize: '0.78rem',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                       }}
                     >
-                      <span style={{ color: '#252525' }}>{sug.text}</span>
+                      <span style={{ color: '#17233D' }}>{sug.text}</span>
                       <Link
                         to={sug.actionType === 'assessment' ? '/assessments' : '/student/passport'}
                         onClick={() => setShowBreakdownModal(false)}
-                        style={{ color: '#C46A45', fontWeight: 700, fontSize: '0.75rem', textDecoration: 'none', whiteSpace: 'nowrap', marginLeft: '8px' }}
+                        style={{ color: '#2455D6', fontWeight: 700, fontSize: '0.75rem', textDecoration: 'none', whiteSpace: 'nowrap', marginLeft: '8px' }}
                       >
                         {sug.actionType === 'assessment' ? 'Start Assessment →' : 'Take Action →'}
                       </Link>
@@ -859,7 +859,7 @@ export const StudentDashboard = () => {
                 type="button"
                 onClick={() => setShowBreakdownModal(false)}
                 style={{
-                  backgroundColor: '#252525',
+                  backgroundColor: '#17233D',
                   color: '#FFFFFF',
                   border: 'none',
                   borderRadius: '6px',

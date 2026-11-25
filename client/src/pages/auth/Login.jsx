@@ -93,7 +93,7 @@ export const Login = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#F5F1E9',
+        backgroundColor: '#F5F8FF',
         padding: '2rem 1rem',
       }}
     >
@@ -102,10 +102,10 @@ export const Login = () => {
           maxWidth: '460px',
           width: '100%',
           padding: '2.75rem 2.5rem',
-          boxShadow: '0 20px 40px -15px rgba(37, 37, 37, 0.08)',
+          boxShadow: '0 20px 40px -15px rgba(23, 35, 61, 0.08)',
           borderRadius: '16px',
           backgroundColor: '#FFFFFF',
-          border: '1px solid #E8E1D7',
+          border: '1px solid #BFC7D5',
         }}
       >
         {/* Brand Header */}
@@ -113,10 +113,10 @@ export const Login = () => {
           <div style={{ display: 'inline-flex', marginBottom: '1rem' }}>
             <SkillProofLogo size={46} theme="light" />
           </div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.35rem', letterSpacing: '-0.025em', color: '#252525' }}>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.35rem', letterSpacing: '-0.025em', color: '#17233D' }}>
             Welcome Back
           </h2>
-          <p style={{ color: '#77736D', fontSize: '0.9rem', margin: 0 }}>
+          <p style={{ color: '#5A6882', fontSize: '0.9rem', margin: 0 }}>
             Sign in to access your SkillProof AI platform
           </p>
         </div>
@@ -227,7 +227,7 @@ export const Login = () => {
               onClick={() => autofillDemo('student@skillproof.ai', 'Password@123')}
               style={{ fontSize: '0.78rem', gap: '0.3rem', padding: '0.45rem 0.5rem' }}
             >
-              <GraduationCap size={14} color="#C46A45" />
+              <GraduationCap size={14} color="#2455D6" />
               <span>Student</span>
             </button>
             <button
@@ -236,7 +236,7 @@ export const Login = () => {
               onClick={() => autofillDemo('recruiter@skillproof.ai', 'Password@123')}
               style={{ fontSize: '0.78rem', gap: '0.3rem', padding: '0.45rem 0.5rem' }}
             >
-              <Building2 size={14} color="#B89B6A" />
+              <Building2 size={14} color="#2455D6" />
               <span>Recruiter</span>
             </button>
             <button
@@ -245,7 +245,7 @@ export const Login = () => {
               onClick={() => autofillDemo('placement@skillproof.ai', 'Password@123')}
               style={{ fontSize: '0.78rem', gap: '0.3rem', padding: '0.45rem 0.5rem' }}
             >
-              <Users size={14} color="#252525" />
+              <Users size={14} color="#17233D" />
               <span>Placement</span>
             </button>
           </div>
