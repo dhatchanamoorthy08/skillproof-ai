@@ -1,27 +1,42 @@
-<svg width="64" height="64" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
   <defs>
-    <linearGradient id="sp_terracotta" x1="15%" y1="15%" x2="85%" y2="85%">
-      <stop offset="0%" stop-color="#D97A53" />
-      <stop offset="100%" stop-color="#A8522E" />
+    <!-- Background Gradient: Pure Snow White to Subtle Tint -->
+    <linearGradient id="sp_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F5F8FF" />
     </linearGradient>
-    <linearGradient id="sp_gold" x1="15%" y1="85%" x2="85%" y2="15%">
-      <stop offset="0%" stop-color="#9C7E4A" />
-      <stop offset="50%" stop-color="#B89B6A" />
-      <stop offset="100%" stop-color="#D4BC91" />
+
+    <!-- Cobalt Blue Gradient for Skill Foundation -->
+    <linearGradient id="sp_cobalt" x1="10%" y1="10%" x2="90%" y2="90%">
+      <stop offset="0%" stop-color="#2455D6" />
+      <stop offset="100%" stop-color="#1B42AC" />
     </linearGradient>
-    <linearGradient id="sp_crest_border" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#C46A45" stop-opacity="0.8" />
-      <stop offset="50%" stop-color="#B89B6A" stop-opacity="0.5" />
-      <stop offset="100%" stop-color="#C46A45" stop-opacity="0.2" />
+
+    <!-- Midnight Gradient for Contrast Growth Pillar -->
+    <linearGradient id="sp_midnight" x1="10%" y1="90%" x2="90%" y2="10%">
+      <stop offset="0%" stop-color="#101A2E" />
+      <stop offset="100%" stop-color="#17233D" />
+    </linearGradient>
+
+    <!-- Subtle Silver Border -->
+    <linearGradient id="sp_border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BFC7D5" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#2455D6" stop-opacity="0.3" />
     </linearGradient>
   </defs>
 
-  <rect x="3" y="3" width="94" height="94" rx="22" fill="#252525" stroke="#E8E1D7" stroke-width="1.5" stroke-opacity="0.2" />
-  <rect x="4" y="4" width="92" height="92" rx="21" stroke="url(#sp_crest_border)" stroke-width="1.5" />
+  <!-- Snow White Squircle Container -->
+  <rect x="2" y="2" width="96" height="96" rx="22" fill="url(#sp_bg)" stroke="url(#sp_border)" stroke-width="2" />
 
-  <path d="M24 68 L24 42 C24 35.5 28.5 31 35 31 L44 31 L34 51 L47 51 L24 68 Z" fill="url(#sp_terracotta)" />
-  <path d="M76 32 L76 58 C76 64.5 71.5 69 65 69 L56 69 L66 49 L53 49 L76 32 Z" fill="url(#sp_gold)" />
+  <!-- Left Rising Facet (Skill Foundation in Cobalt Blue) -->
+  <path d="M22 68 L22 40 C22 33 27 28 34 28 L44 28 L33 50 L46 50 L22 68 Z" fill="url(#sp_cobalt)" />
 
-  <polygon points="50,22 64,39 50,56 36,39" fill="#FAF6EF" opacity="0.96" />
-  <path d="M43 39 L48 44 L57 33" stroke="#252525" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Right Ascending Chevron (Career Growth in Midnight) -->
+  <path d="M78 32 L78 60 C78 67 73 72 66 72 L56 72 L67 50 L54 50 L78 32 Z" fill="url(#sp_midnight)" />
+
+  <!-- Verification Nexus Diamond (Snow White) -->
+  <polygon points="50,22 65,39 50,56 35,39" fill="#FFFFFF" stroke="#BFC7D5" stroke-width="1.2" />
+
+  <!-- Verification Checkmark (Cobalt Blue #2455D6) -->
+  <path d="M42 39 L47.5 44.5 L58 32.5" stroke="#2455D6" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" />
 </svg>

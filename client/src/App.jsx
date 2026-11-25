@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { DashboardLayout } from './layouts/DashboardLayout';
+import { PageTitleManager } from './components/PageTitleManager';
 
 // Public Pages
 import { LandingPage } from './pages/LandingPage';
@@ -87,6 +88,7 @@ export const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <PageTitleManager />
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
